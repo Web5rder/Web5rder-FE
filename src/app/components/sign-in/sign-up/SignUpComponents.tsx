@@ -1,14 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import SignInButton from './common/SignInButton';
-import SignInInput from './common/SignInInput';
-import SignInSubTab from './SignInSubTab';
+import { useRouter } from 'next/navigation';
+import SignInButton from '../common/SignInButton';
+import SignInInput from '../common/SignInInput';
 import SignInData from '@/app/constants/sign-in';
 
-function SignInComponents() {
+function SignUpComponents() {
+  const router = useRouter();
+
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
+  const [pwdConfirm, setPwdConfirm] = useState('');
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -16,6 +19,10 @@ function SignInComponents() {
 
   const handlePwdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPwd(e.target.value);
+  };
+
+  const handlePwdConfirmChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPwdConfirm(e.target.value);
   };
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
@@ -26,36 +33,31 @@ function SignInComponents() {
         value={email}
         onChange={handleEmailChange}
       />
-
       <SignInInput
         label={SignInData.SignInConstants.PWD}
-        placeholder={SignInData.SignInPlaceholder.PWD_CONFIRM}
+        placeholder={SignInData.SignInPlaceholder.PWD}
         type="password"
         value={pwd}
         onChange={handlePwdChange}
       />
+      <SignInInput
+        label={SignInData.SignInConstants.PWD_CONFIRM}
+        placeholder={SignInData.SignInPlaceholder.PWD_CONFIRM}
+        type="password"
+        value={pwdConfirm}
+        onChange={handlePwdConfirmChange}
+      />
 
       <SignInButton
-        onClick={() => {
-          alert('로그인');
-        }}
         type="button"
-        text={SignInData.SignInConstants.EMAIL}
+        text="거래처 생성"
+        onClick={() => {
+          router.push('/sign-in/sign-up/client');
+        }}
         bgColor="bg-primary-1"
       />
-
-      <SignInButton
-        onClick={() => {
-          alert('카카오로그인');
-        }}
-        type="button"
-        text="카카오로그인"
-        bgColor="bg-yellow-1"
-      />
-
-      <SignInSubTab />
     </div>
   );
 }
 
-export default SignInComponents;
+export default SignUpComponents;

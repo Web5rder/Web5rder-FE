@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import SignInConstants from '@/app/constants/sign-in';
+import SignInData from '@/app/constants/sign-in';
 
 function SignInSubTab() {
   const router = useRouter();
@@ -14,7 +14,7 @@ function SignInSubTab() {
         type="button"
         className="text-gray-7 text-sm font-light"
       >
-        {SignInConstants.CHANGE_PASSWORD}
+        {SignInData.SignInConstants.CHANGE_PWD}
       </button>
       <p className="text-sm">|</p>
       <button
@@ -24,7 +24,7 @@ function SignInSubTab() {
         type="button"
         className="text-gray-7 text-sm font-light"
       >
-        {SignInConstants.SIGN_UP}
+        {SignInData.SignInConstants.SIGN_UP}
       </button>
     </div>
   );

@@ -1,4 +1,4 @@
-import SignUpComponents from '@/app/components/sign-in/sign-up/SignUpComponents';
+import SignUpClientComponents from '@/app/components/sign-in/sign-up/client/SignUpClientComponents';
 
 export default function SignUp() {
   return (
@@ -7,7 +7,7 @@ export default function SignUp() {
         <div className="h-[200px] w-[900px] text-[100px] text-center font-black whitespace-nowrap">
           정말 맛있는 푸드
         </div>
-        <SignUpComponents />
+        <SignUpClientComponents />
       </div>
     </section>
   );
