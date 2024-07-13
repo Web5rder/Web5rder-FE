@@ -1,6 +1,7 @@
 import { FocusEventHandler, ChangeEventHandler } from 'react';
 
 export type ValidationType = 'email' | 'pwd' | 'pwdConfirm';
+export type ValidationClientType = 'region' | 'name' | 'address';
 
 export interface SignInputProps {
   label: string;

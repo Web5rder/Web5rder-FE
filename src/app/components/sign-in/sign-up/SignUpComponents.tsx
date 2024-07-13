@@ -116,7 +116,7 @@ function SignUpComponents() {
     formState.pwdConfirmValid,
   ]);
 
-  const handleButtonClick = () => {
+  const handleBtnClick = () => {
     if (formState.isBtnActive) {
       router.push('/sign-in/sign-up/client');
     }
@@ -159,7 +159,7 @@ function SignUpComponents() {
         isActive={formState.isBtnActive}
         type="button"
         text="다음"
-        onClick={handleButtonClick}
+        onClick={handleBtnClick}
         bgColor="bg-primary-1"
         subColor="bg-gray-2"
       />
