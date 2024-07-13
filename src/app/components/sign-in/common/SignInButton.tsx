@@ -20,7 +20,7 @@ function SignInButton({
       onClick={onClick}
       // eslint-disable-next-line react/button-has-type
       type={type}
-      className={`${isActive ? bgColor : subColor} w-full mt-1 rounded-xl py-3`}
+      className={`${isActive ? bgColor : subColor} w-full mt-4 rounded-xl py-3`}
     >
       <p className="text-white text-xl font-black">{text}</p>
     </button>

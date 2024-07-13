@@ -12,7 +12,7 @@ function SignInSubTab() {
           router.push('/sign-in');
         }}
         type="button"
-        className="text-gray-7 text-sm font-light"
+        className="text-gray-5 text-sm font-light"
       >
         {SignInData.SignInConstants.CHANGE_PWD}
       </button>
@@ -22,7 +22,7 @@ function SignInSubTab() {
           router.push('/sign-in/sign-up');
         }}
         type="button"
-        className="text-gray-7 text-sm font-light"
+        className="text-gray-5 text-sm font-light"
       >
         {SignInData.SignInConstants.SIGN_UP}
       </button>
