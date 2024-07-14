@@ -95,12 +95,7 @@ function SignUpClientComponents() {
         errorMessage={formState.addressError}
       />
 
-      <SignInButton
-        type="button"
-        text="생성"
-        onClick={handleBtnClick}
-        bgColor="bg-primary-1"
-      />
+      <SignInButton type="button" text="생성" onClick={handleBtnClick} />
     </div>
   );
 }

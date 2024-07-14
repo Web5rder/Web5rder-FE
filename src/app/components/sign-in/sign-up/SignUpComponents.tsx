@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SignInButton from '../common/SignInButton';
 import SignInInput from '../common/SignInInput';
@@ -14,16 +14,9 @@ function SignUpComponents() {
     email: '',
     pwd: '',
     pwdConfirm: '',
-    emailValid: false,
-    pwdValid: false,
-    pwdConfirmValid: false,
-    emailTouched: false,
-    pwdTouched: false,
-    pwdConfirmTouched: false,
     emailError: '',
     pwdError: '',
     pwdConfirmError: '',
-    isBtnActive: false,
   });
 
   const validateField = (
@@ -35,13 +28,6 @@ function SignUpComponents() {
       case 'email':
         if (!emailRegex.test(value)) {
           return { isValid: false, error: SignInData.SignUpError.EMAIL };
-        }
-        // 중복 검사
-        if (value === 'test@example.com') {
-          return {
-            isValid: false,
-            error: SignInData.SignUpError.EMAIL_DPLCT,
-          };
         }
         return { isValid: true, error: '' };
       case 'pwd':
@@ -68,57 +54,57 @@ function SignUpComponents() {
     type: ValidationType,
   ) => {
     const { value } = e.target;
-    const { isValid, error } = validateField(
-      type,
-      value,
-      type === 'pwdConfirm' ? formState.pwd : undefined,
-    );
 
     setFormState((prevState) => ({
       ...prevState,
       [type]: value,
-      [`${type}Valid`]: isValid,
-      [`${type}Error`]: error,
     }));
   };
 
-  const handleInputBlur = (type: ValidationType) => {
-    setFormState((prevState) => ({
-      ...prevState,
-      [`${type}Touched`]: true,
-    }));
-  };
+  const handleBtnClick = async () => {
+    const { email, pwd, pwdConfirm } = formState;
 
-  useEffect(() => {
-    const { email, pwd, pwdConfirm, emailValid, pwdValid, pwdConfirmValid } =
-      formState;
-    const isBtnActive =
-      email &&
-      pwd &&
-      pwdConfirm &&
-      emailValid &&
-      pwdValid &&
-      pwdConfirmValid &&
-      pwd === pwdConfirm;
+    const emailValidation = validateField('email', email);
+    const pwdValidation = validateField('pwd', pwd);
+    const pwdConfirmValidation = validateField('pwdConfirm', pwdConfirm, pwd);
 
-    if (isBtnActive !== formState.isBtnActive) {
+    if (
+      emailValidation.isValid &&
+      pwdValidation.isValid &&
+      pwdConfirmValidation.isValid
+    ) {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER}/api/v1/users`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password: pwd }),
+          },
+        );
+
+        const responseData = await response.json(); // 응답 본문 파싱
+        if (response.ok && responseData.isSuccess) {
+          router.push('/sign-in/sign-up/client');
+        } else {
+          console.error('Signup error:', responseData);
+          setFormState((prevState) => ({
+            ...prevState,
+            emailError: responseData.message,
+          }));
+        }
+      } catch (error) {
+        console.error('Unexpected error:', error);
+      }
+    } else {
       setFormState((prevState) => ({
         ...prevState,
-        isBtnActive: Boolean(isBtnActive),
+        emailError: emailValidation.error,
+        pwdError: pwdValidation.error,
+        pwdConfirmError: pwdConfirmValidation.error,
       }));
-    }
-  }, [
-    formState.email,
-    formState.pwd,
-    formState.pwdConfirm,
-    formState.emailValid,
-    formState.pwdValid,
-    formState.pwdConfirmValid,
-  ]);
-
-  const handleBtnClick = () => {
-    if (formState.isBtnActive) {
-      router.push('/sign-in/sign-up/client');
     }
   };
 
@@ -130,8 +116,7 @@ function SignUpComponents() {
         type="email"
         value={formState.email}
         onChange={(e) => handleInputChange(e, 'email')}
-        onBlur={() => handleInputBlur('email')}
-        error={formState.emailTouched && !formState.emailValid}
+        error={!!formState.emailError}
         errorMessage={formState.emailError}
       />
       <SignInInput
@@ -140,8 +125,7 @@ function SignUpComponents() {
         type="password"
         value={formState.pwd}
         onChange={(e) => handleInputChange(e, 'pwd')}
-        onBlur={() => handleInputBlur('pwd')}
-        error={formState.pwdTouched && !formState.pwdValid}
+        error={!!formState.pwdError}
         errorMessage={formState.pwdError}
       />
       <SignInInput
@@ -150,19 +134,11 @@ function SignUpComponents() {
         type="password"
         value={formState.pwdConfirm}
         onChange={(e) => handleInputChange(e, 'pwdConfirm')}
-        onBlur={() => handleInputBlur('pwdConfirm')}
-        error={formState.pwdConfirmTouched && !formState.pwdConfirmValid}
+        error={!!formState.pwdConfirmError}
         errorMessage={formState.pwdConfirmError}
       />
 
-      <SignInButton
-        isActive={formState.isBtnActive}
-        type="button"
-        text="다음"
-        onClick={handleBtnClick}
-        bgColor="bg-primary-1"
-        subColor="bg-gray-2"
-      />
+      <SignInButton type="button" text="다음" onClick={handleBtnClick} />
     </div>
   );
 }

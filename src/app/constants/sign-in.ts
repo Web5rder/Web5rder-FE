@@ -23,7 +23,6 @@ const SignInPlaceholder = {
 
 const SignUpError = {
   EMAIL: '유효하지 않은 이메일 형식입니다.',
-  EMAIL_DPLCT: '이미 사용 중인 이메일입니다.',
   PWD: '영문, 숫자, 특수기호를 포함하는 6자 이상의 비밀번호를 입력해주세요.',
   PWD_CONFIRM: '비밀번호가 일치하지 않습니다.',
 } as const;
@@ -38,7 +37,7 @@ export default SignInData;
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const passwordRegex =
-  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()\-=_+])[A-Za-z\d!@#$%^&*()\-=_+]{6,}$/;
 
 export const clientMapping: { [key: string]: string } = {
   region: '지역',
