@@ -55,8 +55,8 @@ function SignUpComponents() {
   ) => {
     const { value } = e.target;
 
-    setFormState((prevState) => ({
-      ...prevState,
+    setFormState((prev) => ({
+      ...prev,
       [type]: value,
     }));
   };
@@ -85,18 +85,17 @@ function SignUpComponents() {
           },
         );
 
-        const responseData = await response.json(); // 응답 본문 파싱
+        const responseData = await response.json();
         if (response.ok && responseData.isSuccess) {
           router.push('/sign-in/sign-up/client');
         } else {
-          console.error('Signup error:', responseData);
           setFormState((prevState) => ({
             ...prevState,
             emailError: responseData.message,
           }));
         }
       } catch (error) {
-        console.error('Unexpected error:', error);
+        alert('오류가 발생했습니다.');
       }
     } else {
       setFormState((prevState) => ({

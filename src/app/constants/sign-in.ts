@@ -21,6 +21,10 @@ const SignInPlaceholder = {
   ADDRESS: '거래처 주소를 정확히 입력해주세요.',
 } as const;
 
+const SignInError = {
+  LOGIN: '이메일 혹은 비밀번호를 확인해주세요.',
+} as const;
+
 const SignUpError = {
   EMAIL: '유효하지 않은 이메일 형식입니다.',
   PWD: '영문, 숫자, 특수기호를 포함하는 6자 이상의 비밀번호를 입력해주세요.',
@@ -30,6 +34,7 @@ const SignUpError = {
 const SignInData = {
   SignInConstants,
   SignInPlaceholder,
+  SignInError,
   SignUpError,
 };
 
