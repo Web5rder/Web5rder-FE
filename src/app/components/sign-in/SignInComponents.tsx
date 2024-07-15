@@ -7,6 +7,7 @@ import SignInInput from './common/SignInInput';
 import SignInSubTab from './SignInSubTab';
 import SignInData from '@/app/constants/sign-in';
 import { ValidationType } from '@/app/_types/sign-in';
+import { postLogin } from '@/app/service/postRequest';
 
 function SignInComponents() {
   const router = useRouter();
@@ -30,26 +31,8 @@ function SignInComponents() {
   const handleBtnClick = async () => {
     const { email, pwd } = signInState;
     try {
-      // URLSearchParams 객체를 생성하여 URL 인코딩된 형식으로 변환
-      const params = new URLSearchParams();
-      params.append('username', email); // 객체에 키와 값 추가
-      params.append('password', pwd);
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER}/api/v1/token`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            Accept: 'application/json',
-          },
-          body: params.toString(),
-          //  params.toString() === username=test@example.com&password=qwe12#
-        },
-      );
-      const responseData = await response.json();
-
-      if (response.ok && responseData.isSuccess) {
+      const responseData = await postLogin({ email, pwd });
+      if (responseData.isSuccess) {
         localStorage.setItem('JMFtoken', responseData.result.access_token);
         router.push('/');
       } else {

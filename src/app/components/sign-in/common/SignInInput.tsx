@@ -1,6 +1,3 @@
-'use client';
-
-import React from 'react';
 import { SignInputProps } from '@/app/_types/sign-in';
 
 function SignInInput({
