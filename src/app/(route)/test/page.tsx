@@ -1,7 +1,7 @@
 'use client';
 
 import { ToastContainer } from 'react-toastify';
-import { testAlert } from '@/app/utils/toast';
+import { testAlert, testAlert2 } from '@/app/utils/toast';
 import 'react-toastify/dist/ReactToastify.css';
 
 const testpage = () => {
@@ -15,6 +15,13 @@ const testpage = () => {
         className="bg-slate-400 rounded-3xl m-4 p-3"
       >
         알림창 테스트 버튼
+      </button>
+      <button
+        type="button"
+        onClick={testAlert2}
+        className="bg-slate-400 rounded-3xl m-4 p-3"
+      >
+        알림창 테스트 버튼(error버전 + 이모지x)
       </button>
     </div>
   );
