@@ -24,6 +24,5 @@
     "@typescript-eslint/camelcase": "off",
     "no-console": "warn",
     "@typescript-eslint/naming-convention": "off"
-
   }
 }
