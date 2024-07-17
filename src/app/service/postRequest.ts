@@ -51,3 +51,25 @@ export const postLogin = async (signInContents: any) => {
     throw new Error('postLogin 에러 발생');
   }
 };
+
+// user 가입
+export const postSignUp = async (signUpContents: any) => {
+  try {
+    const response = await fetch(`${SERVER_URL}/api/v1/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(signUpContents),
+    });
+
+    if (!response.ok) {
+      throw new Error('가입 요청 실패');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('postSignUp 에러 발생');
+  }
+};
