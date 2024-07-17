@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import '../ui/globals.css';
 
 export const metadata: Metadata = {
-  title: '위닛',
-  description: 'We need, Win it!',
+  title: 'JMF',
+  description: '정말 맛있는 음식! JMF!',
   icons: {
     icon: '/favicon.ico',
   },
