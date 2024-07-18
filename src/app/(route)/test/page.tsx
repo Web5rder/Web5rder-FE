@@ -1,6 +1,8 @@
 'use client';
 
 import { ToastContainer } from 'react-toastify';
+import Icons from '@/app/components/common/Icons';
+import { titleIcon } from '@/app/ui/iconPath';
 import { testAlert, testAlert2 } from '@/app/utils/toast';
 import useTestStore from '@/app/utils/useStore';
 import 'react-toastify/dist/ReactToastify.css';
@@ -32,6 +34,7 @@ function Testpage() {
       <div className="w-[600px] h-[400px] bg-white rounded-2xl text-black flex flex-col items-center justify-center gap-y-6 ">
         zustand
         <div className="flex p-2 bg-black text-white rounded-2xl">
+          <Icons name={titleIcon} />
           <span>점수 : {count}</span>
         </div>
         <button
