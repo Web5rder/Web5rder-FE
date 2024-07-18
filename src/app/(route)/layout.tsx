@@ -3,7 +3,7 @@ import '../ui/globals.css';
 
 export const metadata: Metadata = {
   title: 'JMF',
-  description: '정말 맛있는 음식! JMF!',
+  description: '정말 맛있는 음식과 함께, JMF',
   icons: {
     icon: '/favicon.ico',
   },
@@ -16,9 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="bg-black min-h-screen min-w-[800px] mx-auto">
-        {children}
-      </body>
+      <body className="min-h-screen min-w-[900px] mx-auto">{children}</body>
     </html>
   );
 }
