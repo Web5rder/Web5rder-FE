@@ -23,6 +23,7 @@
     "no-useless-catch": "off",
     "@typescript-eslint/camelcase": "off",
     "no-console": "warn",
-    "@typescript-eslint/naming-convention": "off"
+    "@typescript-eslint/naming-convention": "off",
+    "react/require-default-props": "off"
   }
 }
