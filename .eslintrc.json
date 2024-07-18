@@ -22,6 +22,7 @@
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx"] }],
     "no-useless-catch": "off",
     "@typescript-eslint/camelcase": "off",
-    "no-console": "warn"
+    "no-console": "warn",
+    "react/jsx-props-no-spreading": "off"
   }
 }
