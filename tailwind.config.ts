@@ -15,6 +15,7 @@ const config: Config = {
     extend: {
       colors: {
         gray: {
+          0: '#F4F4F4',
           1: '#E0E0E0',
           2: '#B8B8B8',
           3: '#929292',
