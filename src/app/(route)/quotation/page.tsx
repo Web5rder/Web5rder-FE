@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import Input from '@/app/components/common/Input';
+import ProductList from '@/app/components/quotation/ProductList';
 
 export default function Quotation() {
   const [inputState, setInputState] = useState({
     search: '',
-    count: '',
   });
 
   const handleInputChange = (
@@ -19,7 +19,6 @@ export default function Quotation() {
       [type]: value,
     }));
   };
-
   return (
     <section>
       <div className="bg-white w-full h-screen flex relative">
@@ -83,29 +82,8 @@ export default function Quotation() {
             {/* 목록창 */}
             <div className="bg-white px-3 h-80 flex-col border-2 whitespace-nowrap">
               {/* 개별 목록 */}
-              <div className="flex justify-between py-2 w-full text-gray-9 text-xl font-bold border-b-2">
-                <div className="flex gap-4">
-                  <p>냉동</p>
-                  <p>SAM-572</p>
-                </div>
-                <p>하와이안피자 하와이안피자 하와이안피자</p>
-                <div className="flex gap-10">
-                  <Input
-                    className="w-10 text-right"
-                    placeholder="0"
-                    value={inputState.count}
-                    type="text"
-                    onChange={(e) => handleInputChange(e, 'count')}
-                  />
-                  <p>kg</p>
-                  <button
-                    type="button"
-                    className="bg-primary-4 text-white px-1"
-                  >
-                    담기
-                  </button>
-                </div>
-              </div>
+              <ProductList />
+              <ProductList />
             </div>
           </div>
 
