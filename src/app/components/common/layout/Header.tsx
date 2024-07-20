@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import HEADER_TEXT from '@/app/constants/layout';
+import { HEADER_TEXT } from '@/app/constants/layout';
 
 function Header() {
   return (
