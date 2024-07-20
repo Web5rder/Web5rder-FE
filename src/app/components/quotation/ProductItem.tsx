@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 
-export default function ProductList() {
+export default function ProductItem() {
   const [inputState, setInputState] = useState({
     count: '',
   });
