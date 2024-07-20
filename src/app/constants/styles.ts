@@ -1,5 +1,6 @@
 export const BUTTON_STYLE = {
-  small: (className: string) => `px-2 py-2 ${className}`,
+  reorder: (className: string) =>
+    `w-32 h-12 bg-[#49AA19] rounded-2xl text-white shadow-lg ${className}`,
   default: () => 'w-full h-full',
 } as const;
 
