@@ -16,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="min-h-screen min-w-[900px] mx-auto">{children}</body>
+      <body className="min-h-screen min-w-[1100px] mx-auto">{children}</body>
     </html>
   );
 }
