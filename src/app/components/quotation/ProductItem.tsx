@@ -3,9 +3,27 @@
 import { useState } from 'react';
 import Input from '../common/Input';
 
-export default function ProductItem() {
+export interface ProductItemProps {
+  category: string;
+  code?: string;
+  name: string;
+  count?: string;
+  isAdded?: boolean;
+  onAddItem?: (item: ProductItemProps) => void;
+  onRemoveItem?: (code: string | undefined) => void;
+}
+
+export default function ProductItem({
+  category,
+  code,
+  name,
+  count,
+  isAdded,
+  onAddItem,
+  onRemoveItem,
+}: ProductItemProps) {
   const [inputState, setInputState] = useState({
-    count: '',
+    count: count || '',
   });
 
   const handleInputChange = (
@@ -18,24 +36,38 @@ export default function ProductItem() {
       [type]: value,
     }));
   };
+
+  const handleButtonClick = () => {
+    if (isAdded) {
+      onRemoveItem?.(code);
+    } else {
+      onAddItem?.({ category, code, name, count: inputState.count });
+    }
+  };
+
   return (
-    <div className="flex justify-between py-2 w-full text-gray-9 text-xl font-bold border-b-2">
+    <div className="flex justify-between py-2  w-full text-gray-9 text-xl font-bold border-b-2">
       <div className="flex gap-4">
-        <p>냉동</p>
-        <p>SAM-572</p>
+        <p>{category}</p>
+        <p>{code}</p>
       </div>
-      <p>하와이안피자 하와이안피자 하와이안피자</p>
-      <div className="flex gap-10">
+      <p>{name}</p>
+      <div className="flex gap-8">
         <Input
-          className="w-10 text-right"
-          placeholder="0"
+          className="w-14 text-right"
+          placeholder="1"
           value={inputState.count}
-          type="text"
+          type="number"
           onChange={(e) => handleInputChange(e, 'count')}
+          disabled={isAdded}
         />
         <p>kg</p>
-        <button type="button" className="bg-primary-4 text-white px-1">
-          담기
+        <button
+          type="button"
+          className={`${isAdded ? 'bg-red-1' : 'bg-primary-4'} text-white px-1`}
+          onClick={handleButtonClick}
+        >
+          {isAdded ? '삭제' : '담기'}
         </button>
       </div>
     </div>
