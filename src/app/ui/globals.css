@@ -29,6 +29,20 @@ body {
   display: none; /* Chrome, Safari, Opera*/
 }
 
+.swiper {
+  width: 100%;
+}
+
+.swiper-wrapper {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.swiper .swiper-pagination-bullet {
+  background-color: rgb(26, 163, 8);
+}
+
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
