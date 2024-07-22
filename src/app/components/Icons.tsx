@@ -2,6 +2,9 @@
 
 interface IconsProps {
   name: IconPathTypes;
+  hoverFill?: string;
+  className?: string;
+  onClick?: () => void;
 }
 
 function Icons({ name, className, hoverFill, onClick }: IconsProps) {
