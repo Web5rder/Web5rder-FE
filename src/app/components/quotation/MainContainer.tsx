@@ -1,10 +1,20 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../common/Input';
 import ProductItem, { ProductItemProps } from './ProductItem';
+import Icons from '../Icons';
+import { SearchIcon } from '@/app/ui/iconPath';
 
 export default function MainContainer() {
+  const [token, setToken] = useState('');
+  useEffect(() => {
+    const JMFtoken = localStorage.getItem('JMFtoken');
+    if (JMFtoken) {
+      setToken(JMFtoken);
+    }
+  }, []);
+
   const [inputState, setInputState] = useState({
     search: '',
   });
@@ -22,15 +32,44 @@ export default function MainContainer() {
     }));
   };
 
+  const handleSearch = async () => {
+    try {
+      const search = encodeURIComponent(inputState.search);
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER}/api/quotation?name_prefix=${search}&limit=100&cached_time=3000`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'access-token': token,
+          },
+        },
+      );
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   const handleAddItem = (item: ProductItemProps) => {
     setAddedItems((prevItems) => {
-      const existingItem = prevItems.find(
-        (prevItem) => prevItem.code === item.code,
-      );
-      if (existingItem) {
-        alert('이미 추가한 상품입니다.');
-        return prevItems;
-      }
+      // const existingItem = prevItems.find(
+      //   (prevItem) => prevItem.code === item.code,
+      // );
+      // // if (existingItem) {
+      // //   alert('이미 추가한 상품입니다.');
+      // //   return prevItems;
+      // // }
       return [...prevItems, { ...item, count: item.count || '1' }];
     });
   };
@@ -51,13 +90,17 @@ export default function MainContainer() {
         >
           최근주문목록
         </button>
-        <Input
-          className="bg-gray-0 md:w-96 px-2 py-1 text-xl font-black border-2 border-gray-2 placeholder:text-xl placeholder:font-black"
-          value={inputState.search}
-          type="text"
-          onChange={(e) => handleInputChange(e, 'search')}
-          placeholder="검색어를 입력해주세요"
-        />
+        <div className="flex-center gap-2 bg-gray-0 border-2 border-gray-2 pr-1 focus-within:border-gray-7 focus-within:border-2">
+          <Input
+            className=" md:w-96 px-2 py-1 text-xl font-black placeholder:text-xl placeholder:font-black focus:outline-none"
+            value={inputState.search}
+            type="text"
+            onChange={(e) => handleInputChange(e, 'search')}
+            placeholder="검색어를 입력해주세요"
+            onKeyPress={handleKeyPress}
+          />
+          <Icons onClick={handleSearch} name={SearchIcon} />
+        </div>
         <p className="self-center font-bold">
           상품 검색 후 개수를 입력한 뒤에 &apos;담기&apos;를 눌러주세요.
         </p>
@@ -106,6 +149,7 @@ export default function MainContainer() {
                 !!addedItems.find((addedItem) => addedItem.code === item.code)
               }
               onAddItem={handleAddItem}
+              onRemoveItem={handleRemoveItem}
             />
           ))}
         </div>
