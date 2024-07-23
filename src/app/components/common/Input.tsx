@@ -1,20 +1,48 @@
-import React from 'react';
+'use client';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  value: string;
-  type: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-  className: string;
+import { INPUT_STYLE } from '@/app/constants/styles';
+
+interface InputProps {
+  type: keyof typeof INPUT_STYLE;
+  textValue?: string;
+  inputType?: string;
+  name?: string;
+  placeholder?: string;
+  className?: string;
+  accept?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onEnterPress?: () => void;
 }
 
-function Input({ value, type, onChange, className, ...props }: InputProps) {
+function Input({
+  type,
+  name,
+  textValue,
+  placeholder,
+  className,
+  inputType,
+  accept,
+  onFocus,
+  onBlur,
+  onEnterPress,
+  onChange,
+}: InputProps) {
+  const buttonStyles = INPUT_STYLE[type](className || '');
+
   return (
     <input
-      value={value}
-      type={type}
+      type={inputType}
+      value={textValue}
+      placeholder={placeholder}
+      name={name}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onKeyDown={(e) => e.key === 'Enter' && onEnterPress && onEnterPress()}
       onChange={onChange}
-      className={className}
-      {...props}
+      className={buttonStyles}
+      accept={accept}
     />
   );
 }
