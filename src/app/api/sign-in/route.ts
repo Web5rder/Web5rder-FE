@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
 import { postLogin } from '@/app/service/postRequest';
+import { NextResponse } from 'next/server';
 
 // 클라이언트로부터 로그인 요청을 처리하는 함수
-export default async function POST(request: Request) {
+export async function POST(request: Request) {
   // 요청 본문을 JSON으로 파싱
   const content = await request.json();
   try {
