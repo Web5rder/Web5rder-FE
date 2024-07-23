@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
 import { postSignUp } from '@/app/service/postRequest';
 
-/* eslint-disable import/prefer-default-export */
 // 단일 export만 존재할 때 default 없이 쓰기 위해
-export async function POST(req: Request): Promise<NextResponse> {
+export default async function POST(req: Request): Promise<NextResponse> {
   try {
     const body = await req.json();
     const response = await postSignUp(body);

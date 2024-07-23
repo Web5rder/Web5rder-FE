@@ -19,6 +19,7 @@ export default function MainContainer() {
     search: '',
   });
 
+  const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
 
   const handleInputChange = (
@@ -35,13 +36,14 @@ export default function MainContainer() {
   const handleSearch = async () => {
     try {
       const search = encodeURIComponent(inputState.search);
+      console.log(`Search query: ${search}`);
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER}/api/quotation?name_prefix=${search}&limit=100&cached_time=3000`,
+        `/api/quotation?name_prefix=${search}&limit=100&cached_time=300`,
         {
           method: 'GET',
           headers: {
-            'Content-Type': 'application/json',
             'access-token': token,
+            'Content-Type': 'application/json',
           },
         },
       );
@@ -49,7 +51,8 @@ export default function MainContainer() {
         throw new Error(`${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      console.log(`Search results: ${JSON.stringify(data.result)}`);
+      setSearchResults(data.result);
     } catch (error) {
       console.error(error);
     }
@@ -124,22 +127,7 @@ export default function MainContainer() {
         {/* 목록창 */}
         <div className="bg-white px-3 h-80 flex-col border-2 whitespace-nowrap overflow-scroll">
           {/* 개별 목록 */}
-          {[
-            { category: '냉장', code: 'SAM-572', name: '하와이안피자' },
-            { category: '냉동', code: 'SAM-573', name: '민트초코' },
-            { category: '냉동', code: 'SAM-574', name: '데자와' },
-            { category: '냉동', code: 'SAM-575', name: '맥콜' },
-            { category: '냉동', code: 'SAM-576', name: '솔의눈' },
-            { category: '냉동', code: 'SAM-577', name: '닥터페퍼' },
-            { category: '냉동', code: 'SAM-578', name: '마라탕' },
-            { category: '냉동', code: 'SAM-579', name: '탕후루' },
-            { category: '냉장', code: 'SAM-580', name: '두바이 초콜릿' },
-            { category: '냉동', code: 'SAM-581', name: '요아정' },
-            { category: '냉동', code: 'SAM-582', name: '아망추' },
-            { category: '냉동', code: 'SAM-583', name: '크루키' },
-            { category: '냉장', code: 'SAM-584', name: '점보라면' },
-            { category: '냉장', code: 'SAM-585', name: '짬뽕' },
-          ].map((item) => (
+          {searchResults.map((item) => (
             <ProductItem
               key={item.code}
               category={item.category}
