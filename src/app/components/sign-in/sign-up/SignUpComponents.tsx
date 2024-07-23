@@ -75,7 +75,7 @@ function SignUpComponents() {
     ) {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_SERVER}/api/v1/users`,
+          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/sign-in/sign-up`,
           {
             method: 'POST',
             headers: {

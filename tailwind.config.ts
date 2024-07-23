@@ -8,13 +8,14 @@ const config: Config = {
   ],
   theme: {
     screens: {
-      sm: '360px',
-      md: '744px',
-      lg: '834px',
+      sm: '576px',
+      md: '768px',
+      lg: '882px',
     },
     extend: {
       colors: {
         gray: {
+          0: '#F4F4F4',
           1: '#E0E0E0',
           2: '#B8B8B8',
           3: '#929292',
