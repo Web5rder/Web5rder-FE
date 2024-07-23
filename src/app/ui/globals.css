@@ -42,7 +42,6 @@ body {
   background-color: rgb(26, 163, 8);
 }
 
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;

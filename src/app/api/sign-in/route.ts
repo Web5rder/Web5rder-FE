@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
 import { postLogin } from '@/app/service/postRequest';
+import { NextResponse } from 'next/server';
 
 // 클라이언트로부터 로그인 요청을 처리하는 함수
 export async function POST(request: Request) {
