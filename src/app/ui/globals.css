@@ -15,6 +15,10 @@
   }
 }
 
+body {
+  font-family: 'Pretendard', sans-serif;
+}
+
 /* 스크롤바 숨기기 */
 .hide-scrollbar {
   -ms-overflow-style: none; /* IE and Edge */
@@ -23,6 +27,19 @@
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera*/
+}
+
+.swiper {
+  width: 100%;
+}
+
+.swiper-wrapper {
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.swiper .swiper-pagination-bullet {
+  background-color: rgb(26, 163, 8);
 }
 
 @layer utilities {

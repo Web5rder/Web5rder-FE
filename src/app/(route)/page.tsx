@@ -1,10 +1,16 @@
+import Footer from '../components/common/layout/Footer';
+import Header from '../components/common/layout/Header';
+import MainContainer from '../components/main/container/MainContainer';
+
 export default function MainPage() {
   return (
     <section>
-      <div className="flex-center w-full h-screen flex-col px-20">
-        <div className="h-[200px] w-[900px] text-[100px] text-center text-white whitespace-nowrap">
-          정말 맛있는 푸드
+      <div className="relative flex w-full min-h-screen flex-col">
+        <div className="mb-[200px]">
+          <Header />
+          <MainContainer />
         </div>
+        <Footer />
       </div>
     </section>
   );
