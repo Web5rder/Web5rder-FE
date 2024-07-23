@@ -54,12 +54,12 @@ export default function ProductItem({
       <p>{name}</p>
       <div className="flex gap-8">
         <Input
-          className="w-14 text-right"
+          className=""
           placeholder="1"
-          value={inputState.count}
-          type="number"
+          textValue={inputState.count}
+          type="count"
           onChange={(e) => handleInputChange(e, 'count')}
-          disabled={isAdded}
+          isDisabled={isAdded}
         />
         <p>kg</p>
         <button

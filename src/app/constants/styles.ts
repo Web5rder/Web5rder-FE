@@ -6,6 +6,8 @@ export const BUTTON_STYLE = {
 
 export const INPUT_STYLE = {
   search: (className: string) =>
-    `w-96 h-8 bg-neutral-800 rounded-3xl px-8 outline-none ${className}`,
+    `md:w-96 px-2 py-1 text-xl font-black placeholder:text-xl placeholder:font-black focus:outline-none ${className}`,
+  // 견적서 개수 입력
+  count: (className: string) => `w-14 text-right ${className}`,
   default: (className: string) => `w-full h-full ${className}`,
 } as const;
