@@ -4,7 +4,6 @@ import Input from '../../common/Input';
 function SignInInput({
   label,
   placeholder,
-  type = 'text',
   value = '',
   onChange = () => {},
   error,
@@ -14,10 +13,10 @@ function SignInInput({
     <div className="w-full flex-col pb-2">
       <p className="text-gray-9 font-semibold pl-3 pb-[6px]">{label}</p>
       <Input
-        value={value}
-        className={`w-full p-3 items-center rounded-xl border-2 ${error ? 'border-red-1' : 'border-gray-3'} bg-white text-gray-7 font-bold placeholder:text-gray-2 placeholder:font-normal`}
+        className={error ? 'border-red-1' : 'border-gray-3'}
+        textValue={value}
         placeholder={placeholder}
-        type={type}
+        type="signin"
         onChange={onChange}
       />
       {error && (
