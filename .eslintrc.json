@@ -26,6 +26,12 @@
     "@typescript-eslint/naming-convention": "off",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "@typescript-eslint/no-unused-vars": [
       "error",
       { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
