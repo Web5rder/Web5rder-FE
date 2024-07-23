@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { CONTRIBUTORS, FOOTER_TEXT } from '@/app/constants/layout';
+import { CONTRIBUTORS, FOOTER_TEXT } from '@/app/constants/common';
 
 function Footer() {
   return (
