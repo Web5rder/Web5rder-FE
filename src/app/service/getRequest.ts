@@ -1,11 +1,18 @@
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER;
 
+export interface searchProductsProps {
+  namePrefix: string;
+  limit: string;
+  cachedTime: string;
+  token: string;
+}
+
 export const getSearchProducts = async ({
   namePrefix,
   limit,
   cachedTime,
   token,
-}) => {
+}: searchProductsProps) => {
   try {
     const url = `${SERVER_URL}/api/v1/products/search/?name_prefix=${namePrefix}&limit=${limit}&cached_time=${cachedTime}`;
     console.log(`getRequest 요청 URL: ${url}`);

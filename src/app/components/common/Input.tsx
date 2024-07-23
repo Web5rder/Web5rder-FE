@@ -14,6 +14,7 @@ interface InputProps {
   onFocus?: () => void;
   onBlur?: () => void;
   onEnterPress?: () => void;
+  isDisabled?: boolean;
 }
 
 function Input({
@@ -28,6 +29,7 @@ function Input({
   onBlur,
   onEnterPress,
   onChange,
+  isDisabled,
 }: InputProps) {
   const buttonStyles = INPUT_STYLE[type](className || '');
 
@@ -43,6 +45,7 @@ function Input({
       onChange={onChange}
       className={buttonStyles}
       accept={accept}
+      disabled={isDisabled}
     />
   );
 }
