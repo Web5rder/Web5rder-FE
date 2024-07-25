@@ -13,11 +13,11 @@ const QuotationTable = ({ quotationInfo }: QuotationTableProps) => {
         <div className="w-[130px] text-center">{MODAL_TEXT[2]}</div>
         <div className="w-[90px] text-center">{MODAL_TEXT[3]}</div>
       </div>
-      <div className="w-[602px] h-[0px] border-2 border-black"></div>
+      <div className="w-[602px] h-[0px] border-2 border-black" />
       <div className="flex flex-col w-[612px] h-[37px] gap-y-2 mt-2">
         {quotationInfo.products.map((itemData, index) => {
           return (
-            <div>
+            <div key={itemData.product}>
               <div className="w-[598px] h-9 pl-1 justify-start items-center gap-x-[22px] inline-flex ">
                 <div className="w-[34px] text-center">{index}</div>
                 <div className="w-[122px] text-center">
@@ -27,7 +27,7 @@ const QuotationTable = ({ quotationInfo }: QuotationTableProps) => {
                 <div className="w-[82px] text-center">{itemData.quantity}</div>
                 <div className="w-[117px] text-center">{itemData.price}</div>
               </div>
-              <div className="w-[612px] h-[0px] border border-black"></div>
+              <div className="w-[612px] h-[0px] border border-black" />
             </div>
           );
         })}
