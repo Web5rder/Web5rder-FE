@@ -28,6 +28,13 @@
     "react/jsx-props-no-spreading": "off",
     "import/prefer-default-export": "off",
     "import/order": "off",
+    "react/function-component-definition": [
+      "off",
+      {
+        "namedComponents": "function-declaration",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
     "prettier/prettier": [
       "error",
       {
@@ -35,8 +42,8 @@
       }
     ],
     "@typescript-eslint/no-unused-vars": [
-      "error",
-      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+      "warn",
+      { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }
     ]
   }
 }
