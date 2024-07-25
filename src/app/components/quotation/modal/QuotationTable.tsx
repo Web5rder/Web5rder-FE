@@ -1,6 +1,10 @@
 import { MODAL_TEXT } from '@/app/constants/quotation';
 
-const QuotationTable = () => {
+interface QuotationTableProps {
+  quotationInfo: QuotationInfoTypes;
+}
+
+const QuotationTable = ({ quotationInfo }: QuotationTableProps) => {
   return (
     <div className="w-[600px] h-[410px] flex-col">
       <div className="flex gap-x-3 text-xl font-semibold h-8 pl-10 mt-[76px]">
@@ -11,7 +15,7 @@ const QuotationTable = () => {
       </div>
       <div className="w-[602px] h-[0px] border-2 border-black"></div>
       <div className="flex flex-col w-[612px] h-[37px] gap-y-2 mt-2">
-        {mookData.map((itemData, index) => {
+        {quotationInfo.products.map((itemData, index) => {
           return (
             <div>
               <div className="w-[598px] h-9 pl-1 justify-start items-center gap-x-[22px] inline-flex ">
@@ -33,55 +37,3 @@ const QuotationTable = () => {
 };
 
 export default QuotationTable;
-
-const mookData = [
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-  {
-    product: '초당옥수수',
-    quantity: 12,
-    price: 25000,
-    created_at: '2024. 07. 06',
-    updated_at: '2024. 07. 06',
-  },
-];
