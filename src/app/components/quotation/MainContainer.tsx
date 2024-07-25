@@ -3,9 +3,9 @@
 import { useEffect, useState } from 'react';
 import Input from '../common/Input';
 import ProductItem, { ProductItemProps } from './ProductItem';
-import Icons from '../Icons';
 import { SearchIcon } from '@/app/ui/iconPath';
 import { PRODUCT_TEXT, QUOTATION_TEXT } from '../../constants/quotation';
+import Icons from '../common/Icons';
 
 export default function MainContainer() {
   const [token, setToken] = useState('');
