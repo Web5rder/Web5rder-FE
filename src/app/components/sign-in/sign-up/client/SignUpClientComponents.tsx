@@ -2,7 +2,12 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SignInData, { clientMapping } from '@/app/constants/sign-in';
+import {
+  clientMapping,
+  SIGNIN_PLACEHOLDER,
+  SIGNIN_TEXT,
+  SIGNUP_BUTTON,
+} from '@/app/constants/sign-in';
 import SignInInput from '../../common/SignInInput';
 import SignInButton from '../../common/SignInButton';
 import { ValidationClientType } from '@/app/_types/sign-in';
@@ -68,8 +73,8 @@ function SignUpClientComponents() {
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
       <SignInInput
-        label={SignInData.SignInConstants.REGION}
-        placeholder={SignInData.SignInPlaceholder.REGION}
+        label={SIGNIN_TEXT[6]}
+        placeholder={SIGNIN_PLACEHOLDER[3]}
         type="text"
         value={formState.region}
         onChange={(e) => handleInputChange(e, 'region')}
@@ -77,8 +82,8 @@ function SignUpClientComponents() {
         errorMessage={formState.regionError}
       />
       <SignInInput
-        label={SignInData.SignInConstants.NAME}
-        placeholder={SignInData.SignInPlaceholder.NAME}
+        label={SIGNIN_TEXT[7]}
+        placeholder={SIGNIN_PLACEHOLDER[4]}
         type="text"
         value={formState.name}
         onChange={(e) => handleInputChange(e, 'name')}
@@ -86,8 +91,8 @@ function SignUpClientComponents() {
         errorMessage={formState.nameError}
       />
       <SignInInput
-        label={SignInData.SignInConstants.ADDRESS}
-        placeholder={SignInData.SignInPlaceholder.ADDRESS}
+        label={SIGNIN_TEXT[8]}
+        placeholder={SIGNIN_PLACEHOLDER[5]}
         type="text"
         value={formState.address}
         onChange={(e) => handleInputChange(e, 'address')}
@@ -95,7 +100,11 @@ function SignUpClientComponents() {
         errorMessage={formState.addressError}
       />
 
-      <SignInButton type="button" text="생성" onClick={handleBtnClick} />
+      <SignInButton
+        type="button"
+        text={SIGNUP_BUTTON[1]}
+        onClick={handleBtnClick}
+      />
     </div>
   );
 }

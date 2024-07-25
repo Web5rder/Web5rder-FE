@@ -4,7 +4,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import SignInButton from '../common/SignInButton';
 import SignInInput from '../common/SignInInput';
-import SignInData, { emailRegex, passwordRegex } from '@/app/constants/sign-in';
+import {
+  emailRegex,
+  passwordRegex,
+  SIGNIN_PLACEHOLDER,
+  SIGNIN_TEXT,
+  SIGNUP_BUTTON,
+  SIGNUP_ERROR,
+} from '@/app/constants/sign-in';
 import { ValidationType } from '@/app/_types/sign-in';
 
 function SignUpComponents() {
@@ -27,20 +34,20 @@ function SignUpComponents() {
     switch (type) {
       case 'email':
         if (!emailRegex.test(value)) {
-          return { isValid: false, error: SignInData.SignUpError.EMAIL };
+          return { isValid: false, error: SIGNUP_ERROR[0] };
         }
         return { isValid: true, error: '' };
       case 'pwd':
         if (!passwordRegex.test(value)) {
           return {
             isValid: false,
-            error: SignInData.SignUpError.PWD,
+            error: SIGNUP_ERROR[1],
           };
         }
         return { isValid: true, error: '' };
       case 'pwdConfirm':
         if (value !== password) {
-          return { isValid: false, error: SignInData.SignUpError.PWD_CONFIRM };
+          return { isValid: false, error: SIGNUP_ERROR[2] };
         }
         return { isValid: true, error: '' };
 
@@ -110,8 +117,8 @@ function SignUpComponents() {
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
       <SignInInput
-        label={SignInData.SignInConstants.EMAIL}
-        placeholder={SignInData.SignInPlaceholder.EMAIL}
+        label={SIGNIN_TEXT[0]}
+        placeholder={SIGNIN_PLACEHOLDER[0]}
         type="email"
         value={formState.email}
         onChange={(e) => handleInputChange(e, 'email')}
@@ -119,8 +126,8 @@ function SignUpComponents() {
         errorMessage={formState.emailError}
       />
       <SignInInput
-        label={SignInData.SignInConstants.PWD}
-        placeholder={SignInData.SignInPlaceholder.PWD}
+        label={SIGNIN_TEXT[2]}
+        placeholder={SIGNIN_PLACEHOLDER[1]}
         type="password"
         value={formState.pwd}
         onChange={(e) => handleInputChange(e, 'pwd')}
@@ -128,8 +135,8 @@ function SignUpComponents() {
         errorMessage={formState.pwdError}
       />
       <SignInInput
-        label={SignInData.SignInConstants.PWD_CONFIRM}
-        placeholder={SignInData.SignInPlaceholder.PWD_CONFIRM}
+        label={SIGNIN_TEXT[3]}
+        placeholder={SIGNIN_PLACEHOLDER[2]}
         type="password"
         value={formState.pwdConfirm}
         onChange={(e) => handleInputChange(e, 'pwdConfirm')}
@@ -137,7 +144,11 @@ function SignUpComponents() {
         errorMessage={formState.pwdConfirmError}
       />
 
-      <SignInButton type="button" text="다음" onClick={handleBtnClick} />
+      <SignInButton
+        type="button"
+        text={SIGNUP_BUTTON[0]}
+        onClick={handleBtnClick}
+      />
     </div>
   );
 }
