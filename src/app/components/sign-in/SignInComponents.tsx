@@ -34,6 +34,12 @@ function SignInComponents() {
 
   const handleBtnClick = async () => {
     const { email, pwd } = signInState;
+
+    if (!email || !pwd) {
+      alert('이메일과 비밀번호를 입력해주세요.');
+      return;
+    }
+
     try {
       const responseData = await postLogin({ email, pwd });
       if (responseData.isSuccess) {
