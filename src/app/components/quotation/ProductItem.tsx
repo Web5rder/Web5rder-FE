@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Input from '../common/Input';
+import { QUOTATION_TEXT } from '@/app/constants/quotation';
 
 export interface ProductItemProps {
   category: string;
@@ -59,7 +60,6 @@ export default function ProductItem({
           textValue={inputState.count}
           type="count"
           onChange={(e) => handleInputChange(e, 'count')}
-          isDisabled={isAdded}
         />
         <p>kg</p>
         <button
@@ -67,7 +67,7 @@ export default function ProductItem({
           className={`${isAdded ? 'bg-red-1' : 'bg-primary-4'} text-white px-1`}
           onClick={handleButtonClick}
         >
-          {isAdded ? '삭제' : '담기'}
+          {isAdded ? QUOTATION_TEXT[5] : QUOTATION_TEXT[6]}
         </button>
       </div>
     </div>

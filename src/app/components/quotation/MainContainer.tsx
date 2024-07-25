@@ -5,6 +5,7 @@ import Input from '../common/Input';
 import ProductItem, { ProductItemProps } from './ProductItem';
 import Icons from '../Icons';
 import { SearchIcon } from '@/app/ui/iconPath';
+import { PRODUCT_TEXT, QUOTATION_TEXT } from '../../constants/quotation';
 
 export default function MainContainer() {
   const [token, setToken] = useState('');
@@ -61,13 +62,6 @@ export default function MainContainer() {
 
   const handleAddItem = (item: ProductItemProps) => {
     setAddedItems((prevItems) => {
-      // const existingItem = prevItems.find(
-      //   (prevItem) => prevItem.code === item.code,
-      // );
-      // // if (existingItem) {
-      // //   alert('이미 추가한 상품입니다.');
-      // //   return prevItems;
-      // // }
       return [...prevItems, { ...item, count: item.count || '1' }];
     });
   };
@@ -86,35 +80,33 @@ export default function MainContainer() {
           type="button"
           onClick={() => {}}
         >
-          최근주문목록
+          {QUOTATION_TEXT[0]}
         </button>
         <div className="flex-center gap-2 bg-gray-0 border-2 border-gray-2 pr-1 focus-within:border-gray-7 focus-within:border-2">
           <Input
             textValue={inputState.search}
             type="search"
             onChange={(e) => handleInputChange(e, 'search')}
-            placeholder="검색어를 입력해주세요"
+            placeholder={QUOTATION_TEXT[1]}
             onEnterPress={handleSearch}
           />
           <Icons onClick={handleSearch} name={SearchIcon} />
         </div>
-        <p className="self-center font-bold">
-          상품 검색 후 개수를 입력한 뒤에 &apos;담기&apos;를 눌러주세요.
-        </p>
+        <p className="self-center font-bold">{QUOTATION_TEXT[2]}</p>
       </div>
 
       <div className="md:w-full bg-primary-4 mt-4 w-[540px]">
         {/* 분류 품번 품명 단위 개수 */}
         <div className="flex justify-between text-white text-xl font-black pl-4 pr-9 py-1">
           <div className="flex gap-8">
-            <p>분류</p>
-            <p>품번</p>
+            <p>{PRODUCT_TEXT[0]}</p>
+            <p>{PRODUCT_TEXT[1]}</p>
           </div>
-          <p className="pl-6">품명</p>
+          <p className="pl-6">{PRODUCT_TEXT[2]}</p>
           <div className="flex gap-8">
-            <p>개수</p>
-            <p>단위</p>
-            <p>담기</p>
+            <p>{PRODUCT_TEXT[3]}</p>
+            <p>{PRODUCT_TEXT[4]}</p>
+            <p>{PRODUCT_TEXT[5]}</p>
           </div>
         </div>
 
@@ -155,7 +147,7 @@ export default function MainContainer() {
       <div className="md:w-full bg-primary-4 mt-4 w-[540px]">
         {/* 분류 품번 품명 단위 개수 */}
         <div className="flex text-white text-xl font-black px-4 py-1">
-          추가한 상품
+          {QUOTATION_TEXT[3]}
         </div>
 
         <div className="bg-white px-3 h-48 flex-col border-2 whitespace-nowrap overflow-scroll">
@@ -178,7 +170,7 @@ export default function MainContainer() {
           type="button"
           className="bg-primary-4 text-white text-2xl px-3 py-1 font-black"
         >
-          주문
+          {QUOTATION_TEXT[4]}
         </button>
       </div>
     </div>
