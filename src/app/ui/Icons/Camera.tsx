@@ -1,4 +1,4 @@
-const CameraIcon = () => {
+export default function CameraIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +23,4 @@ const CameraIcon = () => {
       />
     </svg>
   );
-};
-
-export default CameraIcon;
+}
