@@ -6,6 +6,7 @@ import ProductItem, { ProductItemProps } from './ProductItem';
 import { SearchIcon } from '@/app/ui/iconPath';
 import { PRODUCT_TEXT, QUOTATION_TEXT } from '../../constants/quotation';
 import Icons from '../common/Icons';
+import { Dialog } from '../common/Dialog';
 
 export default function MainContainer() {
   const [token, setToken] = useState('');
@@ -72,8 +73,11 @@ export default function MainContainer() {
     );
   };
 
+  // 다이얼로그
+  const [dialog, setDialog] = useState(false);
+
   return (
-    <div className="mt-14 px-4 py-2 w-full">
+    <div className="mt-14 px-8 py-2 w-full">
       <div className="flex gap-4">
         <button
           className="bg-primary-4 text-lg font-black text-white px-2 whitespace-nowrap"
@@ -95,7 +99,7 @@ export default function MainContainer() {
         <p className="self-center font-bold">{QUOTATION_TEXT[2]}</p>
       </div>
 
-      <div className="md:w-full bg-primary-4 mt-4 w-[540px]">
+      <div className="md:w-full bg-primary-4 mt-4 w-[540px] ">
         {/* 분류 품번 품명 단위 개수 */}
         <div className="flex justify-between text-white text-xl font-black pl-4 pr-9 py-1">
           <div className="flex gap-8">
@@ -165,7 +169,17 @@ export default function MainContainer() {
         </div>
       </div>
 
-      <div className="w-full flex justify-end mt-4">
+      <div className="w-full flex justify-end gap-12 mt-4">
+        <button
+          onClick={() => {
+            setDialog(true);
+          }}
+          type="button"
+          className="bg-primary-4 text-white text-2xl px-3 py-1 font-black"
+        >
+          즐겨찾기 추가
+        </button>
+
         <button
           type="button"
           className="bg-primary-4 text-white text-2xl px-3 py-1 font-black"
@@ -173,6 +187,18 @@ export default function MainContainer() {
           {QUOTATION_TEXT[4]}
         </button>
       </div>
+      {dialog && (
+        <Dialog
+          isTwoButton
+          topText="북마크 이름을 적어주세요"
+          onSubBtnClick={() => {
+            setDialog(false);
+          }}
+          onBtnClick={() => {}}
+          hasInput
+          onChange={() => {}}
+        />
+      )}
     </div>
   );
 }

@@ -1,6 +1,8 @@
 export const BUTTON_STYLE = {
   reorder: (className: string) =>
     `w-32 h-12 bg-[#49AA19] rounded-2xl text-white shadow-lg ${className}`,
+  dialog: (className: string) =>
+    `flex-center p-2 gap-2 rounded-lg w-full whitespace-nowrap text-sm font-extrabold ${className}`,
   default: () => 'w-full h-full',
 } as const;
 
