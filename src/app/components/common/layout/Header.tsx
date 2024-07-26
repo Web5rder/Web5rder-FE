@@ -4,8 +4,8 @@ import { HEADER_TEXT } from '@/app/constants/common';
 
 function Header() {
   return (
-    <div className="relative w-full border-b-2">
-      <header className="relative w-full h-[74px] flex items-center px-20 drop-shadow-lg">
+    <div className="relative w-full border-b-2 pt-2">
+      <header className="relative w-full h-[74px] flex items-center px-20  drop-shadow-lg">
         <div className="absolute left-40">
           <Image src="/Images/logo.png" width={64} height={64} alt="logo" />
         </div>
