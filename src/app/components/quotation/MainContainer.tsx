@@ -19,8 +19,10 @@ export default function MainContainer() {
 
   const [inputState, setInputState] = useState({
     search: '',
+    bookmark: '',
   });
 
+  const [dialog, setDialog] = useState(false);
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
 
@@ -61,6 +63,29 @@ export default function MainContainer() {
     }
   };
 
+  const handleAddBookMark = async () => {
+    try {
+      const { bookmark } = inputState;
+      const body = {
+        client_id: 1, // 임시데이터
+        name: bookmark,
+        product_ids: addedItems.map((item) => item.code), // 임시데이터
+      };
+      const response = await fetch('/api/quotation/post-past-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ body }),
+      });
+
+      const responseData = await response.json();
+      console.log(responseData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleAddItem = (item: ProductItemProps) => {
     setAddedItems((prevItems) => {
       return [...prevItems, { ...item, count: item.count || '1' }];
@@ -72,9 +97,6 @@ export default function MainContainer() {
       prevItems.filter((item) => item.code !== code),
     );
   };
-
-  // 다이얼로그
-  const [dialog, setDialog] = useState(false);
 
   const getUsers = async (mytoken: string) => {
     try {
@@ -218,9 +240,9 @@ export default function MainContainer() {
           onSubBtnClick={() => {
             setDialog(false);
           }}
-          onBtnClick={() => {}}
+          onBtnClick={handleAddBookMark}
           hasInput
-          onChange={() => {}}
+          onChange={(e) => handleInputChange(e, 'bookmark')}
         />
       )}
     </div>

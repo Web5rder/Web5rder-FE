@@ -9,7 +9,7 @@ interface DialogProps {
   onSubBtnClick?: () => void;
 
   hasInput?: boolean;
-  onChange?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export function Dialog({
