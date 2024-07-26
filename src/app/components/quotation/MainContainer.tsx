@@ -22,7 +22,11 @@ export default function MainContainer() {
     bookmark: '',
   });
 
-  const [dialog, setDialog] = useState(false);
+  const [state, setState] = useState({
+    dialog: false,
+    showBookmark: false,
+  });
+
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
 
@@ -125,13 +129,32 @@ export default function MainContainer() {
   return (
     <div className="mt-14 px-8 py-2 w-full">
       <div className="flex gap-4">
-        <button
-          className="bg-primary-4 text-lg font-black text-white px-2 whitespace-nowrap"
-          type="button"
-          onClick={() => {}}
-        >
-          {QUOTATION_TEXT[0]}
-        </button>
+        <div>
+          <button
+            className="bg-primary-4 text-lg font-black text-white px-2 py-1 whitespace-nowrap"
+            type="button"
+            onClick={() => {
+              setState((prev) => ({
+                ...prev,
+                showBookmark: !prev.showBookmark,
+              }));
+            }}
+          >
+            {QUOTATION_TEXT[0]}
+          </button>
+          {state.showBookmark && (
+            <div className="absolute w-auto bg-white border-t-[1px] border-2 border-gray-2">
+              {['북마크', '북마크2', '북마크북마크북마크'].map((i) => (
+                <div
+                  key={i}
+                  className="px-4 py-1 border-b border-gray-2 cursor-pointer last:border-none"
+                >
+                  {i}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
         <div className="flex-center gap-2 bg-gray-0 border-2 border-gray-2 pr-1 focus-within:border-gray-7 focus-within:border-2">
           <Input
             textValue={inputState.search}
@@ -218,7 +241,7 @@ export default function MainContainer() {
       <div className="w-full flex justify-end gap-12 mt-4">
         <button
           onClick={() => {
-            setDialog(true);
+            setState((prev) => ({ ...prev, dialog: true }));
           }}
           type="button"
           className="bg-primary-4 text-white text-2xl px-3 py-1 font-black"
@@ -233,12 +256,12 @@ export default function MainContainer() {
           {QUOTATION_TEXT[4]}
         </button>
       </div>
-      {dialog && (
+      {state.dialog && (
         <Dialog
           isTwoButton
           topText="북마크 이름을 적어주세요"
           onSubBtnClick={() => {
-            setDialog(false);
+            setState((prev) => ({ ...prev, dialog: false }));
           }}
           onBtnClick={handleAddBookMark}
           hasInput
