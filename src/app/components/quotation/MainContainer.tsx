@@ -40,7 +40,7 @@ export default function MainContainer() {
       const search = encodeURIComponent(inputState.search);
       console.log(`Search query: ${search}`);
       const response = await fetch(
-        `/api/quotation?name_prefix=${search}&limit=100&cached_time=300`,
+        `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
         {
           method: 'GET',
           headers: {
@@ -76,6 +76,30 @@ export default function MainContainer() {
   // 다이얼로그
   const [dialog, setDialog] = useState(false);
 
+  const getUsers = async (mytoken: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/quotation/users`,
+        {
+          method: 'GET',
+          headers: {
+            'access-token': mytoken,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('클라이언트 에러', error);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      getUsers(token);
+    }
+  }, [token]);
   return (
     <div className="mt-14 px-8 py-2 w-full">
       <div className="flex gap-4">

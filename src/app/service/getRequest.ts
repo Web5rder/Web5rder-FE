@@ -7,6 +7,31 @@ export interface searchProductsProps {
   token: string;
 }
 
+// 내 정보 조회
+export const getUsers = async (token: string) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/users/me`;
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'access-token': token,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`getRequest 데이터 fetch 실패: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error', error);
+    throw error;
+  }
+};
+
+// 상품 검색
 export const getSearchProducts = async ({
   namePrefix,
   limit,
