@@ -13,6 +13,7 @@ import {
   SIGNUP_ERROR,
 } from '@/app/constants/sign-in';
 import { ValidationType } from '@/app/_types/sign-in';
+import { callPost } from '@/app/utils/callApi';
 
 function SignUpComponents() {
   const router = useRouter();
@@ -81,19 +82,30 @@ function SignUpComponents() {
       pwdConfirmValidation.isValid
     ) {
       try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/sign-in/sign-up`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password: pwd }),
-          },
-        );
+        // const response = await fetch(
+        //   `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/sign-in/sign-up`,
+        //   {
+        //     method: 'POST',
+        //     headers: {
+        //       'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ email, password: pwd }),
+        //   },
+        // );
 
-        const responseData = await response.json();
-        if (response.ok && responseData.isSuccess) {
+        // const responseData = await response.json();
+        const responseData = await callPost('/api/sign-in/sign-up', {
+          email,
+          password: pwd,
+        });
+        console.log(responseData);
+
+        if (responseData.code === 4003) {
+          alert('이미 존재하는 사용자입니다.');
+          return;
+        }
+
+        if (responseData.isSuccess) {
           router.push('/sign-in/sign-up/client');
         } else {
           setFormState((prevState) => ({
@@ -102,7 +114,7 @@ function SignUpComponents() {
           }));
         }
       } catch (error) {
-        alert('오류가 발생했습니다.');
+        console.error('오류가 발생했습니다.');
       }
     } else {
       setFormState((prevState) => ({
