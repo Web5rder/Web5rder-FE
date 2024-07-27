@@ -7,6 +7,7 @@ import { SearchIcon } from '@/app/ui/iconPath';
 import { PRODUCT_TEXT, QUOTATION_TEXT } from '../../constants/quotation';
 import Icons from '../common/Icons';
 import { Dialog } from '../common/Dialog';
+import { callGet, callPost } from '@/app/utils/callApi';
 
 export default function MainContainer() {
   const [token, setToken] = useState('');
@@ -45,20 +46,25 @@ export default function MainContainer() {
     try {
       const search = encodeURIComponent(inputState.search);
       console.log(`Search query: ${search}`);
-      const response = await fetch(
-        `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
-        {
-          method: 'GET',
-          headers: {
-            'access-token': token,
-            'Content-Type': 'application/json',
-          },
-        },
+      // const response = await fetch(
+      //   `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
+      //   {
+      //     method: 'GET',
+      //     headers: {
+      //       'access-token': token,
+      //       'Content-Type': 'application/json',
+      //     },
+      //   },
+      // );
+      // if (!response.ok) {
+      //   throw new Error(`${response.status}`);
+      // }
+      // const data = await response.json();
+
+      const data = await callGet(
+        `/api/quotation/search`,
+        `name_prefix=${search}&limit=100&cached_time=300`,
       );
-      if (!response.ok) {
-        throw new Error(`${response.status}`);
-      }
-      const data = await response.json();
       console.log(searchResults);
       console.log(`Search results: ${JSON.stringify(data.result)}`);
       setSearchResults(data.result);
@@ -75,15 +81,19 @@ export default function MainContainer() {
         name: bookmark,
         product_ids: addedItems.map((item) => item.code), // 임시데이터
       };
-      const response = await fetch('/api/quotation/post-past-order', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ body }),
-      });
+      // const response = await fetch('/api/quotation/post-past-order', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ body }),
+      // });
 
-      const responseData = await response.json();
+      // const responseData = await response.json();
+      const responseData = await callPost(
+        '/api/quotation/post-past-order',
+        body,
+      );
       console.log(responseData);
     } catch (error) {
       console.error(error);
