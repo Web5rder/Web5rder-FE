@@ -260,7 +260,10 @@ export default function MainContainer() {
           hasInput
           value={state.bookmarkName}
           onChange={(e) =>
-            setState((prev) => ({ ...prev, bookmarkName: e.target.value }))
+            setState((prev) => ({
+              ...prev,
+              bookmarkName: e.target.value.slice(0, 10), // 10자 제한
+            }))
           }
         />
       )}

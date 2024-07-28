@@ -39,12 +39,15 @@ export function Dialog({
 
         {/* 인풋 */}
         {hasInput && (
-          <Input
-            className="w-full border-2 border-gray-1 px-2 py-4"
-            type="default"
-            textValue={value}
-            onChange={onChange || (() => {})}
-          />
+          <div className="relative w-full">
+            <Input
+              className="border-2 border-gray-1 px-2 py-4"
+              type="default"
+              textValue={value}
+              onChange={onChange || (() => {})}
+            />
+            <p className="text-xs text-end">{value?.length} / 10</p>
+          </div>
         )}
 
         {/* 버튼 */}
