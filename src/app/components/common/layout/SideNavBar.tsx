@@ -9,7 +9,7 @@ import Icons from '../Icons';
 
 export default function SideNavBar() {
   return (
-    <div className="bg-white w-48 whitespace-nowrap pt-9 flex flex-col items-center shadow-xl">
+    <div className="bg-white w-48 whitespace-nowrap pt-9 flex flex-col items-center ">
       <Link href={'/'}>
         <Image src={'/Images/JMF2.png'} alt={'로고'} width={100} height={75} />
       </Link>
