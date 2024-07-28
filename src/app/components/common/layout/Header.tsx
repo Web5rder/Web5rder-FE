@@ -11,7 +11,7 @@ function Header() {
         </div>
         <div className="flex gap-x-10 items-center justify-center w-full font-normal text-2xl ml-12 mr-40 ">
           <Link href="/">{HEADER_TEXT[0]}</Link>
-          <Link href="/">{HEADER_TEXT[1]}</Link>
+          <Link href="/quotation">{HEADER_TEXT[1]}</Link>
           <Link href="/">{HEADER_TEXT[2]}</Link>
           <Link href="/">{HEADER_TEXT[3]}</Link>
         </div>
