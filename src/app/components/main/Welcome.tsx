@@ -1,6 +1,6 @@
+import { WELCOME_TEXT } from '@/app/constants/main';
 import Image from 'next/image';
 import Link from 'next/link';
-import { WELCOME_TEXT } from '@/app/constants/main';
 
 function Welcome() {
   return (
@@ -12,7 +12,7 @@ function Welcome() {
           <p>{WELCOME_TEXT[2]}</p>
           <p className="font-semibold">{WELCOME_TEXT[3]}</p>
         </div>
-        <Image src="/Images/wallpaper.jpg" alt="배경이미지" fill />
+        <Image src="/Images/mainImage.jpg" alt="배경" fill />
       </div>
       <Link
         href="/login"
