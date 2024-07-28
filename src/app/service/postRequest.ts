@@ -55,19 +55,8 @@ export const postLogin = async (signInContents: any) => {
 // user 가입
 export const postSignUp = async (signUpContents: any) => {
   try {
-    const response = await fetch(`${SERVER_URL}/api/v1/users`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(signUpContents),
-    });
-
-    if (!response.ok) {
-      throw new Error('가입 요청 실패');
-    }
-
-    return await response.json();
+    const url = `${SERVER_URL}/api/v1/users`;
+    return await postRequest(url, signUpContents);
   } catch (error) {
     console.error('에러 : ', error);
     throw new Error('postSignUp 에러 발생');
@@ -77,15 +66,8 @@ export const postSignUp = async (signUpContents: any) => {
 // 주문 내역 생성
 export const postPastOrder = async (pastOrderContents: any) => {
   try {
-    const response = await fetch(`${SERVER_URL}/api/v1/past-order`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(pastOrderContents),
-    });
-
-    return await response.json();
+    const url = `${SERVER_URL}/api/v1/past-order`;
+    return await postRequest(url, pastOrderContents);
   } catch (error) {
     console.error('에러 :', error);
     throw new Error('postPastOrder 에러 발생');

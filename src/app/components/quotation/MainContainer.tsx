@@ -113,15 +113,7 @@ export default function MainContainer() {
         name: state.bookmarkName,
         product_ids: addedItems.map((item) => item.id),
       };
-      // const response = await fetch('/api/quotation/post-past-order', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify({ body }),
-      // });
 
-      // const responseData = await response.json();
       console.log('즐겨찾기 생성', body);
       const responseData = await callPost(
         '/api/quotation/post-past-order',
