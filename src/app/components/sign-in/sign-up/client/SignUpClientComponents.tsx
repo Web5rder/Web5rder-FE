@@ -16,10 +16,8 @@ function SignUpClientComponents() {
   const router = useRouter();
 
   const [formState, setFormState] = useState({
-    region: '',
     name: '',
     address: '',
-    regionError: '',
     nameError: '',
     addressError: '',
     isBtnActive: false,
@@ -46,14 +44,12 @@ function SignUpClientComponents() {
   };
 
   const handleBtnClick = () => {
-    const regionError = validateField('region', formState.region);
     const nameError = validateField('name', formState.name);
     const addressError = validateField('address', formState.address);
 
-    if (regionError || nameError || addressError) {
+    if (nameError || addressError) {
       setFormState((prevState) => ({
         ...prevState,
-        regionError,
         nameError,
         addressError,
         isBtnActive: false,
@@ -61,7 +57,6 @@ function SignUpClientComponents() {
     } else {
       setFormState((prevState) => ({
         ...prevState,
-        regionError: '',
         nameError: '',
         addressError: '',
         isBtnActive: true,
@@ -74,15 +69,6 @@ function SignUpClientComponents() {
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
       <SignInInput
         label={SIGNIN_TEXT[6]}
-        placeholder={SIGNIN_PLACEHOLDER[3]}
-        type="text"
-        value={formState.region}
-        onChange={(e) => handleInputChange(e, 'region')}
-        error={!!formState.regionError}
-        errorMessage={formState.regionError}
-      />
-      <SignInInput
-        label={SIGNIN_TEXT[7]}
         placeholder={SIGNIN_PLACEHOLDER[4]}
         type="text"
         value={formState.name}
@@ -91,7 +77,7 @@ function SignUpClientComponents() {
         errorMessage={formState.nameError}
       />
       <SignInInput
-        label={SIGNIN_TEXT[8]}
+        label={SIGNIN_TEXT[7]}
         placeholder={SIGNIN_PLACEHOLDER[5]}
         type="text"
         value={formState.address}
