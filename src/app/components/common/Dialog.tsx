@@ -10,6 +10,7 @@ interface DialogProps {
   onSubBtnClick?: () => void;
 
   hasInput?: boolean;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -22,6 +23,7 @@ export function Dialog({
   onSubBtnClick,
 
   hasInput,
+  value,
   onChange,
 }: DialogProps) {
   return (
@@ -40,6 +42,7 @@ export function Dialog({
           <Input
             className="w-full border-2 border-gray-1 px-2 py-4"
             type="default"
+            textValue={value}
             onChange={onChange || (() => {})}
           />
         )}

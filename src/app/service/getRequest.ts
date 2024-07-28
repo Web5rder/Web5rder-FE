@@ -42,8 +42,6 @@ export const getSearchProducts = async ({
 }: searchProductsProps) => {
   try {
     const url = `${SERVER_URL}/api/v1/products/search/recent?name_prefix=${namePrefix}&limit=${limit}&cached_time=${cachedTime}`;
-    console.log(`getRequest 요청 URL: ${url}`);
-    console.log(`getRequest Token: ${token}`);
 
     const response = await fetch(url, {
       method: 'GET',

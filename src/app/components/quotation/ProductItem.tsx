@@ -56,12 +56,10 @@ export default function ProductItem({
 
   return (
     <div className="flex items-center pl-1 py-2 w-full text-gray-9 font-bold border-b-2">
-      <div className="w-[7%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
+      <div className="w-[7%] pl-4 text-ellipsis whitespace-nowrap">
         {category}
       </div>
-      <div className="w-[7%] overflow-hidden text-ellipsis whitespace-nowrap">
-        {id}
-      </div>
+      <div className="w-[7%] text-ellipsis whitespace-nowrap">{id}</div>
       <div className="w-[60%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
         {name}
       </div>

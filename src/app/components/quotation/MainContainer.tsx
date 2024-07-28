@@ -23,7 +23,6 @@ export default function MainContainer() {
   }, []);
 
   const [user, setUser] = useState();
-
   const getUsers = async (mytoken: string) => {
     try {
       const response = await fetch(
@@ -51,12 +50,11 @@ export default function MainContainer() {
 
   const [inputState, setInputState] = useState({
     search: '',
-    bookmark: '',
   });
-
   const [state, setState] = useState({
     dialog: false,
     showBookmark: false,
+    bookmarkName: '',
   });
 
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
@@ -105,11 +103,14 @@ export default function MainContainer() {
   };
 
   const handleAddBookMark = async () => {
+    if (!state.bookmarkName) {
+      alert('즐겨찾기 이름을 입력해주세요');
+      return;
+    }
     try {
-      const { bookmark } = inputState;
       const body = {
-        client_id: 1, // 임시데이터
-        name: bookmark,
+        client_id: 1, // 임시데이터(여기에 클라이언트 아이디)
+        name: state.bookmarkName,
         product_ids: addedItems.map((item) => item.id),
       };
       // const response = await fetch('/api/quotation/post-past-order', {
@@ -121,11 +122,12 @@ export default function MainContainer() {
       // });
 
       // const responseData = await response.json();
+      console.log('즐겨찾기 생성', body);
       const responseData = await callPost(
         '/api/quotation/post-past-order',
         body,
       );
-      console.log(responseData);
+      console.log('리스폰스데이터', responseData);
     } catch (error) {
       console.error(error);
     }
@@ -260,11 +262,14 @@ export default function MainContainer() {
           topText="즐겨찾기 이름을 적어주세요"
           subText="현재 추가한 상품으로 즐겨찾기가 만들어집니다"
           onSubBtnClick={() => {
-            setState((prev) => ({ ...prev, dialog: false }));
+            setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' })); // 다이얼로그를 닫을 때 입력값 초기화
           }}
           onBtnClick={handleAddBookMark}
           hasInput
-          onChange={(e) => handleInputChange(e, 'bookmark')}
+          value={state.bookmarkName}
+          onChange={(e) =>
+            setState((prev) => ({ ...prev, bookmarkName: e.target.value }))
+          }
         />
       )}
     </div>
