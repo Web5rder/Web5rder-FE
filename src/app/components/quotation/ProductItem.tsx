@@ -26,14 +26,20 @@ export default function ProductItem({
   onRemoveItem,
 }: ProductItemProps) {
   const [inputState, setInputState] = useState({
-    count: count || '',
+    count: count || '1',
   });
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     type: any,
   ) => {
-    const { value } = e.target;
+    let { value } = e.target;
+    if (type === 'count') {
+      const numericValue = parseInt(value, 10);
+      if (Number.isNaN(numericValue) || numericValue <= 0) {
+        value = '1'; // 0 이하의 값일 경우 1로 설정
+      }
+    }
     setInputState((prev) => ({
       ...prev,
       [type]: value,
@@ -49,7 +55,7 @@ export default function ProductItem({
   };
 
   return (
-    <div className="flex items-center py-2 w-full text-gray-9 font-bold border-b-2">
+    <div className="flex items-center pl-1 py-2 w-full text-gray-9 font-bold border-b-2">
       <div className="w-[7%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
         {category}
       </div>
@@ -63,8 +69,9 @@ export default function ProductItem({
         <Input
           className="w-16 text-center"
           placeholder="1"
-          textValue={inputState.count}
+          textValue={inputState.count || 1}
           type="count"
+          inputType="number"
           onChange={(e) => handleInputChange(e, 'count')}
         />
       </div>

@@ -4,7 +4,7 @@ import { INPUT_STYLE } from '@/app/constants/styles';
 
 interface InputProps {
   type: keyof typeof INPUT_STYLE;
-  textValue?: string;
+  textValue?: string | number;
   inputType?: string;
   name?: string;
   placeholder?: string;

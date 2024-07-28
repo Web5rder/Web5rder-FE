@@ -3,6 +3,7 @@ import Input from './Input';
 
 interface DialogProps {
   topText: string;
+  subText?: string;
   onBtnClick: () => void;
 
   isTwoButton?: boolean;
@@ -14,6 +15,7 @@ interface DialogProps {
 
 export function Dialog({
   topText,
+  subText,
   onBtnClick,
 
   isTwoButton,
@@ -26,10 +28,11 @@ export function Dialog({
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
       <div className="flex w-auto min-w-[30vw] max-w-[80vw] py-6 px-4 flex-col items-start gap-8 rounded-2xl bg-white shadow-xl">
         {/* 텍스트 */}
-        <div className="flex py-0 px-4 flex-col items-start gap-2 self-stretch">
+        <div className="flex items-center py-0 px-4 flex-col gap-2 self-stretch">
           <span className="self-stretch text-center text-xl font-semibold">
             {topText}
           </span>
+          <p>{subText}</p>
         </div>
 
         {/* 인풋 */}

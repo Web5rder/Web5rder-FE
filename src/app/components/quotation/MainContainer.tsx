@@ -22,6 +22,33 @@ export default function MainContainer() {
     }
   }, []);
 
+  const [user, setUser] = useState();
+
+  const getUsers = async (mytoken: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/quotation/users`,
+        {
+          method: 'GET',
+          headers: {
+            'access-token': mytoken,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+      const data = await response.json();
+      setUser(data);
+    } catch (error) {
+      console.error('클라이언트 에러', error);
+    }
+  };
+
+  useEffect(() => {
+    if (token) {
+      getUsers(token);
+    }
+  }, [token]);
+
   const [inputState, setInputState] = useState({
     search: '',
     bookmark: '',
@@ -48,7 +75,9 @@ export default function MainContainer() {
 
   const handleSearch = async () => {
     try {
-      const search = encodeURIComponent(inputState.search);
+      const search = inputState.search
+        ? encodeURIComponent(inputState.search)
+        : '""';
       const response = await fetch(
         `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
         {
@@ -81,7 +110,7 @@ export default function MainContainer() {
       const body = {
         client_id: 1, // 임시데이터
         name: bookmark,
-        product_ids: addedItems.map((item) => item.id), // 임시데이터
+        product_ids: addedItems.map((item) => item.id),
       };
       // const response = await fetch('/api/quotation/post-past-order', {
       //   method: 'POST',
@@ -112,36 +141,12 @@ export default function MainContainer() {
     setAddedItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
-  const getUsers = async (mytoken: string) => {
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/quotation/users`,
-        {
-          method: 'GET',
-          headers: {
-            'access-token': mytoken,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error('클라이언트 에러', error);
-    }
-  };
-
-  useEffect(() => {
-    if (token) {
-      getUsers(token);
-    }
-  }, [token]);
   return (
     <div className="mt-14 px-24 py-2 w-full min-w-[320px]">
-      <div className="flex gap-4">
+      <div className="flex gap-4 items-center">
         <div>
           <button
-            className="bg-primary-4 text-lg font-black text-white px-2 py-1 whitespace-nowrap"
+            className="bg-primary-4 self-center font-black text-white px-2 py-1 whitespace-nowrap"
             type="button"
             onClick={() => {
               setState((prev) => ({
@@ -175,7 +180,7 @@ export default function MainContainer() {
           />
           <Icons onClick={handleSearch} name={SearchIcon} />
         </div>
-        <p className="self-center text-sm">{QUOTATION_TEXT[2]}</p>
+        <p className="text-sm">{QUOTATION_TEXT[2]}</p>
       </div>
 
       <div className="bg-primary-4 mt-4 w-full ">
@@ -211,7 +216,7 @@ export default function MainContainer() {
 
       <div className="w-full bg-primary-4 mt-4 ">
         {/* 분류 품번 품명 단위 개수 */}
-        <div className="flex text-white text-xl font-black px-4 py-1">
+        <div className="flex text-white font-black px-4 py-1">
           {QUOTATION_TEXT[3]}
         </div>
 
@@ -237,14 +242,14 @@ export default function MainContainer() {
             setState((prev) => ({ ...prev, dialog: true }));
           }}
           type="button"
-          className="bg-primary-4 text-white text-2xl px-3 py-1 font-black"
+          className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
           즐겨찾기 추가
         </button>
 
         <button
           type="button"
-          className="bg-primary-4 text-white text-2xl px-3 py-1 font-black"
+          className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
           {QUOTATION_TEXT[4]}
         </button>
@@ -252,7 +257,8 @@ export default function MainContainer() {
       {state.dialog && (
         <Dialog
           isTwoButton
-          topText="북마크 이름을 적어주세요"
+          topText="즐겨찾기 이름을 적어주세요"
+          subText="현재 추가한 상품으로 즐겨찾기가 만들어집니다"
           onSubBtnClick={() => {
             setState((prev) => ({ ...prev, dialog: false }));
           }}
