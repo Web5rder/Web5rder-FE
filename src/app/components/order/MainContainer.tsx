@@ -2,22 +2,22 @@
 
 import { useEffect, useState } from 'react';
 import Input from '../common/Input';
-import ProductItem, { ProductItemProps } from './ProductItem';
 import { SearchIcon } from '@/app/ui/iconPath';
 import {
   categoryMapping,
   PRODUCT_TEXT,
-  QUOTATION_TEXT,
-} from '../../constants/quotation';
+  ORDER_TEXT,
+} from '../../constants/order';
 import Icons from '../common/Icons';
 import { Dialog } from '../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
+import ProductItem, { ProductItemProps } from './ProductItem';
 
 export default function MainContainer() {
   const [user, setUser] = useState();
   const getUsers = async () => {
     try {
-      const data = await callGet('/api/quotation/users');
+      const data = await callGet('/api/order/users');
       setUser(data);
     } catch (error) {
       console.error('클라이언트 에러', error);
@@ -57,7 +57,7 @@ export default function MainContainer() {
         ? encodeURIComponent(inputState.search)
         : '""';
       const data = await callGet(
-        `/api/quotation/search`,
+        `/api/order/search`,
         `name_prefix=${search}&limit=100&cached_time=300`,
       );
       console.log(`검색 결과: ${JSON.stringify(data.result)}`);
@@ -80,10 +80,7 @@ export default function MainContainer() {
       };
 
       console.log('즐겨찾기 생성', body);
-      const responseData = await callPost(
-        '/api/quotation/post-past-order',
-        body,
-      );
+      const responseData = await callPost('/api/order/post-past-order', body);
       console.log('리스폰스데이터', responseData);
     } catch (error) {
       console.error(error);
@@ -114,7 +111,7 @@ export default function MainContainer() {
               }));
             }}
           >
-            {QUOTATION_TEXT[0]}
+            {ORDER_TEXT[0]}
           </button>
           {state.showBookmark && (
             <div className="absolute w-auto bg-white border-t-[1px] border-2 border-gray-2">
@@ -134,12 +131,12 @@ export default function MainContainer() {
             textValue={inputState.search}
             type="search"
             onChange={(e) => handleInputChange(e, 'search')}
-            placeholder={QUOTATION_TEXT[1]}
+            placeholder={ORDER_TEXT[1]}
             onEnterPress={handleSearch}
           />
           <Icons onClick={handleSearch} name={SearchIcon} />
         </div>
-        <p className="text-sm">{QUOTATION_TEXT[2]}</p>
+        <p className="text-sm">{ORDER_TEXT[2]}</p>
       </div>
 
       <div className="bg-primary-4 mt-4 w-full ">
@@ -176,7 +173,7 @@ export default function MainContainer() {
       <div className="w-full bg-primary-4 mt-4 ">
         {/* 분류 품번 품명 단위 개수 */}
         <div className="flex text-white font-black px-4 py-1">
-          {QUOTATION_TEXT[3]}
+          {ORDER_TEXT[3]}
         </div>
 
         <div className="bg-white px-3 h-48 flex-col border-2 whitespace-nowrap overflow-scroll">
@@ -210,7 +207,7 @@ export default function MainContainer() {
           type="button"
           className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
-          {QUOTATION_TEXT[4]}
+          {ORDER_TEXT[4]}
         </button>
       </div>
       {state.dialog && (

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Input from '../common/Input';
-import { QUOTATION_TEXT } from '@/app/constants/quotation';
+import { ORDER_TEXT } from '@/app/constants/order';
 
 export interface ProductItemProps {
   category: string;
@@ -82,7 +82,7 @@ export default function ProductItem({
           className={`${isAdded ? 'bg-red-1' : 'bg-primary-4'} text-white px-2 py-1`}
           onClick={handleButtonClick}
         >
-          {isAdded ? QUOTATION_TEXT[5] : QUOTATION_TEXT[6]}
+          {isAdded ? ORDER_TEXT[5] : ORDER_TEXT[6]}
         </button>
       </div>
     </div>
