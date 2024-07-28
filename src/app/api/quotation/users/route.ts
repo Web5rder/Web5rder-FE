@@ -1,10 +1,11 @@
 import { getUsers } from '@/app/service/getRequest';
+import { getCookie } from '@/app/utils/setTokens';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request): Promise<NextResponse> {
   try {
-    const token = request.headers.get('access-token') || '';
-
+    const token = getCookie(request, 'accessToken');
+    console.log('내 토큰', token);
     const data = await getUsers(token);
     return NextResponse.json(data);
   } catch (error) {

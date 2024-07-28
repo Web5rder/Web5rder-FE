@@ -12,6 +12,7 @@ import {
   SIGNIN_PLACEHOLDER,
   SIGNIN_TEXT,
 } from '@/app/constants/sign-in';
+import { setTokens } from '@/app/utils/setTokens';
 
 function SignInComponents() {
   const router = useRouter();
@@ -43,7 +44,7 @@ function SignInComponents() {
     try {
       const responseData = await postLogin({ email, pwd });
       if (responseData.isSuccess) {
-        localStorage.setItem('JMFtoken', responseData.result.access_token);
+        setTokens(responseData.result.access_token);
         router.push('/');
       } else {
         alert(SIGNIN_ERROR[0]);

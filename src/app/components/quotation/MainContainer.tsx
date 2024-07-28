@@ -14,28 +14,10 @@ import { Dialog } from '../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
 
 export default function MainContainer() {
-  const [token, setToken] = useState('');
-  useEffect(() => {
-    const JMFtoken = localStorage.getItem('JMFtoken');
-    if (JMFtoken) {
-      setToken(JMFtoken);
-    }
-  }, []);
-
   const [user, setUser] = useState();
-  const getUsers = async (mytoken: string) => {
+  const getUsers = async () => {
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/quotation/users`,
-        {
-          method: 'GET',
-          headers: {
-            'access-token': mytoken,
-            'Content-Type': 'application/json',
-          },
-        },
-      );
-      const data = await response.json();
+      const data = await callGet('/api/quotation/users');
       setUser(data);
     } catch (error) {
       console.error('클라이언트 에러', error);
@@ -43,10 +25,8 @@ export default function MainContainer() {
   };
 
   useEffect(() => {
-    if (token) {
-      getUsers(token);
-    }
-  }, [token]);
+    getUsers();
+  }, []);
 
   const [inputState, setInputState] = useState({
     search: '',
@@ -76,25 +56,10 @@ export default function MainContainer() {
       const search = inputState.search
         ? encodeURIComponent(inputState.search)
         : '""';
-      const response = await fetch(
-        `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
-        {
-          method: 'GET',
-          headers: {
-            'access-token': token,
-            'Content-Type': 'application/json',
-          },
-        },
+      const data = await callGet(
+        `/api/quotation/search`,
+        `name_prefix=${search}&limit=100&cached_time=300`,
       );
-      if (!response.ok) {
-        throw new Error(`${response.status}`);
-      }
-      const data = await response.json();
-
-      // const data = await callGet(
-      //   `/api/quotation/search`,
-      //   `name_prefix=${search}&limit=100&cached_time=300`,
-      // );
       console.log(`검색 결과: ${JSON.stringify(data.result)}`);
       setSearchResults(data.result);
     } catch (error) {
