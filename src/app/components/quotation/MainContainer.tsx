@@ -4,7 +4,11 @@ import { useEffect, useState } from 'react';
 import Input from '../common/Input';
 import ProductItem, { ProductItemProps } from './ProductItem';
 import { SearchIcon } from '@/app/ui/iconPath';
-import { PRODUCT_TEXT, QUOTATION_TEXT } from '../../constants/quotation';
+import {
+  categoryMapping,
+  PRODUCT_TEXT,
+  QUOTATION_TEXT,
+} from '../../constants/quotation';
 import Icons from '../common/Icons';
 import { Dialog } from '../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
@@ -45,28 +49,26 @@ export default function MainContainer() {
   const handleSearch = async () => {
     try {
       const search = encodeURIComponent(inputState.search);
-      console.log(`Search query: ${search}`);
-      // const response = await fetch(
-      //   `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
-      //   {
-      //     method: 'GET',
-      //     headers: {
-      //       'access-token': token,
-      //       'Content-Type': 'application/json',
-      //     },
-      //   },
-      // );
-      // if (!response.ok) {
-      //   throw new Error(`${response.status}`);
-      // }
-      // const data = await response.json();
-
-      const data = await callGet(
-        `/api/quotation/search`,
-        `name_prefix=${search}&limit=100&cached_time=300`,
+      const response = await fetch(
+        `/api/quotation/search?name_prefix=${search}&limit=100&cached_time=300`,
+        {
+          method: 'GET',
+          headers: {
+            'access-token': token,
+            'Content-Type': 'application/json',
+          },
+        },
       );
-      console.log(searchResults);
-      console.log(`Search results: ${JSON.stringify(data.result)}`);
+      if (!response.ok) {
+        throw new Error(`${response.status}`);
+      }
+      const data = await response.json();
+
+      // const data = await callGet(
+      //   `/api/quotation/search`,
+      //   `name_prefix=${search}&limit=100&cached_time=300`,
+      // );
+      console.log(`검색 결과: ${JSON.stringify(data.result)}`);
       setSearchResults(data.result);
     } catch (error) {
       console.error(error);
@@ -79,7 +81,7 @@ export default function MainContainer() {
       const body = {
         client_id: 1, // 임시데이터
         name: bookmark,
-        product_ids: addedItems.map((item) => item.code), // 임시데이터
+        product_ids: addedItems.map((item) => item.id), // 임시데이터
       };
       // const response = await fetch('/api/quotation/post-past-order', {
       //   method: 'POST',
@@ -106,10 +108,8 @@ export default function MainContainer() {
     });
   };
 
-  const handleRemoveItem = (code: string | undefined) => {
-    setAddedItems((prevItems) =>
-      prevItems.filter((item) => item.code !== code),
-    );
+  const handleRemoveItem = (id: string | undefined) => {
+    setAddedItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
   const getUsers = async (mytoken: string) => {
@@ -137,7 +137,7 @@ export default function MainContainer() {
     }
   }, [token]);
   return (
-    <div className="mt-14 px-8 py-2 w-full">
+    <div className="mt-14 px-24 py-2 w-full min-w-[320px]">
       <div className="flex gap-4">
         <div>
           <button
@@ -175,51 +175,33 @@ export default function MainContainer() {
           />
           <Icons onClick={handleSearch} name={SearchIcon} />
         </div>
-        <p className="self-center font-bold">{QUOTATION_TEXT[2]}</p>
+        <p className="self-center text-sm">{QUOTATION_TEXT[2]}</p>
       </div>
 
-      <div className="md:w-full bg-primary-4 mt-4 w-[540px] ">
+      <div className="bg-primary-4 mt-4 w-full ">
         {/* 분류 품번 품명 단위 개수 */}
-        <div className="flex justify-between text-white text-xl font-black pl-4 pr-9 py-1">
-          <div className="flex gap-8">
-            <p>{PRODUCT_TEXT[0]}</p>
-            <p>{PRODUCT_TEXT[1]}</p>
-          </div>
-          <p className="pl-6">{PRODUCT_TEXT[2]}</p>
-          <div className="flex gap-8">
-            <p>{PRODUCT_TEXT[3]}</p>
-            <p>{PRODUCT_TEXT[4]}</p>
-            <p>{PRODUCT_TEXT[5]}</p>
-          </div>
+        <div className="flex text-white font-black py-1 pl-4 pr-6 whitespace-nowrap">
+          <div className="w-[7%] pl-4">{PRODUCT_TEXT[0]}</div>
+          <div className="w-[7%]">{PRODUCT_TEXT[1]}</div>
+          <div className="w-[60%] pl-4">{PRODUCT_TEXT[2]}</div>
+          <div className="w-[10%] text-center">{PRODUCT_TEXT[3]}</div>
+          <div className="w-[8%] text-right pr-2">{PRODUCT_TEXT[4]}</div>
+          <div className="w-[8%] text-right pr-8">{PRODUCT_TEXT[5]}</div>
         </div>
 
         {/* 목록창 */}
         <div className="bg-white px-3 h-80 flex-col border-2 whitespace-nowrap overflow-scroll">
           {/* 개별 목록 */}
-          {[
-            { category: '냉장', code: 'SAM-572', name: '하와이안피자' },
-            { category: '냉동', code: 'SAM-573', name: '민트초코' },
-            { category: '냉동', code: 'SAM-574', name: '데자와' },
-            { category: '냉동', code: 'SAM-575', name: '맥콜' },
-            { category: '냉동', code: 'SAM-576', name: '솔의눈' },
-            { category: '냉동', code: 'SAM-577', name: '닥터페퍼' },
-            { category: '냉동', code: 'SAM-578', name: '마라탕' },
-            { category: '냉동', code: 'SAM-579', name: '탕후루' },
-            { category: '냉장', code: 'SAM-580', name: '두바이 초콜릿' },
-            { category: '냉동', code: 'SAM-581', name: '요아정' },
-            { category: '냉동', code: 'SAM-582', name: '아망추' },
-            { category: '냉동', code: 'SAM-583', name: '크루키' },
-            { category: '냉장', code: 'SAM-584', name: '점보라면' },
-            { category: '냉장', code: 'SAM-585', name: '짬뽕' },
-          ].map((item) => (
+          {searchResults.map((item) => (
             <ProductItem
-              key={item.code}
-              category={item.category}
-              code={item.code}
+              key={item.id}
+              category={categoryMapping[item.category]}
+              id={item.id}
               name={item.name}
               isAdded={
-                !!addedItems.find((addedItem) => addedItem.code === item.code)
+                !!addedItems.find((addedItem) => addedItem.id === item.id)
               }
+              unit={item.unit}
               onAddItem={handleAddItem}
               onRemoveItem={handleRemoveItem}
             />
@@ -227,7 +209,7 @@ export default function MainContainer() {
         </div>
       </div>
 
-      <div className="md:w-full bg-primary-4 mt-4 w-[540px]">
+      <div className="w-full bg-primary-4 mt-4 ">
         {/* 분류 품번 품명 단위 개수 */}
         <div className="flex text-white text-xl font-black px-4 py-1">
           {QUOTATION_TEXT[3]}
@@ -236,12 +218,13 @@ export default function MainContainer() {
         <div className="bg-white px-3 h-48 flex-col border-2 whitespace-nowrap overflow-scroll">
           {addedItems.map((item) => (
             <ProductItem
-              key={item.code}
+              key={item.id}
               category={item.category}
-              code={item.code}
+              id={item.id}
               name={item.name}
               count={item.count || '1'}
               isAdded
+              unit={item.unit}
               onRemoveItem={handleRemoveItem}
             />
           ))}

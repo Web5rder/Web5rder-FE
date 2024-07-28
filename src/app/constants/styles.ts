@@ -11,7 +11,7 @@ export const INPUT_STYLE = {
   signin: (className: string) =>
     `w-full p-3 items-center rounded-xl border-2 bg-white text-gray-7 font-bold placeholder:text-gray-2 placeholder:font-normal ${className}`,
   search: (className: string) =>
-    `md:w-96 px-2 py-1 text-xl font-black placeholder:text-xl placeholder:font-black focus:outline-none ${className}`,
+    ` px-2 py-1 text-xl font-black placeholder:text-xl placeholder:font-black focus:outline-none ${className}`,
   // 견적서 개수 입력
   count: (className: string) => `w-14 text-right ${className}`,
   default: (className: string) => `w-full h-full ${className}`,

@@ -6,20 +6,22 @@ import { QUOTATION_TEXT } from '@/app/constants/quotation';
 
 export interface ProductItemProps {
   category: string;
-  code?: string;
+  id?: string;
   name: string;
   count?: string;
   isAdded?: boolean;
+  unit: string;
   onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem?: (code: string | undefined) => void;
+  onRemoveItem?: (id: string | undefined) => void;
 }
 
 export default function ProductItem({
   category,
-  code,
+  id,
   name,
   count,
   isAdded,
+  unit,
   onAddItem,
   onRemoveItem,
 }: ProductItemProps) {
@@ -40,31 +42,39 @@ export default function ProductItem({
 
   const handleButtonClick = () => {
     if (isAdded) {
-      onRemoveItem?.(code);
+      onRemoveItem?.(id);
     } else {
-      onAddItem?.({ category, code, name, count: inputState.count });
+      onAddItem?.({ category, id, name, count: inputState.count, unit });
     }
   };
 
   return (
-    <div className="flex justify-between py-2  w-full text-gray-9 text-xl font-bold border-b-2">
-      <div className="flex gap-4">
-        <p>{category}</p>
-        <p>{code}</p>
+    <div className="flex items-center py-2 w-full text-gray-9 font-bold border-b-2">
+      <div className="w-[7%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
+        {category}
       </div>
-      <p>{name}</p>
-      <div className="flex gap-8">
+      <div className="w-[7%] overflow-hidden text-ellipsis whitespace-nowrap">
+        {id}
+      </div>
+      <div className="w-[60%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
+        {name}
+      </div>
+      <div className="w-[10%] flex items-center justify-center">
         <Input
-          className=""
+          className="w-16 text-center"
           placeholder="1"
           textValue={inputState.count}
           type="count"
           onChange={(e) => handleInputChange(e, 'count')}
         />
-        <p>kg</p>
+      </div>
+      <div className="w-[8%] text-right pr-2 overflow-hidden text-ellipsis whitespace-nowrap">
+        {unit}
+      </div>
+      <div className="w-[8%] flex justify-end pr-4">
         <button
           type="button"
-          className={`${isAdded ? 'bg-red-1' : 'bg-primary-4'} text-white px-1`}
+          className={`${isAdded ? 'bg-red-1' : 'bg-primary-4'} text-white px-2 py-1`}
           onClick={handleButtonClick}
         >
           {isAdded ? QUOTATION_TEXT[5] : QUOTATION_TEXT[6]}

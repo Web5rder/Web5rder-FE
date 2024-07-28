@@ -20,7 +20,9 @@ export const getUsers = async (token: string) => {
     });
 
     if (!response.ok) {
-      throw new Error(`getRequest 데이터 fetch 실패: ${response.statusText}`);
+      throw new Error(
+        `내 정보 조회(getRequest) fetch 실패: ${response.statusText}`,
+      );
     }
 
     const data = await response.json();
@@ -39,7 +41,7 @@ export const getSearchProducts = async ({
   token,
 }: searchProductsProps) => {
   try {
-    const url = `${SERVER_URL}/api/v1/products/search/?name_prefix=${namePrefix}&limit=${limit}&cached_time=${cachedTime}`;
+    const url = `${SERVER_URL}/api/v1/products/search/recent?name_prefix=${namePrefix}&limit=${limit}&cached_time=${cachedTime}`;
     console.log(`getRequest 요청 URL: ${url}`);
     console.log(`getRequest Token: ${token}`);
 

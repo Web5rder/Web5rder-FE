@@ -1,5 +1,5 @@
 export const QUOTATION_TEXT = [
-  '최근주문목록',
+  '즐겨찾기',
   '검색어를 입력해주세요',
   "상품 검색 후 개수를 입력한 뒤에 '담기'를 눌러주세요.",
   '추가한 상품',
@@ -19,3 +19,10 @@ export const MODAL_TEXT = [
 ];
 
 export const MODAL_INFO = ['견적서', 'Date', '구매자', '총액'];
+
+export const categoryMapping: { [key: string]: string } = {
+  refrigeration: '냉장',
+  frozen: '냉동',
+  industrial: '공산',
+  vegetable: '야채',
+};
