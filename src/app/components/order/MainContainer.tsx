@@ -12,19 +12,22 @@ import Icons from '../common/Icons';
 import { Dialog } from '../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
 import ProductItem, { ProductItemProps } from './ProductItem';
+import { useRouter } from 'next/navigation';
 
 export default function MainContainer() {
+  const router = useRouter();
+
   const [user, setUser] = useState<User | null>();
-  const [pastOrder, setPastOrder] = useState<PastOrder[]>([]);
   const [inputState, setInputState] = useState({
     search: '',
   });
   const [state, setState] = useState({
     dialog: false,
     showBookmark: false,
+    alert: false,
     bookmarkName: '',
   });
-
+  const [pastOrder, setPastOrder] = useState<PastOrder[]>([]);
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
 
@@ -32,6 +35,10 @@ export default function MainContainer() {
     try {
       const data = await callGet('/api/order/users');
       setUser(data);
+      // 거래처가 생성되지 않았을 경우 경고를 띄우고 리다이렉트
+      if (!data.isSuccess && data.code === '4005') {
+        setState((prev) => ({ ...prev, alert: true }));
+      }
     } catch (error) {
       console.error('클라이언트 에러', error);
     }
@@ -51,6 +58,7 @@ export default function MainContainer() {
   useEffect(() => {
     getUsers();
   }, []);
+  console.log('유저 정보 : ', user);
 
   useEffect(() => {
     if (user?.result?.client_id) {
@@ -72,7 +80,6 @@ export default function MainContainer() {
           count: '1',
         }));
         setAddedItems(productList);
-        // setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' }));
         setState((prev) => ({ ...prev, showBookmark: false }));
       }
     } catch (error) {
@@ -100,7 +107,6 @@ export default function MainContainer() {
         `/api/order/search`,
         `name_prefix=${search}&limit=100&cached_time=300`,
       );
-      console.log(`검색 결과: ${JSON.stringify(data.result)}`);
       setSearchResults(data.result);
     } catch (error) {
       console.error(error);
@@ -254,11 +260,22 @@ export default function MainContainer() {
           {ORDER_TEXT[4]}
         </button>
       </div>
+      {state.alert && (
+        <Dialog
+          topText="거래처가 생성되지 않았습니다."
+          BtnText="이동"
+          onBtnClick={() => {
+            setState((prev) => ({ ...prev, alert: false }));
+            router.push('/sign-in/client');
+          }}
+        />
+      )}
       {state.dialog && (
         <Dialog
           isTwoButton
           topText="즐겨찾기 이름을 적어주세요"
           subText="현재 추가한 상품으로 즐겨찾기가 만들어집니다"
+          BtnText="추가"
           onSubBtnClick={() => {
             setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' })); // 다이얼로그를 닫을 때 입력값 초기화
           }}

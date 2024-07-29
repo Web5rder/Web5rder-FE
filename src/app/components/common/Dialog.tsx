@@ -4,6 +4,7 @@ import Input from './Input';
 interface DialogProps {
   topText: string;
   subText?: string;
+  BtnText: string;
   onBtnClick: () => void;
 
   isTwoButton?: boolean;
@@ -17,6 +18,7 @@ interface DialogProps {
 export function Dialog({
   topText,
   subText,
+  BtnText,
   onBtnClick,
 
   isTwoButton,
@@ -66,7 +68,7 @@ export function Dialog({
           {/* 기본 버튼 */}
           <Button
             onClickHandler={onBtnClick}
-            buttonText="추가"
+            buttonText={BtnText}
             type="dialog"
             className="bg-primary-3 text-white"
             isDisabled={false}
