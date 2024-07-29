@@ -27,6 +27,7 @@ export default function MainContainer() {
   useEffect(() => {
     getUsers();
   }, []);
+  console.log(user);
 
   const [inputState, setInputState] = useState({
     search: '',

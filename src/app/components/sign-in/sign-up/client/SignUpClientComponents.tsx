@@ -11,6 +11,7 @@ import {
 import SignInInput from '../../common/SignInInput';
 import SignInButton from '../../common/SignInButton';
 import { ValidationClientType } from '@/app/_types/sign-in';
+import { callPost } from '@/app/utils/callApi';
 
 function SignUpClientComponents() {
   const router = useRouter();
@@ -43,6 +44,20 @@ function SignUpClientComponents() {
     }));
   };
 
+  const handlePostClient = async () => {
+    try {
+      const body = {
+        name: formState.name,
+        address: formState.address,
+      };
+      console.log('클라이언트 바디', body);
+      const responseData = await callPost('/api/sign-in/sign-up/client', body);
+      console.log('리스폰스 데이터', responseData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleBtnClick = () => {
     const nameError = validateField('name', formState.name);
     const addressError = validateField('address', formState.address);
@@ -61,6 +76,7 @@ function SignUpClientComponents() {
         addressError: '',
         isBtnActive: true,
       }));
+      handlePostClient();
       router.push('/sign-in');
     }
   };

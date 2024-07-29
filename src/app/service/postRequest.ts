@@ -12,7 +12,10 @@ export const postRequest = async (
   try {
     const response = await fetch(url, {
       method: 'POST',
-      headers: { ...headers, Authorization: `Bearer ${accessToken}` },
+      headers: {
+        ...headers,
+        ...(accessToken && { 'access-token': accessToken }),
+      },
       body: JSON.stringify(body),
     });
 
@@ -60,6 +63,17 @@ export const postSignUp = async (signUpContents: any) => {
   } catch (error) {
     console.error('에러 : ', error);
     throw new Error('postSignUp 에러 발생');
+  }
+};
+
+// 거래처 생성
+export const postClient = async (clientContents: any, accessToken?: string) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/clients`;
+    return await postRequest(url, clientContents, accessToken);
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('postClient 에러 발생');
   }
 };
 

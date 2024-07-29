@@ -106,7 +106,7 @@ function SignUpComponents() {
         }
 
         if (responseData.isSuccess) {
-          router.push('/sign-in/sign-up/client');
+          router.push('/sign-in');
         } else {
           setFormState((prevState) => ({
             ...prevState,
