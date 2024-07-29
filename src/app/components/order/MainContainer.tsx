@@ -14,10 +14,12 @@ import { callGet, callPost } from '@/app/utils/callApi';
 import ProductItem, { ProductItemProps } from './ProductItem';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/utils/useUser';
+import { usePastOrder } from '@/app/utils/usePastOrder';
 
 export default function MainContainer() {
   const router = useRouter();
   const { user } = useUser(); // 커스텀 훅에서 user 가져오기
+  const { pastOrder, getPastOrder } = usePastOrder(); // 커스텀 훅에서 즐겨찾기 가져오기
 
   const [inputState, setInputState] = useState({
     search: '',
@@ -28,27 +30,8 @@ export default function MainContainer() {
     alert: false,
     bookmarkName: '',
   });
-  const [pastOrder, setPastOrder] = useState<PastOrder[]>([]);
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
-
-  const getPastOrder = async () => {
-    try {
-      const client_id = user?.result.client_id;
-
-      const data = await callGet(`/api/order/${client_id}/get-past-order`);
-      setPastOrder(data.result);
-    } catch (error) {
-      console.error('클라이언트 에러', error);
-    }
-  };
-
-  useEffect(() => {
-    if (user?.result?.client_id) {
-      getPastOrder();
-      console.log(pastOrder);
-    }
-  }, [user?.result?.client_id]);
 
   useEffect(() => {
     if (user && !user.isSuccess && user.code === '4005') {
