@@ -26,7 +26,7 @@ export const SIGNUP_ERROR = [
   '비밀번호가 일치하지 않습니다.',
 ];
 
-export const SIGNUP_BUTTON = ['다음', '생성'];
+export const SIGNUP_BUTTON = ['가입', '생성'];
 
 export const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 export const passwordRegex =

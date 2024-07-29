@@ -8,12 +8,12 @@ import {
   SIGNIN_TEXT,
   SIGNUP_BUTTON,
 } from '@/app/constants/sign-in';
-import SignInInput from '../../common/SignInInput';
-import SignInButton from '../../common/SignInButton';
 import { ValidationClientType } from '@/app/_types/sign-in';
 import { callPost } from '@/app/utils/callApi';
+import SignInButton from '../common/SignInButton';
+import SignInInput from '../common/SignInInput';
 
-function SignUpClientComponents() {
+function ClientComponents() {
   const router = useRouter();
 
   const [formState, setFormState] = useState({
@@ -50,8 +50,7 @@ function SignUpClientComponents() {
         name: formState.name,
         address: formState.address,
       };
-      console.log('클라이언트 바디', body);
-      const responseData = await callPost('/api/sign-in/sign-up/client', body);
+      const responseData = await callPost('/api/sign-in/client', body);
       console.log('리스폰스 데이터', responseData);
     } catch (error) {
       console.error(error);
@@ -77,7 +76,7 @@ function SignUpClientComponents() {
         isBtnActive: true,
       }));
       handlePostClient();
-      router.push('/sign-in');
+      router.push('/');
     }
   };
 
@@ -111,4 +110,4 @@ function SignUpClientComponents() {
   );
 }
 
-export default SignUpClientComponents;
+export default ClientComponents;

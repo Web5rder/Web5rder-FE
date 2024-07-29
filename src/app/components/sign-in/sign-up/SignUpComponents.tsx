@@ -82,18 +82,6 @@ function SignUpComponents() {
       pwdConfirmValidation.isValid
     ) {
       try {
-        // const response = await fetch(
-        //   `${process.env.NEXT_PUBLIC_LOCAL_SERVER}/api/sign-in/sign-up`,
-        //   {
-        //     method: 'POST',
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //     },
-        //     body: JSON.stringify({ email, password: pwd }),
-        //   },
-        // );
-
-        // const responseData = await response.json();
         const responseData = await callPost('/api/sign-in/sign-up', {
           email,
           password: pwd,
