@@ -16,6 +16,18 @@ import ProductItem, { ProductItemProps } from './ProductItem';
 export default function MainContainer() {
   const [user, setUser] = useState<User | null>();
   const [pastOrder, setPastOrder] = useState<PastOrder[]>([]);
+  const [inputState, setInputState] = useState({
+    search: '',
+  });
+  const [state, setState] = useState({
+    dialog: false,
+    showBookmark: false,
+    bookmarkName: '',
+  });
+
+  const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
+  const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
+
   const getUsers = async () => {
     try {
       const data = await callGet('/api/order/users');
@@ -25,15 +37,12 @@ export default function MainContainer() {
     }
   };
 
-  console.log(user);
-
   const getPastOrder = async () => {
     try {
       const client_id = user?.result.client_id;
 
       const data = await callGet(`/api/order/${client_id}/get-past-order`);
       setPastOrder(data.result);
-      console.log(pastOrder);
     } catch (error) {
       console.error('클라이언트 에러', error);
     }
@@ -48,19 +57,28 @@ export default function MainContainer() {
       getPastOrder();
       console.log(pastOrder);
     }
-  }, [user]);
+  }, [user?.result?.client_id]);
 
-  const [inputState, setInputState] = useState({
-    search: '',
-  });
-  const [state, setState] = useState({
-    dialog: false,
-    showBookmark: false,
-    bookmarkName: '',
-  });
-
-  const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
-  const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
+  const setPastOrderId = async (past_order_id: string) => {
+    try {
+      const data = await callGet(`/api/order/get-past-order/${past_order_id}`);
+      if (data.isSuccess) {
+        const productList = data.result.product_list.map((product: any) => ({
+          id: product.id,
+          category: categoryMapping[product.category],
+          name: product.name,
+          unit: product.unit,
+          price: product.price,
+          count: '1',
+        }));
+        setAddedItems(productList);
+        // setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' }));
+        setState((prev) => ({ ...prev, showBookmark: false }));
+      }
+    } catch (error) {
+      console.error('클라이언트 에러', error);
+    }
+  };
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -101,7 +119,6 @@ export default function MainContainer() {
         product_ids: addedItems.map((item) => item.id),
       };
 
-      console.log('즐겨찾기 생성', body);
       const responseData = await callPost('/api/order/post-past-order', body);
       console.log('리스폰스데이터', responseData);
 
@@ -139,14 +156,16 @@ export default function MainContainer() {
             {ORDER_TEXT[0]}
           </button>
           {state.showBookmark && (
-            <div className="absolute w-auto bg-white border-t-[1px] border-2 border-gray-2">
+            <div className="absolute flex flex-col w-auto bg-white border-t-[1px] border-2 border-gray-2">
               {pastOrder.map((order) => (
-                <div
+                <button
                   key={order.past_order_id}
+                  type="button"
                   className="px-4 py-1 border-b border-gray-2 cursor-pointer last:border-none"
+                  onClick={() => setPastOrderId(order.past_order_id.toString())}
                 >
                   {order.name}
-                </div>
+                </button>
               ))}
             </div>
           )}
