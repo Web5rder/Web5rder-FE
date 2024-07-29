@@ -63,3 +63,30 @@ export const getSearchProducts = async ({
     throw error;
   }
 };
+
+// 거래처 주문 내역 조회
+export const getClientPastOrder = async (client_id: string) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/clients/${client_id}/past-order`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(
+        `getClientPastOrder 데이터 fetch 실패: ${response.statusText}`,
+      );
+    }
+
+    const data = await response.json();
+    console.log(`Response data: ${JSON.stringify(data)}`);
+    return data;
+  } catch (error) {
+    console.error('Error: ', error);
+    throw error;
+  }
+};

@@ -14,7 +14,8 @@ import { callGet, callPost } from '@/app/utils/callApi';
 import ProductItem, { ProductItemProps } from './ProductItem';
 
 export default function MainContainer() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState<User | null>();
+  const [pastOrder, setPastOrder] = useState<PastOrder[]>([]);
   const getUsers = async () => {
     try {
       const data = await callGet('/api/order/users');
@@ -24,10 +25,30 @@ export default function MainContainer() {
     }
   };
 
+  console.log(user);
+
+  const getPastOrder = async () => {
+    try {
+      const client_id = user?.result.client_id;
+
+      const data = await callGet(`/api/order/${client_id}/get-past-order`);
+      setPastOrder(data.result);
+      console.log(pastOrder);
+    } catch (error) {
+      console.error('클라이언트 에러', error);
+    }
+  };
+
   useEffect(() => {
     getUsers();
   }, []);
-  console.log(user);
+
+  useEffect(() => {
+    if (user?.result?.client_id) {
+      getPastOrder();
+      console.log(pastOrder);
+    }
+  }, [user]);
 
   const [inputState, setInputState] = useState({
     search: '',
@@ -75,7 +96,7 @@ export default function MainContainer() {
     }
     try {
       const body = {
-        client_id: 1, // 임시데이터(여기에 클라이언트 아이디)
+        client_id: user?.result.client_id,
         name: state.bookmarkName,
         product_ids: addedItems.map((item) => item.id),
       };
@@ -83,6 +104,9 @@ export default function MainContainer() {
       console.log('즐겨찾기 생성', body);
       const responseData = await callPost('/api/order/post-past-order', body);
       console.log('리스폰스데이터', responseData);
+
+      await getPastOrder();
+      setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' }));
     } catch (error) {
       console.error(error);
     }
@@ -116,12 +140,12 @@ export default function MainContainer() {
           </button>
           {state.showBookmark && (
             <div className="absolute w-auto bg-white border-t-[1px] border-2 border-gray-2">
-              {['북마크', '북마크2', '북마크북마크북마크'].map((i) => (
+              {pastOrder.map((order) => (
                 <div
-                  key={i}
+                  key={order.past_order_id}
                   className="px-4 py-1 border-b border-gray-2 cursor-pointer last:border-none"
                 >
-                  {i}
+                  {order.name}
                 </div>
               ))}
             </div>
