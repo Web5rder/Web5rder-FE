@@ -21,25 +21,25 @@ export default function MainContainer() {
   const { user } = useUser(); // 커스텀 훅에서 user 가져오기
   const { pastOrder, getPastOrder } = usePastOrder(); // 커스텀 훅에서 즐겨찾기 가져오기
 
-  const [inputState, setInputState] = useState({
-    search: '',
-  });
   const [state, setState] = useState({
     dialog: false,
     showBookmark: false,
     alert: false,
+    search: '',
     bookmarkName: '',
   });
-  const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
-  const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
+  const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]); // 검색 결과
+  const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]); // 추가한 상품
 
   useEffect(() => {
+    // 4005 상태 시 거래처 생성으로 이동
     if (user && !user.isSuccess && user.code === '4005') {
       setState((prev) => ({ ...prev, alert: true }));
     }
   }, [user]);
   console.log(user);
 
+  // 즐겨 찾기에서 불러온 상품을 추가한 상품에 저장
   const setPastOrderId = async (past_order_id: string) => {
     try {
       const data = await callGet(`/api/order/get-past-order/${past_order_id}`);
@@ -65,7 +65,7 @@ export default function MainContainer() {
     type: any,
   ) => {
     const { value } = e.target;
-    setInputState((prev) => ({
+    setState((prev) => ({
       ...prev,
       [type]: value,
     }));
@@ -73,9 +73,7 @@ export default function MainContainer() {
 
   const handleSearch = async () => {
     try {
-      const search = inputState.search
-        ? encodeURIComponent(inputState.search)
-        : '""';
+      const search = state.search ? encodeURIComponent(state.search) : '""';
       const data = await callGet(
         `/api/order/search`,
         `name_prefix=${search}&limit=100&cached_time=300`,
@@ -98,8 +96,7 @@ export default function MainContainer() {
         product_ids: addedItems.map((item) => item.id),
       };
 
-      const responseData = await callPost('/api/order/post-past-order', body);
-      console.log('리스폰스데이터', responseData);
+      await callPost('/api/order/post-past-order', body);
 
       await getPastOrder();
       setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' }));
@@ -151,7 +148,7 @@ export default function MainContainer() {
         </div>
         <div className="flex-center gap-2 bg-gray-0 border-2 border-gray-2 pr-1 focus-within:border-gray-7 focus-within:border-2">
           <Input
-            textValue={inputState.search}
+            textValue={state.search}
             type="search"
             onChange={(e) => handleInputChange(e, 'search')}
             placeholder={ORDER_TEXT[1]}
