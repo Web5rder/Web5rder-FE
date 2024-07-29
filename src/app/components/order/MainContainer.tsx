@@ -13,11 +13,12 @@ import { Dialog } from '../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
 import ProductItem, { ProductItemProps } from './ProductItem';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@/app/utils/useUser';
 
 export default function MainContainer() {
   const router = useRouter();
+  const { user } = useUser(); // 커스텀 훅에서 user 가져오기
 
-  const [user, setUser] = useState<User | null>();
   const [inputState, setInputState] = useState({
     search: '',
   });
@@ -31,19 +32,6 @@ export default function MainContainer() {
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
 
-  const getUsers = async () => {
-    try {
-      const data = await callGet('/api/order/users');
-      setUser(data);
-      // 거래처가 생성되지 않았을 경우 경고를 띄우고 리다이렉트
-      if (!data.isSuccess && data.code === '4005') {
-        setState((prev) => ({ ...prev, alert: true }));
-      }
-    } catch (error) {
-      console.error('클라이언트 에러', error);
-    }
-  };
-
   const getPastOrder = async () => {
     try {
       const client_id = user?.result.client_id;
@@ -56,16 +44,18 @@ export default function MainContainer() {
   };
 
   useEffect(() => {
-    getUsers();
-  }, []);
-  console.log('유저 정보 : ', user);
-
-  useEffect(() => {
     if (user?.result?.client_id) {
       getPastOrder();
       console.log(pastOrder);
     }
   }, [user?.result?.client_id]);
+
+  useEffect(() => {
+    if (user && !user.isSuccess && user.code === '4005') {
+      setState((prev) => ({ ...prev, alert: true }));
+    }
+  }, [user]);
+  console.log(user);
 
   const setPastOrderId = async (past_order_id: string) => {
     try {
