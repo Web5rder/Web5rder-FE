@@ -1,0 +1,58 @@
+export const QuoteViewData: QuotationViewInfoTypes[] = [
+  {
+    id: 0,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 1,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 2,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 3,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 4,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 5,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 6,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+  {
+    id: 7,
+    name: 'minkyu',
+    total_price: 125000,
+    created_at: '2024. 07. 06',
+    updated_at: '2024. 07. 06',
+  },
+];
