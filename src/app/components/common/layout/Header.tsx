@@ -11,13 +11,14 @@ function Header() {
         </div>
         <div className="flex gap-x-10 items-center justify-center w-full font-normal text-2xl ml-12 mr-40 ">
           <Link href="/">{HEADER_TEXT[0]}</Link>
-          <Link href="/quotation">{HEADER_TEXT[1]}</Link>
-          <Link href="/">{HEADER_TEXT[2]}</Link>
-          <Link href="/">{HEADER_TEXT[3]}</Link>
+          <Link href="/order">{HEADER_TEXT[1]}</Link>
+          <Link href="/quotation">{HEADER_TEXT[2]}</Link>
+          <Link href="/pastorder">{HEADER_TEXT[3]}</Link>
         </div>
         <div className="flex gap-x-3 h-full items-end mb-3 font-semibold text-lg text-[#6ABE39] absolute right-40">
           <Link href="/">{HEADER_TEXT[4]}</Link>
           <Link href="/">{HEADER_TEXT[5]}</Link>
+          <Link href="/" className='text-gray-5'>{HEADER_TEXT[6]}</Link>
         </div>
         <div className="flex w-[180x] h-[40px] text-[32px] font-semibold" />
       </header>
