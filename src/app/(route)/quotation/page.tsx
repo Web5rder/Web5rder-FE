@@ -1,19 +1,16 @@
-import MainContainer from '@/app/components/quotation/MainContainer';
-import NavBar from '@/app/components/quotation/NavBar';
-import TopBar from '@/app/components/quotation/TopBar';
+import Footer from '@/app/components/common/layout/Footer';
+import SideNavBar from '@/app/components/common/layout/SideNavBar';
+import MainContainer from '@/app/components/quotation/container/QuotationContainer';
 
 export default function Quotation() {
   return (
     <section>
-      <div className="bg-white w-full h-screen flex relative">
-        {/* 네비게이션 바 */}
-        <NavBar />
-
-        {/* 탑바 */}
-        <TopBar />
-
-        {/* 메인 컨테이너 */}
-        <MainContainer />
+      <div className="bg-white w-full h-screen flex flex-col relative">
+        <div className="flex w-full">
+          <SideNavBar />
+          <MainContainer />
+        </div>
+        <Footer />
       </div>
     </section>
   );
