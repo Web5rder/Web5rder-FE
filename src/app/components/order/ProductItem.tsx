@@ -4,17 +4,6 @@ import { useState } from 'react';
 import Input from '../common/Input';
 import { ORDER_TEXT } from '@/app/constants/order';
 
-export interface ProductItemProps {
-  category: string;
-  id?: string;
-  name: string;
-  count?: string;
-  isAdded?: boolean;
-  unit: string;
-  onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem?: (id: string | undefined) => void;
-}
-
 export default function ProductItem({
   category,
   id,

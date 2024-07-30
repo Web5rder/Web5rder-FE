@@ -7,7 +7,6 @@ import { categoryMapping, ORDER_TEXT } from '../../../constants/order';
 import Icons from '../../common/Icons';
 import { Dialog } from '../../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
-import { ProductItemProps } from '../ProductItem';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/utils/useUser';
 import { usePastOrder } from '@/app/utils/usePastOrder';
