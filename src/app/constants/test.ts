@@ -56,3 +56,61 @@ export const QuoteViewData: QuotationViewInfoTypes[] = [
     updated_at: '2024. 07. 06',
   },
 ];
+
+export const QuotationModalData: QuotationInfoTypes = {
+  products: [
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+    {
+      product: '초당옥수수',
+      quantity: 12,
+      price: 25000,
+      created_at: '2024. 07. 06',
+      updated_at: '2024. 07. 06',
+    },
+  ],
+  name: 'yng1404@naver.com',
+  total: 148000,
+  created_at: '2024-07-27',
+  updated_at: '2024-07-27',
+};
