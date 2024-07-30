@@ -1,4 +1,4 @@
-import MainContainer from '@/app/components/order/MainContainer';
+import OrderContainer from '@/app/components/order/container/OrderContainer';
 import NavBar from '@/app/components/order/NavBar';
 import TopBar from '@/app/components/order/TopBar';
 
@@ -13,7 +13,7 @@ export default function Order() {
         <TopBar />
 
         {/* 메인 컨테이너 */}
-        <MainContainer />
+        <OrderContainer />
       </div>
     </section>
   );

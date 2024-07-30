@@ -1,22 +1,19 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Input from '../common/Input';
+import Input from '../../common/Input';
 import { SearchIcon } from '@/app/ui/iconPath';
-import {
-  categoryMapping,
-  PRODUCT_TEXT,
-  ORDER_TEXT,
-} from '../../constants/order';
-import Icons from '../common/Icons';
-import { Dialog } from '../common/Dialog';
+import { categoryMapping, ORDER_TEXT } from '../../../constants/order';
+import Icons from '../../common/Icons';
+import { Dialog } from '../../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
-import ProductItem, { ProductItemProps } from './ProductItem';
+import { ProductItemProps } from '../ProductItem';
 import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/utils/useUser';
 import { usePastOrder } from '@/app/utils/usePastOrder';
+import ProductList from '../ProductList';
 
-export default function MainContainer() {
+export default function OrderContainer() {
   const router = useRouter();
   const { user } = useUser(); // 커스텀 훅에서 user 가져오기
   const { pastOrder, getPastOrder } = usePastOrder(); // 커스텀 훅에서 즐겨찾기 가져오기
@@ -159,58 +156,19 @@ export default function MainContainer() {
         <p className="text-sm">{ORDER_TEXT[2]}</p>
       </div>
 
-      <div className="bg-primary-4 mt-4 w-full ">
-        {/* 분류 품번 품명 단위 개수 */}
-        <div className="flex text-white font-black py-1 pl-4 pr-6 whitespace-nowrap">
-          <div className="w-[7%] pl-4">{PRODUCT_TEXT[0]}</div>
-          <div className="w-[7%]">{PRODUCT_TEXT[1]}</div>
-          <div className="w-[60%] pl-4">{PRODUCT_TEXT[2]}</div>
-          <div className="w-[10%] text-center">{PRODUCT_TEXT[3]}</div>
-          <div className="w-[8%] text-right pr-2">{PRODUCT_TEXT[4]}</div>
-          <div className="w-[8%] text-right pr-8">{PRODUCT_TEXT[5]}</div>
-        </div>
+      <ProductList
+        items={searchResults}
+        isSearchResult
+        addedItems={addedItems}
+        onAddItem={handleAddItem}
+        onRemoveItem={handleRemoveItem}
+      />
 
-        {/* 목록창 */}
-        <div className="bg-white px-3 h-80 flex-col border-2 whitespace-nowrap overflow-scroll">
-          {/* 개별 목록 */}
-          {searchResults.map((item) => (
-            <ProductItem
-              key={item.id}
-              category={categoryMapping[item.category]}
-              id={item.id}
-              name={item.name}
-              isAdded={
-                !!addedItems.find((addedItem) => addedItem.id === item.id)
-              }
-              unit={item.unit}
-              onAddItem={handleAddItem}
-              onRemoveItem={handleRemoveItem}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className="w-full bg-primary-4 mt-4 ">
-        {/* 분류 품번 품명 단위 개수 */}
-        <div className="flex text-white font-black px-4 py-1">
-          {ORDER_TEXT[3]}
-        </div>
-
-        <div className="bg-white px-3 h-48 flex-col border-2 whitespace-nowrap overflow-scroll">
-          {addedItems.map((item) => (
-            <ProductItem
-              key={item.id}
-              category={item.category}
-              id={item.id}
-              name={item.name}
-              count={item.count || '1'}
-              isAdded
-              unit={item.unit}
-              onRemoveItem={handleRemoveItem}
-            />
-          ))}
-        </div>
-      </div>
+      <ProductList
+        items={addedItems}
+        isSearchResult={false}
+        onRemoveItem={handleRemoveItem}
+      />
 
       <div className="w-full flex justify-end gap-12 mt-4">
         <button
