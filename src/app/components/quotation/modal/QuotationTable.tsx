@@ -1,4 +1,4 @@
-import { MODAL_TEXT } from '@/app/constants/quotation';
+import { MODAL_TEXT } from '@/app/constants/order';
 
 interface QuotationTableProps {
   quotationInfo: QuotationInfoTypes;

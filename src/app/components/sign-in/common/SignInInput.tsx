@@ -4,6 +4,7 @@ import Input from '../../common/Input';
 function SignInInput({
   label,
   placeholder,
+  type,
   value = '',
   onChange = () => {},
   error,
@@ -15,6 +16,7 @@ function SignInInput({
       <Input
         className={error ? 'border-red-1' : 'border-gray-3'}
         textValue={value}
+        inputType={type}
         placeholder={placeholder}
         type="signin"
         onChange={onChange}

@@ -1,8 +1,8 @@
-import { MODAL_INFO } from '@/app/constants/quotation';
 import { cancelIcon } from '@/app/ui/iconPath';
 import Icons from '../../common/Icons';
 import QuotationSave from './QuotationSave';
 import QuotationTable from './QuotationTable';
+import { MODAL_INFO } from '@/app/constants/order';
 
 const mookData: QuotationInfoTypes = {
   products: [

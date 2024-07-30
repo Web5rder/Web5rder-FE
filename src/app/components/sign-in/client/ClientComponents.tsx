@@ -2,19 +2,23 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SignInData, { clientMapping } from '@/app/constants/sign-in';
-import SignInInput from '../../common/SignInInput';
-import SignInButton from '../../common/SignInButton';
+import {
+  clientMapping,
+  SIGNIN_PLACEHOLDER,
+  SIGNIN_TEXT,
+  SIGNUP_BUTTON,
+} from '@/app/constants/sign-in';
 import { ValidationClientType } from '@/app/_types/sign-in';
+import { callPost } from '@/app/utils/callApi';
+import SignInButton from '../common/SignInButton';
+import SignInInput from '../common/SignInInput';
 
-function SignUpClientComponents() {
+function ClientComponents() {
   const router = useRouter();
 
   const [formState, setFormState] = useState({
-    region: '',
     name: '',
     address: '',
-    regionError: '',
     nameError: '',
     addressError: '',
     isBtnActive: false,
@@ -40,15 +44,26 @@ function SignUpClientComponents() {
     }));
   };
 
+  const handlePostClient = async () => {
+    try {
+      const body = {
+        name: formState.name,
+        address: formState.address,
+      };
+      const responseData = await callPost('/api/sign-in/client', body);
+      console.log('리스폰스 데이터', responseData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleBtnClick = () => {
-    const regionError = validateField('region', formState.region);
     const nameError = validateField('name', formState.name);
     const addressError = validateField('address', formState.address);
 
-    if (regionError || nameError || addressError) {
+    if (nameError || addressError) {
       setFormState((prevState) => ({
         ...prevState,
-        regionError,
         nameError,
         addressError,
         isBtnActive: false,
@@ -56,29 +71,20 @@ function SignUpClientComponents() {
     } else {
       setFormState((prevState) => ({
         ...prevState,
-        regionError: '',
         nameError: '',
         addressError: '',
         isBtnActive: true,
       }));
-      router.push('/sign-in');
+      handlePostClient();
+      router.push('/');
     }
   };
 
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
       <SignInInput
-        label={SignInData.SignInConstants.REGION}
-        placeholder={SignInData.SignInPlaceholder.REGION}
-        type="text"
-        value={formState.region}
-        onChange={(e) => handleInputChange(e, 'region')}
-        error={!!formState.regionError}
-        errorMessage={formState.regionError}
-      />
-      <SignInInput
-        label={SignInData.SignInConstants.NAME}
-        placeholder={SignInData.SignInPlaceholder.NAME}
+        label={SIGNIN_TEXT[6]}
+        placeholder={SIGNIN_PLACEHOLDER[4]}
         type="text"
         value={formState.name}
         onChange={(e) => handleInputChange(e, 'name')}
@@ -86,8 +92,8 @@ function SignUpClientComponents() {
         errorMessage={formState.nameError}
       />
       <SignInInput
-        label={SignInData.SignInConstants.ADDRESS}
-        placeholder={SignInData.SignInPlaceholder.ADDRESS}
+        label={SIGNIN_TEXT[7]}
+        placeholder={SIGNIN_PLACEHOLDER[5]}
         type="text"
         value={formState.address}
         onChange={(e) => handleInputChange(e, 'address')}
@@ -95,9 +101,13 @@ function SignUpClientComponents() {
         errorMessage={formState.addressError}
       />
 
-      <SignInButton type="button" text="생성" onClick={handleBtnClick} />
+      <SignInButton
+        type="button"
+        text={SIGNUP_BUTTON[1]}
+        onClick={handleBtnClick}
+      />
     </div>
   );
 }
 
-export default SignUpClientComponents;
+export default ClientComponents;

@@ -1,8 +1,8 @@
-import MainContainer from '@/app/components/quotation/MainContainer';
-import NavBar from '@/app/components/quotation/NavBar';
-import TopBar from '@/app/components/quotation/TopBar';
+import OrderContainer from '@/app/components/order/container/OrderContainer';
+import NavBar from '@/app/components/order/NavBar';
+import TopBar from '@/app/components/order/TopBar';
 
-export default function Quotation() {
+export default function Order() {
   return (
     <section>
       <div className="bg-white w-full h-screen flex relative">
@@ -13,7 +13,7 @@ export default function Quotation() {
         <TopBar />
 
         {/* 메인 컨테이너 */}
-        <MainContainer />
+        <OrderContainer />
       </div>
     </section>
   );
