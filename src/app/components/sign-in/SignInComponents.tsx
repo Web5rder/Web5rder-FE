@@ -5,9 +5,14 @@ import { useRouter } from 'next/navigation';
 import SignInButton from './common/SignInButton';
 import SignInInput from './common/SignInInput';
 import SignInSubTab from './SignInSubTab';
-import SignInData from '@/app/constants/sign-in';
 import { ValidationType } from '@/app/_types/sign-in';
 import { postLogin } from '@/app/service/postRequest';
+import {
+  SIGNIN_ERROR,
+  SIGNIN_PLACEHOLDER,
+  SIGNIN_TEXT,
+} from '@/app/constants/sign-in';
+import { setTokens } from '@/app/utils/setTokens';
 
 function SignInComponents() {
   const router = useRouter();
@@ -30,13 +35,19 @@ function SignInComponents() {
 
   const handleBtnClick = async () => {
     const { email, pwd } = signInState;
+
+    if (!email || !pwd) {
+      alert('이메일과 비밀번호를 입력해주세요.');
+      return;
+    }
+
     try {
       const responseData = await postLogin({ email, pwd });
       if (responseData.isSuccess) {
-        localStorage.setItem('JMFtoken', responseData.result.access_token);
+        setTokens(responseData.result.access_token);
         router.push('/');
       } else {
-        alert(SignInData.SignInError.LOGIN);
+        alert(SIGNIN_ERROR[0]);
       }
     } catch (error) {
       alert('오류가 발생했습니다.');
@@ -46,16 +57,16 @@ function SignInComponents() {
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
       <SignInInput
-        label={SignInData.SignInConstants.EMAIL}
-        placeholder={SignInData.SignInPlaceholder.EMAIL}
+        label={SIGNIN_TEXT[0]}
+        placeholder={SIGNIN_PLACEHOLDER[0]}
         type="email"
         value={signInState.email}
         onChange={(e) => handleInputChange(e, 'email')}
       />
 
       <SignInInput
-        label={SignInData.SignInConstants.PWD}
-        placeholder={SignInData.SignInPlaceholder.PWD_CONFIRM}
+        label={SIGNIN_TEXT[2]}
+        placeholder={SIGNIN_PLACEHOLDER[2]}
         type="password"
         value={signInState.pwd}
         onChange={(e) => handleInputChange(e, 'pwd')}
@@ -64,7 +75,7 @@ function SignInComponents() {
       <SignInButton
         onClick={handleBtnClick}
         type="button"
-        text={SignInData.SignInConstants.LOGIN}
+        text={SIGNIN_TEXT[4]}
       />
 
       <SignInButton

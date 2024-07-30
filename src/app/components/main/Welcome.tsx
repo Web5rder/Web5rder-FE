@@ -15,7 +15,7 @@ function Welcome() {
         <Image src="/Images/mainImage.jpg" alt="배경" fill />
       </div>
       <Link
-        href="/login"
+        href="/order"
         className="w-[680px] h-[60px] flex items-center justify-center text-white text-2xl bg-[#55AA00] rounded-[50px] shadow-md shadow-slate-400"
       >
         {WELCOME_TEXT[4]}
