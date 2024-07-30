@@ -14,11 +14,11 @@ const QuotationViewTable = ({ quotationViewInfo }: QuotationViewTableProps) => {
         <div className="w-[78px] text-center">{VIEW_QUOTATION_GRAPH[3]}</div>
       </div>
       <div className="w-full h-[0px] border-2 border-black" />
-      <div className="flex flex-col w-full h-[37px] gap-y-2 mt-2">
+      <div className="flex flex-col w-full gap-y-1 mt-1">
         {quotationViewInfo.map((quoteView, index) => {
           return (
             <div key={quoteView.id}>
-              <div className="w-full h-9 pl-1 justify-start items-center gap-x-[20px] inline-flex ">
+              <div className="w-full pl-1 justify-start items-center gap-x-[20px] inline-flex h-[48px] text-lg">
                 <div className="w-[108px] text-center">{index + 1}</div>
                 <div className="w-[200px] text-center">
                   {quoteView.created_at}
@@ -29,8 +29,8 @@ const QuotationViewTable = ({ quotationViewInfo }: QuotationViewTableProps) => {
                 <div className="w-[170px] text-center">
                   {quoteView.total_price}원
                 </div>
-                <div className="w-[58px] text-center cursor-pointer text">{'조회'}</div>
-                <div className="w-[58px] text-center cursor-pointer">{'수정'}</div>
+                <div className="w-[58px] text-center cursor-pointer font-bold">{'조회'}</div>
+                <div className="w-[58px] text-center cursor-pointer font-bold text-primary-4">{'수정'}</div>
               </div>
               <div className="w-full h-[0px] border border-black" />
             </div>
