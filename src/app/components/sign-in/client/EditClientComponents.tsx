@@ -51,7 +51,18 @@ export default function EditClientComponents() {
         name: formState.name,
         address: formState.address,
       };
-      // const responseData = await callPost('/api/sign-in/client', body);
+      const response = await fetch(
+        `/api/sign-in/client/${user?.result.id}/update`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        },
+      );
+      const responseData = await response.json();
+      console.log(responseData);
     } catch (error) {
       console.error(error);
     }
@@ -80,8 +91,6 @@ export default function EditClientComponents() {
     }
   };
 
-  const handleDeleteClick = () => {};
-
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
       <SignInInput
@@ -107,13 +116,6 @@ export default function EditClientComponents() {
         type="button"
         text={SIGNUP_BUTTON[2]}
         onClick={handleBtnClick}
-      />
-
-      <SignInButton
-        isDelete
-        type="button"
-        text={SIGNUP_BUTTON[3]}
-        onClick={handleDeleteClick}
       />
     </div>
   );
