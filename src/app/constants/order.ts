@@ -13,9 +13,11 @@ export const PRODUCT_TEXT = ['분류', '품번', '품명', '개수', '단위', '
 export const MODAL_TEXT = [
   '주문일자',
   '상품명',
-  '주문 개수',
+  '개수',
   '총 가격',
   '사진으로 저장',
+  '단위',
+  '분류',
 ];
 
 export const MODAL_INFO = ['견적서', 'Date', '구매자', '총액'];

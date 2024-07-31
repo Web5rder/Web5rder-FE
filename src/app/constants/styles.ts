@@ -3,7 +3,7 @@ export const BUTTON_STYLE = {
     `w-32 h-12 bg-[#49AA19] rounded-2xl text-white shadow-lg ${className}`,
   dialog: (className: string) =>
     `flex-center p-2 gap-2 rounded-lg w-full whitespace-nowrap text-sm font-extrabold ${className}`,
-  default: () => 'w-full h-full',
+  default: (className: string) => `w-full h-full ${className}`,
 } as const;
 
 export const INPUT_STYLE = {
