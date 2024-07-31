@@ -7,7 +7,6 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     const { past_order_id } = params;
-    console.log('아이디', past_order_id);
     const data = await getPastOrder(past_order_id);
     return NextResponse.json(data);
   } catch (error) {
