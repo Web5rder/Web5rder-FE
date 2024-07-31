@@ -1,6 +1,8 @@
 'use client';
 import { VIEW_QUOTATION_GRAPH } from '@/app/constants/quotation';
 import { useModal } from '@/app/hooks/useModal';
+import { callGet } from '@/app/utils/callApi';
+import { useEffect, useState } from 'react';
 import QuotationModal from './modal/QuotationModal';
 
 interface QuotationViewTableProps {
@@ -9,6 +11,21 @@ interface QuotationViewTableProps {
 
 const QuotationViewTable = ({ quotationViewInfo }: QuotationViewTableProps) => {
   const { isOpen, openModal, closeModal, handleModalClick } = useModal(false);
+  const [quotation, setQuotation] = useState<QuotationTableInfoTypes | null>(
+    null,
+  );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await callGet('/api/quotation' );
+      console.log('가져온 데이터', data);
+
+      setQuotation(data.result);
+    };
+    fetchData();
+  }, []);
+
+  console.log(quotation);
 
   return (
     <div className="w-full h-[710px]">

@@ -1,5 +1,7 @@
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER;
-
+const commonHeaders = {
+  'Content-Type': 'application/json',
+};
 export interface searchProductsProps {
   namePrefix: string;
   limit: string;
@@ -24,7 +26,6 @@ export const getUsers = async (token: string) => {
         `내 정보 조회(getRequest) fetch 실패: ${response.statusText}`,
       );
     }
-
     const data = await response.json();
     return data;
   } catch (error) {
@@ -117,4 +118,23 @@ export const getClientPastOrder = async (client_id: string) => {
     console.error('Error: ', error);
     throw error;
   }
+};
+
+const getRequest = async (url: string, token?: string) => {
+  try {
+    const headers = token
+      ? { ...commonHeaders, 'access-token': token }
+      : commonHeaders;
+    const response = await fetch(url, {
+      headers: headers,
+    }).then((res) => res.json());
+    return response;
+  } catch (error) {
+    console.log('Error:', error);
+  }
+};
+
+export const getQuotation = async (client_id: string, accessToken: string) => {
+  const url = `${SERVER_URL}/api/v1/clients/16/quotations`;
+  return await getRequest(url, accessToken);
 };
