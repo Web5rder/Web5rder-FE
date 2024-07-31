@@ -128,12 +128,12 @@ export default function OrderContainer() {
             {ORDER_TEXT[0]}
           </button>
           {state.showBookmark && (
-            <div className="absolute flex flex-col w-auto bg-white border-t-[1px] border-2 border-gray-2">
+            <div className="absolute flex flex-col w-auto bg-white">
               {pastOrder.map((order) => (
                 <button
                   key={order.past_order_id}
                   type="button"
-                  className="px-4 py-1 border-b border-gray-2 cursor-pointer last:border-none"
+                  className="px-4 py-1 border-b border-gray-2 cursor-pointer  border-t-[1px] border-2 "
                   onClick={() => setPastOrderId(order.past_order_id.toString())}
                 >
                   {order.name}
