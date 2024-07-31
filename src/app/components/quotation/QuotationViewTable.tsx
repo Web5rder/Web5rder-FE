@@ -1,7 +1,7 @@
 'use client';
 import { VIEW_QUOTATION_GRAPH } from '@/app/constants/quotation';
 import { useModal } from '@/app/hooks/useModal';
-import QuotationModal from './modal/QuotationModal';
+import QuotationModal from '../order/quotation/QuotationModal';
 
 interface QuotationViewTableProps {
   quotationViewInfo: QuotationViewInfoTypes[];
