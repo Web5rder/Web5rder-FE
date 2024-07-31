@@ -13,6 +13,7 @@ export default function ProductItem({
   unit,
   onAddItem,
   onRemoveItem,
+  onCountChange,
 }: ProductItemProps) {
   const [inputState, setInputState] = useState({
     count: count || '1',
@@ -28,6 +29,7 @@ export default function ProductItem({
       if (Number.isNaN(numericValue) || numericValue <= 0) {
         value = '1'; // 0 이하의 값일 경우 1로 설정
       }
+      onCountChange?.(id, value);
     }
     setInputState((prev) => ({
       ...prev,

@@ -41,6 +41,7 @@ interface ProductItemProps {
   unit: string;
   onAddItem?: (item: ProductItemProps) => void;
   onRemoveItem?: (id: string | undefined) => void;
+  onCountChange?: (id: string | undefined, value: string) => void;
 }
 
 interface ProductListProps {
@@ -49,6 +50,7 @@ interface ProductListProps {
   addedItems?: ProductItemProps[];
   onAddItem?: (item: ProductItemProps) => void;
   onRemoveItem: (id: string | undefined) => void;
+  onCountChange?: (id: string | undefined, value: string) => void;
 }
 interface QuotationViewInfoTypes {
   id: number;

@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/utils/useUser';
 import { usePastOrder } from '@/app/utils/usePastOrder';
 import ProductList from '../ProductList';
+import QuotationModal from '../quotation/QuotationModal';
 
 export default function OrderContainer() {
   const router = useRouter();
@@ -23,6 +24,7 @@ export default function OrderContainer() {
     alert: false,
     search: '',
     bookmarkName: '',
+    quotation: false,
   });
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]); // 검색 결과
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]); // 추가한 상품
@@ -33,7 +35,7 @@ export default function OrderContainer() {
       setState((prev) => ({ ...prev, alert: true }));
     }
   }, [user]);
-  console.log(user);
+  console.log(addedItems);
 
   // 즐겨 찾기에서 불러온 상품을 추가한 상품에 저장
   const setPastOrderId = async (past_order_id: string) => {
@@ -46,7 +48,7 @@ export default function OrderContainer() {
           name: product.name,
           unit: product.unit,
           price: product.price,
-          count: '1',
+          count: product.count,
         }));
         setAddedItems(productList);
         setState((prev) => ({ ...prev, showBookmark: false }));
@@ -103,7 +105,7 @@ export default function OrderContainer() {
 
   const handleAddItem = (item: ProductItemProps) => {
     setAddedItems((prevItems) => {
-      return [...prevItems, { ...item, count: item.count || '1' }];
+      return [...prevItems, { ...item, count: item.count }];
     });
   };
 
@@ -111,6 +113,11 @@ export default function OrderContainer() {
     setAddedItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
+  const handleCountChange = (id: string | undefined, count: string) => {
+    setAddedItems((prevItems) =>
+      prevItems.map((item) => (item.id === id ? { ...item, count } : item)),
+    );
+  };
   return (
     <div className="mt-14 px-24 py-2 w-full min-w-[320px]">
       <div className="flex gap-4 items-center">
@@ -161,12 +168,14 @@ export default function OrderContainer() {
         addedItems={addedItems}
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
+        onCountChange={handleCountChange}
       />
 
       <ProductList
         items={addedItems}
         isSearchResult={false}
         onRemoveItem={handleRemoveItem}
+        onCountChange={handleCountChange}
       />
 
       <div className="w-full flex justify-end gap-12 mt-4">
@@ -181,6 +190,9 @@ export default function OrderContainer() {
         </button>
 
         <button
+          onClick={() => {
+            setState((prev) => ({ ...prev, quotation: true }));
+          }}
           type="button"
           className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
@@ -215,6 +227,15 @@ export default function OrderContainer() {
               bookmarkName: e.target.value.slice(0, 10), // 10자 제한
             }))
           }
+        />
+      )}
+
+      {state.quotation && (
+        <QuotationModal
+          QuotationModalData={addedItems}
+          closeModal={() => {
+            setState((prev) => ({ ...prev, quotation: false }));
+          }}
         />
       )}
     </div>
