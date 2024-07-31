@@ -50,3 +50,12 @@ interface ProductListProps {
   onAddItem?: (item: ProductItemProps) => void;
   onRemoveItem: (id: string | undefined) => void;
 }
+interface QuotationViewInfoTypes {
+  id: number;
+  name: string;
+  total_price: number;
+  created_at: string;
+  updated_at: string;
+}
+
+type CheckTypes = 'week' | 'month' | 'date';

@@ -6,7 +6,7 @@ interface QuotationTableProps {
 
 const QuotationTable = ({ quotationInfo }: QuotationTableProps) => {
   return (
-    <div className="w-[600px] h-[410px] flex-col">
+    <div className="w-[600px] h-[410px]">
       <div className="flex gap-x-3 text-xl font-semibold h-8 pl-10 mt-[76px]">
         <div className="w-40 text-center">{MODAL_TEXT[0]}</div>
         <div className="w-28 text-center">{MODAL_TEXT[1]}</div>
