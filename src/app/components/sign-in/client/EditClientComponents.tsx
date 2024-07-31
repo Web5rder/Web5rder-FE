@@ -52,7 +52,7 @@ export default function EditClientComponents() {
         address: formState.address,
       };
       const response = await fetch(
-        `/api/sign-in/client/${user?.result.id}/update`,
+        `/api/sign-in/client/${user?.result.client_id}/update`,
         {
           method: 'PUT',
           headers: {
@@ -61,8 +61,7 @@ export default function EditClientComponents() {
           body: JSON.stringify(body),
         },
       );
-      const responseData = await response.json();
-      console.log(responseData);
+      await response.json();
     } catch (error) {
       console.error(error);
     }
