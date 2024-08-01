@@ -18,7 +18,7 @@ export const HEADER_TEXT = [
   '주문내역',
   '회원가입',
   '로그인',
-  '거래처 생성',
+  '거래처관리',
 ];
 
 export const FOOTER_TEXT = [
