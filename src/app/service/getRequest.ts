@@ -134,8 +134,15 @@ const getRequest = async (url: string, token?: string) => {
   }
 };
 
-export const getQuotation = async (client_id: string, accessToken: string) => {
-  const url = `${SERVER_URL}/api/v1/clients/${client_id}/quotations`;
+export const getQuotation = async (
+  client_id: string,
+  date: string,
+  accessToken: string,
+) => {
+  const url =
+    date === 'all'
+      ? `${SERVER_URL}/api/v1/clients/${client_id}/quotations`
+      : `${SERVER_URL}/api/v1/clients/${client_id}/quotations/date?date_range_type=${date}`;
   return await getRequest(url, accessToken);
 };
 

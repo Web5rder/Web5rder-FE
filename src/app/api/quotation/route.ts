@@ -7,9 +7,10 @@ export async function GET(req: Request): Promise<NextResponse> {
     const token = getCookie(req, 'accessToken');
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id') || '';
-    console.log(id,'로 요청');
-    
-    const data = await getQuotation(id, token);
+    const date = searchParams.get('date') || '';
+    console.log(id, date, '로 요청');
+
+    const data = await getQuotation(id, date, token);
     return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json('Internal Server Error');

@@ -5,7 +5,11 @@ import { useUser } from '@/app/utils/useUser';
 import { useEffect, useState } from 'react';
 import QuotationViewTableInfo from './QuotationViewTableInfo';
 
-const QuotationViewTable = () => {
+interface QuotationViewTableProps {
+  viewType: CheckTypes;
+}
+
+const QuotationViewTable = ({ viewType }: QuotationViewTableProps) => {
   const { user } = useUser();
   const [quotation, setQuotation] = useState<QuotationTableInfoTypes | null>(
     null,
@@ -14,11 +18,12 @@ const QuotationViewTable = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await callGet(`/api/quotation?id=${user?.result.client_id}`);
+      const url = `/api/quotation?id=${user?.result.client_id}&date=${viewType}`;
+      const data = await callGet(url);
       setQuotation(data.result);
     };
     fetchData();
-  }, [user]);
+  }, [user, viewType]);
 
   return (
     <div className="w-full h-[710px]">
