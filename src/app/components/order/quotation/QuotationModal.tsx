@@ -9,12 +9,16 @@ import { useUser } from '@/app/utils/useUser';
 import Button from '../../common/Button';
 import Input from '../../common/Input';
 import { useState, useEffect } from 'react';
-import { callPost } from '@/app/utils/callApi';
+import { callGet, callPost } from '@/app/utils/callApi';
 
 interface QuotationModalProps {
   QuotationModalData: any;
   closeModal: () => void;
 }
+
+const formatNumber = (number: number) => {
+  return new Intl.NumberFormat('ko-KR').format(number);
+};
 
 export default function QuotationModal({
   QuotationModalData,
@@ -23,6 +27,7 @@ export default function QuotationModal({
   const { user } = useUser();
   const [currentDate, setCurrentDate] = useState('');
   const [quotationId, setQuotationId] = useState<number | null>(null);
+  const [total, setTotal] = useState(0);
 
   // 견적서 생성
   const createQuotations = async () => {
@@ -33,7 +38,7 @@ export default function QuotationModal({
         status: 'CREATED',
       };
       const response = await callPost('/api/order/quotations', body);
-      console.log(response);
+
       if (response.isSuccess && response.result) {
         return response.result.id;
       }
@@ -52,37 +57,58 @@ export default function QuotationModal({
         quantity: item.count,
       }));
 
-      const response = await callPost('/api/order/quotations/products', body);
-      console.log('견적서 물품 생성 응답:', response);
+      await callPost('/api/order/quotations/products', body);
     } catch (error) {
       console.error(error);
     }
   };
 
+  // 견적서 합계 금액 업데이트
+  const updateTotal = async (quotation_id: number) => {
+    try {
+      const data = await callGet(`/api/order/quotations/${quotation_id}/total`);
+      if (data.isSuccess) {
+        setTotal(data.result);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 오늘 날짜 불러오기
   useEffect(() => {
     const today = new Date();
     const formattedDate = today.toISOString().split('T')[0];
     setCurrentDate(formattedDate);
   }, []);
 
+  // 견적서 완성
   useEffect(() => {
-    const createQuotationAndProducts = async () => {
+    const completeQuotation = async () => {
       if (currentDate && user?.result.client_id) {
-        const id = await createQuotations();
-        setQuotationId(id);
-        if (id) {
+        try {
+          // 1. 견적서 생성
+          const id = await createQuotations();
+          if (!id) {
+            console.error('견적서 생성 실패');
+            return;
+          }
           setQuotationId(id);
+
+          // 2. 견적서 물품 생성
           await createProducts(id);
+
+          // 3. 견적서 합계 금액 업데이트
+          await updateTotal(id);
+        } catch (error) {
+          console.error('견적서 생성 중 오류 발생 : ', error);
         }
       }
     };
 
-    createQuotationAndProducts();
+    // 견적서 완성
+    completeQuotation();
   }, [currentDate, user?.result.client_id]);
-
-  useEffect(() => {
-    console.log('견적서 ID', quotationId);
-  }, [quotationId]);
   return (
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
       <div className="flex flex-col w-[680px] h-[812px] rounded-3xl px-8 py-7 bg-white relative whitespace-nowrap">
@@ -123,7 +149,7 @@ export default function QuotationModal({
           <span className="text-2xl mr-4">{MODAL_INFO[3]}</span>
           <div className="pl-4 border-double border-b-[7px] border-[#55aa00]">
             <span className="text-2xl sm:text-4xl font-bold text-end pb-1">
-              1,000,000 원
+              {formatNumber(total)} 원
             </span>
           </div>
         </div>
