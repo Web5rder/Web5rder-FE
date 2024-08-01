@@ -1,4 +1,5 @@
 import { MODAL_TEXT } from '@/app/constants/order';
+import { formatDate } from '@/app/utils/date';
 
 interface QuotationTableProps {
   quotationInfo: QuotationInfoTypes;
@@ -21,7 +22,7 @@ const QuotationTable = ({ quotationInfo }: QuotationTableProps) => {
               <div className="w-[598px] h-9 pl-1 justify-start items-center gap-x-[22px] inline-flex ">
                 <div className="w-[34px] text-center">{index}</div>
                 <div className="w-[122px] text-center">
-                  {itemData.created_at}
+                  {formatDate(itemData.created_at)}
                 </div>
                 <div className="w-[137px] text-center">{itemData.product}</div>
                 <div className="w-[82px] text-center">{itemData.quantity}</div>
