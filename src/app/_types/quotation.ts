@@ -22,7 +22,7 @@ interface QuotationViewInfoTypes {
   updated_at: string;
 }
 
-type CheckTypes = 'week' | 'month' | 'date';
+type CheckTypes = 'all' | 'week' | 'month' | 'date';
 
 interface ItemsTypes {
   id: number;
