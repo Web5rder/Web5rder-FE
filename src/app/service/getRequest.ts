@@ -124,13 +124,11 @@ const getRequest = async (url: string, token?: string) => {
   try {
     const headers = token
       ? { ...commonHeaders, 'access-token': token }
-      : commonHeaders;
-    const response = await fetch(url, {
-      headers: headers,
-    }).then((res) => res.json());
+      : { ...commonHeaders };
+    const response = await fetch(url, { headers }).then((res) => res.json());
     return response;
   } catch (error) {
-    console.log('Error:', error);
+    return error;
   }
 };
 
@@ -143,7 +141,7 @@ export const getQuotation = async (
     date === 'all'
       ? `${SERVER_URL}/api/v1/clients/${client_id}/quotations`
       : `${SERVER_URL}/api/v1/clients/${client_id}/quotations/date?date_range_type=${date}`;
-  return await getRequest(url, accessToken);
+  return getRequest(url, accessToken);
 };
 
 export const getQuotationDetail = async (
@@ -151,5 +149,5 @@ export const getQuotationDetail = async (
   accessToken: string,
 ) => {
   const url = `${SERVER_URL}/api/v1/quotations/${quotationId}`;
-  return await getRequest(url, accessToken);
+  return getRequest(url, accessToken);
 };

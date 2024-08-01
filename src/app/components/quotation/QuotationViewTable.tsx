@@ -1,4 +1,5 @@
 'use client';
+
 import { VIEW_QUOTATION_GRAPH } from '@/app/constants/quotation';
 import { callGet } from '@/app/utils/callApi';
 import { useUser } from '@/app/utils/useUser';
@@ -35,7 +36,13 @@ const QuotationViewTable = ({ viewType }: QuotationViewTableProps) => {
       <div className="w-full h-[0px] border-2 border-black" />
       <div className="flex flex-col w-full gap-y-1 mt-1">
         {quotation?.items.map((quoteView, index) => {
-          return <QuotationViewTableInfo quoteView={quoteView} index={index} />;
+          return (
+            <QuotationViewTableInfo
+              quoteView={quoteView}
+              index={index}
+              key={quoteView.id}
+            />
+          );
         })}
       </div>
     </div>

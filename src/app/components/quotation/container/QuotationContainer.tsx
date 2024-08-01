@@ -1,4 +1,5 @@
 'use client';
+
 import { QUOTATION } from '@/app/constants/quotation';
 import { useState } from 'react';
 import QuotationViewTable from '../QuotationViewTable';

@@ -10,13 +10,13 @@ const deleteRequest = async (url: string) => {
       method: 'DELETE',
       headers: commonHeaders,
     });
-    return response.json();
+    return await response.json();
   } catch (err) {
-    console.log('Error in delete:', err);
+    throw err;
   }
 };
 
 export const deleteQuotation = async (id: string) => {
   const url = `${SERVER_URL}/api/v1/quotations/${id}/delete`;
-  return await deleteRequest(url);
+  return deleteRequest(url);
 };

@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 import Icons from '../../common/Icons';
 import QuotationSave from './QuotationSave';
 import QuotationTable from './QuotationTable';
+
 interface QuotationModalProps {
   closeModal: () => void;
   id: number;
