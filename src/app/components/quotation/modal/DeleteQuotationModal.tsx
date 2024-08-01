@@ -20,13 +20,13 @@ const DeleteQuotationModal = ({
         <div className="flex gap-x-7 mt-[52px]">
           <Button
             buttonText={QUOTATION_DELETE[1]}
-            type={'modalButton'}
+            type="modalButton"
             onClickHandler={closeModal}
             className="bg-[#55aa00]"
           />
           <Button
             buttonText={QUOTATION_DELETE[2]}
-            type={'modalButton'}
+            type="modalButton"
             onClickHandler={deleteQuote}
             className="bg-[#cf360c]"
           />

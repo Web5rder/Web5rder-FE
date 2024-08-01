@@ -7,7 +7,7 @@ export default function Quotation() {
   return (
     <section>
       <div className="bg-white w-full h-screen flex flex-col relative">
-        <div className='w-full flex relative h-full'>
+        <div className="w-full flex relative h-full">
           <SideNavBar selected={SIDENAV_TEXT[2]} />
           <div className="flex-center w-full">
             <QuotationContainer />
