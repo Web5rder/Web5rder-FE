@@ -7,8 +7,8 @@ export async function GET(request: Request): Promise<NextResponse> {
     const token = getCookie(request, 'accessToken');
     const url = new URL(request.url);
     const namePrefix = url.searchParams.get('name_prefix') || '';
-    const limit = url.searchParams.get('limit') || '10'; // default value: 10
-    const cachedTime = url.searchParams.get('cached_time') || '300'; // default value: 300
+    const limit = url.searchParams.get('limit') || '10';
+    const cachedTime = url.searchParams.get('cached_time') || '300';
 
     const data = await getSearchProducts({
       namePrefix,
