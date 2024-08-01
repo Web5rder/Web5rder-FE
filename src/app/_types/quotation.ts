@@ -35,8 +35,8 @@ interface ItemsTypes {
 
 interface QuotationTableInfoTypes {
   items: ItemsTypes[];
-  total: 0;
-  page: 0;
-  page_size: 0;
-  total_pages: 0;
+  total: number;
+  page: number;
+  page_size: number;
+  total_pages: number;
 }
