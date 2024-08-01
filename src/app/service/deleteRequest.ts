@@ -18,7 +18,5 @@ const deleteRequest = async (url: string) => {
 
 export const deleteQuotation = async (id: string) => {
   const url = `${SERVER_URL}/api/v1/quotations/${id}/delete`;
-  console.log(url, '로 삭제요청');
-
   return await deleteRequest(url);
 };

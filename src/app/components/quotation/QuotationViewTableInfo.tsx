@@ -17,7 +17,6 @@ const QuotationViewTableInfo = ({
 
   const deleteQuotation = async (id: number) => {
     const data = await callDelete(`/api/quotation/delete?id=${id}`);
-    console.log(data.result, '삭제 후 응답');
   };
 
   return (
