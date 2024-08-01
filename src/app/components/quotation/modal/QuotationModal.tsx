@@ -4,11 +4,11 @@ import { MODAL_INFO } from '@/app/constants/order';
 import { QuotationModalData } from '@/app/constants/test';
 import { cancelIcon } from '@/app/ui/iconPath';
 import { callGet } from '@/app/utils/callApi';
+import { formatDate } from '@/app/utils/date';
 import { useEffect, useState } from 'react';
 import Icons from '../../common/Icons';
 import QuotationSave from './QuotationSave';
 import QuotationTable from './QuotationTable';
-import { formatDate } from '@/app/utils/date';
 interface QuotationModalProps {
   closeModal: () => void;
   id: number;
@@ -39,7 +39,7 @@ const QuotationModal = ({ closeModal, id }: QuotationModalProps) => {
           <div className="flex gap-x-12 mt-6">
             <div className="flex gap-x-2">
               <div className="font-bold">{MODAL_INFO[1]}</div>
-              <div>{formatDate(detailData?.created_at||'')}</div>
+              <div>{formatDate(detailData?.created_at || '')}</div>
             </div>
             <div className="flex gap-x-2">
               <div className="font-bold">{MODAL_INFO[2]}</div>
