@@ -78,8 +78,12 @@ export default function QuotationModal({
 
   // 오늘 날짜 불러오기
   useEffect(() => {
-    const today = new Date();
-    const formattedDate = today.toISOString().split('T')[0];
+    const now = new Date();
+    const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
+    const year = koreaTime.getFullYear();
+    const month = String(koreaTime.getMonth() + 1).padStart(2, '0');
+    const day = String(koreaTime.getDate()).padStart(2, '0');
+    const formattedDate = `${year}-${month}-${day}`;
     setCurrentDate(formattedDate);
   }, []);
 
