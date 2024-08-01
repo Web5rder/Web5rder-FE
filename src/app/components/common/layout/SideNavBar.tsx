@@ -1,4 +1,5 @@
 import {
+  SELECTED_SIDENAV_ICONS,
   SIDENAV_ICONS,
   SIDENAV_PATH,
   SIDENAV_TEXT,
@@ -7,7 +8,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Icons from '../Icons';
 
-export default function SideNavBar() {
+interface SideNavBarProps {
+  selected: string;
+}
+
+export default function SideNavBar({ selected }: SideNavBarProps) {
+  const isSelected = (selectedMenu: string): boolean => {
+    return selectedMenu === selected;
+  };
   return (
     <div className="bg-white w-48 whitespace-nowrap pt-9 flex flex-col items-center ">
       <Link href={'/'}>
@@ -17,8 +25,19 @@ export default function SideNavBar() {
         {SIDENAV_PATH.map((path, i) => {
           return (
             <div key={path} className="flex items-center gap-x-2 h-9">
-              <Icons name={SIDENAV_ICONS[i]} />
-              <Link href={path}>{SIDENAV_TEXT[i]}</Link>
+              <Icons
+                name={
+                  isSelected(SIDENAV_TEXT[i])
+                    ? SELECTED_SIDENAV_ICONS[i]
+                    : SIDENAV_ICONS[i]
+                }
+              />
+              <Link
+                href={path}
+                className={`${isSelected(SIDENAV_TEXT[i]) && 'text-[#49AA19]'}`}
+              >
+                {SIDENAV_TEXT[i]}
+              </Link>
             </div>
           );
         })}

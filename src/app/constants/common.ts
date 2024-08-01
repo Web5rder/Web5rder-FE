@@ -3,6 +3,11 @@ import {
   PastOrderIcon,
   ProductsIcon,
   QuotationIcon,
+  SelectedOrderIcon,
+  SelectedPastOrderIcon,
+  SelectedProductsIcon,
+  SelectedQuotationIcon,
+  SelectedStarIcon,
   StarIcon,
 } from '@/app/ui/iconPath';
 
@@ -44,6 +49,14 @@ export const SIDENAV_ICONS = [
   QuotationIcon,
   PastOrderIcon,
   ProductsIcon,
+];
+
+export const SELECTED_SIDENAV_ICONS = [
+  SelectedStarIcon,
+  SelectedOrderIcon,
+  SelectedQuotationIcon,
+  SelectedPastOrderIcon,
+  SelectedProductsIcon,
 ];
 
 export const SIDENAV_PATH = [
