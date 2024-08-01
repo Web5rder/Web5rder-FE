@@ -8,8 +8,8 @@ import QuotationTable from './QuotationTable';
 import { useUser } from '@/app/utils/useUser';
 import Button from '../../common/Button';
 import Input from '../../common/Input';
-import { useState, useEffect } from 'react';
-import { callGet, callPost } from '@/app/utils/callApi';
+import { useState, useEffect, ChangeEvent } from 'react';
+import { callGet, callPatch, callPost } from '@/app/utils/callApi';
 
 interface QuotationModalProps {
   QuotationModalData: any;
@@ -28,6 +28,7 @@ export default function QuotationModal({
   const [currentDate, setCurrentDate] = useState('');
   const [quotationId, setQuotationId] = useState<number | null>(null);
   const [total, setTotal] = useState(0);
+  const [partiValue, setPartiValue] = useState('');
 
   // 견적서 생성
   const createQuotations = async () => {
@@ -109,6 +110,41 @@ export default function QuotationModal({
     // 견적서 완성
     completeQuotation();
   }, [currentDate, user?.result.client_id]);
+
+  // 견적서 특이사항 작성 onChange
+  const handlePartiChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const parti = e.target.value;
+    setPartiValue(parti);
+  };
+
+  // 견적서 특이사항 작성
+  const patchParticulars = async () => {
+    try {
+      const particulars = partiValue;
+      await callPatch(
+        `/api/order/quotations/${quotationId}/particulars`,
+        `particulars=${particulars}`,
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 견적서 작성 확정
+  const patchConfirm = async () => {
+    try {
+      await callPatch(`/api/order/quotations/${quotationId}/confirmation`);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleConfirmQuotation = async () => {
+    // 4. 견적서 특이사항 전송
+    await patchParticulars();
+    // 5. 견적서 작성 확정
+    await patchConfirm();
+  };
   return (
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
       <div className="flex flex-col w-[680px] h-[812px] rounded-3xl px-8 py-7 bg-white relative whitespace-nowrap">
@@ -139,8 +175,11 @@ export default function QuotationModal({
           <div className="flex">
             <Input
               type="default"
-              onChange={() => {}}
+              onChange={(e) => {
+                handlePartiChange(e);
+              }}
               className="w-full min-h-14 px-2 py-1 border-2"
+              textValue={partiValue}
             />
           </div>
         </div>
@@ -160,7 +199,7 @@ export default function QuotationModal({
         <div className="flex flex-col absolute bottom-8 right-12 w-[calc(100%-6rem)]">
           견적서의 내용을 최종적으로 확인한 후 주문 확정을 눌러주세요
           <Button
-            onClickHandler={() => {}}
+            onClickHandler={handleConfirmQuotation}
             buttonText="주문 확정"
             type="default"
             className="bg-primary-3 text-white rounded-lg whitespace-nowrap font-extrabold text-xl py-2"

@@ -1,12 +1,5 @@
 const SERVER_URL = process.env.NEXT_PUBLIC_SERVER;
 
-export interface searchProductsProps {
-  namePrefix: string;
-  limit: string;
-  cachedTime: string;
-  token: string;
-}
-
 // 내 정보 조회
 export const getUsers = async (token: string) => {
   try {

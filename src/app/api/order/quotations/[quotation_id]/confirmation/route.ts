@@ -7,11 +7,11 @@ export async function PATCH(
 ): Promise<NextResponse> {
   try {
     const { quotation_id } = params;
-    const body = await req.json();
 
-    const response = await patchQuotationConfirm(body, quotation_id);
-
-    return NextResponse.json(response, { status: 200 });
+    const data = await patchQuotationConfirm({
+      quotation_id,
+    });
+    return NextResponse.json(data);
   } catch (error) {
     console.error('API Error:', error);
     return NextResponse.json(

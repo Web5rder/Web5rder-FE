@@ -27,6 +27,13 @@ interface User {
   };
 }
 
+interface searchProductsProps {
+  namePrefix: string;
+  limit: string;
+  cachedTime: string;
+  token: string;
+}
+
 interface PastOrder {
   past_order_id: number;
   name: string;
@@ -61,3 +68,11 @@ interface QuotationViewInfoTypes {
 }
 
 type CheckTypes = 'week' | 'month' | 'date';
+
+interface quotationIdProps {
+  quotation_id: string;
+}
+
+interface patchQuotationPartiProps extends quotationIdProps {
+  particulars: string;
+}
