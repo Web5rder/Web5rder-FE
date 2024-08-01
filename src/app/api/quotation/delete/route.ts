@@ -5,7 +5,7 @@ export async function DELETE(req: Request): Promise<NextResponse> {
   try {
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id') || '';
-    
+
     const data = await deleteQuotation(id);
     return NextResponse.json(data);
   } catch (error) {

@@ -17,7 +17,7 @@ export async function callGet(endpoint: string, params?: string) {
     ? `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}?${params}`
     : `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}`;
 
-  const response = await fetch(url,);
+  const response = await fetch(url);
   return response.json();
 }
 
@@ -26,8 +26,8 @@ export async function callDelete(endpoint: string, params?: string) {
     ? `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}?${params}`
     : `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}`;
 
-  const response = await fetch(url,{
-    method:'DELETE'
+  const response = await fetch(url, {
+    method: 'DELETE',
   });
   return response.json();
 }

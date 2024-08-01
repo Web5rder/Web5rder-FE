@@ -24,7 +24,9 @@ const QuotationTable = ({ quotationInfo }: QuotationTableProps) => {
                 <div className="w-[118px] text-center">
                   {formatDate(itemData.created_at)}
                 </div>
-                <div className="w-[137px] text-center text-sm">{itemData.product}</div>
+                <div className="w-[137px] text-center text-sm">
+                  {itemData.product}
+                </div>
                 <div className="w-[82px] text-center">{itemData.quantity}</div>
                 <div className="w-[117px] text-center">{itemData.price}</div>
               </div>
