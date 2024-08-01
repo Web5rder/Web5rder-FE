@@ -5,7 +5,7 @@ import { BUTTON_STYLE } from '@/app/constants/styles';
 interface ButtonProps {
   buttonText: string;
   type: keyof typeof BUTTON_STYLE;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   onClickHandler: () => void;
   mouseEnterHandler?: () => void;
   mouseLeaveHandler?: () => void;
