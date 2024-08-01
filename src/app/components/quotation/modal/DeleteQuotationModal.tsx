@@ -5,12 +5,10 @@ import Button from '../../common/Button';
 
 interface DeleteQuotationModalProps {
   closeModal: () => void;
-  id: number;
   deleteQuote: () => void;
 }
 const DeleteQuotationModal = ({
   closeModal,
-  id,
   deleteQuote,
 }: DeleteQuotationModalProps) => {
   return (

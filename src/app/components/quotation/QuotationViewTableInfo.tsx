@@ -32,7 +32,6 @@ const QuotationViewTableInfo = ({
       {isDeleteModalOpen && (
         <DeleteQuotationModal
           closeModal={closeDeleteModal}
-          id={quoteView.id}
           deleteQuote={() => deleteQuotation(quoteView.id)}
         />
       )}
