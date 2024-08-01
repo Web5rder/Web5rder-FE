@@ -12,6 +12,7 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import { callGet, callPatch, callPost } from '@/app/utils/callApi';
 import { Dialog } from '../../common/Dialog';
 import { useRouter } from 'next/navigation';
+import LoadingIndicator from '../../common/Loading';
 
 const formatNumber = (number: number) => {
   return new Intl.NumberFormat('ko-KR').format(number);
@@ -29,6 +30,7 @@ export default function QuotationModal({
   const [total, setTotal] = useState(0);
   const [partiValue, setPartiValue] = useState('');
   const [dialog, setDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // 견적서 생성
   const createQuotations = async () => {
@@ -91,6 +93,7 @@ export default function QuotationModal({
   useEffect(() => {
     const completeQuotation = async () => {
       if (currentDate && user?.result.client_id) {
+        setLoading(true);
         try {
           // 1. 견적서 생성
           const id = await createQuotations();
@@ -107,6 +110,8 @@ export default function QuotationModal({
           await updateTotal(id);
         } catch (error) {
           console.error('견적서 생성 중 오류 발생 : ', error);
+        } finally {
+          setLoading(false); // 로딩 종료
         }
       }
     };
@@ -158,74 +163,80 @@ export default function QuotationModal({
   return (
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
       <div className="flex flex-col w-[680px] h-[812px] rounded-3xl px-8 py-7 bg-white relative whitespace-nowrap">
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
-        <div className="self-end cursor-pointer" onClick={closeModal}>
-          <Icons name={cancelIcon} />
-        </div>
-        <div className="w-full flex text-lg font-light">
-          <span className="text-5xl font-bold mr-6">{MODAL_INFO[0]}</span>
-          <div>
-            <div className="flex gap-x-2">
-              <span className="font-bold">{MODAL_INFO[1]}</span>
-              <span>{currentDate}</span>
+        {loading ? (
+          <LoadingIndicator />
+        ) : (
+          <>
+            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+            <div className="self-end cursor-pointer" onClick={closeModal}>
+              <Icons name={cancelIcon} />
             </div>
-            <div className="flex gap-x-2">
-              <span className="font-bold">{MODAL_INFO[2]}</span>
-              <span>{user?.result.email}</span>
+            <div className="w-full flex text-lg font-light">
+              <span className="text-5xl font-bold mr-6">{MODAL_INFO[0]}</span>
+              <div>
+                <div className="flex gap-x-2">
+                  <span className="font-bold">{MODAL_INFO[1]}</span>
+                  <span>{currentDate}</span>
+                </div>
+                <div className="flex gap-x-2">
+                  <span className="font-bold">{MODAL_INFO[2]}</span>
+                  <span>{user?.result.email}</span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div className="w-full border-2 border-[#55aa00] mt-2.5" />
+            <div className="w-full border-2 border-[#55aa00] mt-2.5" />
 
-        <QuotationTable quotationInfo={QuotationModalData} />
+            <QuotationTable quotationInfo={QuotationModalData} />
 
-        <div className="w-full mt-4 flex flex-col">
-          <p>추가적인 문의 사항을 적어주세요</p>
-          <div className="flex">
-            <Input
-              type="default"
-              onChange={(e) => {
-                handlePartiChange(e);
-              }}
-              className="w-full min-h-14 px-2 py-1 border-2"
-              textValue={partiValue}
-            />
-          </div>
-        </div>
+            <div className="w-full mt-4 flex flex-col">
+              <p>추가적인 문의 사항을 적어주세요</p>
+              <div className="flex">
+                <Input
+                  type="default"
+                  onChange={(e) => {
+                    handlePartiChange(e);
+                  }}
+                  className="w-full min-h-14 px-2 py-1 border-2"
+                  textValue={partiValue}
+                />
+              </div>
+            </div>
 
-        <div className="absolute right-12 bottom-32 flex items-center font-extrabold">
-          <span className="text-2xl mr-4">{MODAL_INFO[3]}</span>
-          <div className="pl-4 border-double border-b-[7px] border-[#55aa00]">
-            <span className="text-2xl sm:text-4xl font-bold text-end pb-1">
-              {formatNumber(total)} 원
-            </span>
-          </div>
-        </div>
-        <div className="absolute bottom-32">
-          <QuotationSave />
-        </div>
+            <div className="absolute right-12 bottom-32 flex items-center font-extrabold">
+              <span className="text-2xl mr-4">{MODAL_INFO[3]}</span>
+              <div className="pl-4 border-double border-b-[7px] border-[#55aa00]">
+                <span className="text-2xl sm:text-4xl font-bold text-end pb-1">
+                  {formatNumber(total)} 원
+                </span>
+              </div>
+            </div>
+            <div className="absolute bottom-32">
+              <QuotationSave />
+            </div>
 
-        <div className="flex flex-col absolute bottom-8 right-12 w-[calc(100%-6rem)]">
-          견적서의 내용을 최종적으로 확인한 후 주문 확정을 눌러주세요
-          <Button
-            onClickHandler={handleConfirmQuotation}
-            buttonText="주문 확정"
-            type="default"
-            className="bg-primary-3 text-white rounded-lg whitespace-nowrap font-extrabold text-xl py-2"
-            isDisabled={false}
-          />
-        </div>
+            <div className="flex flex-col absolute bottom-8 right-12 w-[calc(100%-6rem)]">
+              견적서의 내용을 최종적으로 확인한 후 주문 확정을 눌러주세요
+              <Button
+                onClickHandler={handleConfirmQuotation}
+                buttonText="주문 확정"
+                type="default"
+                className="bg-primary-3 text-white rounded-lg whitespace-nowrap font-extrabold text-xl py-2"
+                isDisabled={false}
+              />
+            </div>
 
-        {dialog && (
-          <Dialog
-            topText="견적서가 제출되었습니다."
-            BtnText="닫기"
-            onBtnClick={() => {
-              setDialog(false);
-              router.push('/quotation');
-            }}
-          />
+            {dialog && (
+              <Dialog
+                topText="견적서가 제출되었습니다."
+                BtnText="닫기"
+                onBtnClick={() => {
+                  setDialog(false);
+                  router.push('/quotation');
+                }}
+              />
+            )}
+          </>
         )}
       </div>
     </div>
