@@ -100,10 +100,13 @@ export const postQuotations = async (quotationContents: any) => {
 };
 
 // 견적서 물품 생성
-export const postQuotationsProducts = async (quotationContents: any) => {
+export const postQuotationsProducts = async (
+  quotationContents: any,
+  accessToken?: string,
+) => {
   try {
     const url = `${SERVER_URL}/api/v1/quotations/products`;
-    return await postRequest(url, quotationContents);
+    return await postRequest(url, quotationContents, accessToken);
   } catch (error) {
     console.error('에러 :', error);
     throw new Error('postQuotationsProducts 에러 발생');

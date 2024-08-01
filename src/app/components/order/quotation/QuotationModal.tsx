@@ -1,3 +1,5 @@
+'use client';
+
 import { MODAL_INFO } from '@/app/constants/order';
 import { cancelIcon } from '@/app/ui/iconPath';
 import Icons from '../../common/Icons';
@@ -6,6 +8,8 @@ import QuotationTable from './QuotationTable';
 import { useUser } from '@/app/utils/useUser';
 import Button from '../../common/Button';
 import Input from '../../common/Input';
+import { useState, useEffect } from 'react';
+import { callPost } from '@/app/utils/callApi';
 
 interface QuotationModalProps {
   QuotationModalData: any;
@@ -17,7 +21,68 @@ export default function QuotationModal({
   closeModal,
 }: QuotationModalProps) {
   const { user } = useUser();
+  const [currentDate, setCurrentDate] = useState('');
+  const [quotationId, setQuotationId] = useState<number | null>(null);
 
+  // 견적서 생성
+  const createQuotations = async () => {
+    try {
+      const body = {
+        client_id: user?.result.client_id,
+        created_at: currentDate,
+        status: 'CREATED',
+      };
+      const response = await callPost('/api/order/quotations', body);
+      console.log(response);
+      if (response.isSuccess && response.result) {
+        return response.result.id;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    return null;
+  };
+
+  // 견적서 물품 생성
+  const createProducts = async (id: number) => {
+    try {
+      const body = QuotationModalData.map((item: any) => ({
+        quotation_id: id,
+        product_id: item.id,
+        quantity: item.count,
+      }));
+
+      const response = await callPost('/api/order/quotations/products', body);
+      console.log('견적서 물품 생성 응답:', response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split('T')[0];
+    setCurrentDate(formattedDate);
+  }, []);
+
+  useEffect(() => {
+    const createQuotationAndProducts = async () => {
+      if (currentDate && user?.result.client_id) {
+        const id = await createQuotations();
+        setQuotationId(id);
+        if (id) {
+          setQuotationId(id);
+          await createProducts(id);
+        }
+      }
+    };
+
+    createQuotationAndProducts();
+  }, [currentDate, user?.result.client_id]);
+
+  useEffect(() => {
+    console.log('견적서 ID', quotationId);
+  }, [quotationId]);
   return (
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
       <div className="flex flex-col w-[680px] h-[812px] rounded-3xl px-8 py-7 bg-white relative whitespace-nowrap">
@@ -30,7 +95,7 @@ export default function QuotationModal({
           <div>
             <div className="flex gap-x-2">
               <span className="font-bold">{MODAL_INFO[1]}</span>
-              <span>2024.08.01</span>
+              <span>{currentDate}</span>
             </div>
             <div className="flex gap-x-2">
               <span className="font-bold">{MODAL_INFO[2]}</span>
@@ -50,13 +115,6 @@ export default function QuotationModal({
               type="default"
               onChange={() => {}}
               className="w-full min-h-14 px-2 py-1 border-2"
-            />
-            <Button
-              onClickHandler={() => {}}
-              buttonText="전송"
-              type="default"
-              className="bg-primary-3 w-fit text-white rounded-lg whitespace-nowrap font-extrabold text-sm px-2"
-              isDisabled={false}
             />
           </div>
         </div>
