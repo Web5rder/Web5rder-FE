@@ -87,3 +87,25 @@ export const postPastOrder = async (pastOrderContents: any) => {
     throw new Error('postPastOrder 에러 발생');
   }
 };
+
+// 견적서 생성
+export const postQuotations = async (quotationContents: any) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/quotations`;
+    return await postRequest(url, quotationContents);
+  } catch (error) {
+    console.error('에러 :', error);
+    throw new Error('postQuotations 에러 발생');
+  }
+};
+
+// 견적서 물품 생성
+export const postQuotationsProducts = async (quotationContents: any) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/quotations/products`;
+    return await postRequest(url, quotationContents);
+  } catch (error) {
+    console.error('에러 :', error);
+    throw new Error('postQuotationsProducts 에러 발생');
+  }
+};

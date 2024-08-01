@@ -89,6 +89,31 @@ export const getPastOrder = async (past_order_id: string) => {
   }
 };
 
+// 합계 금액 업데이트
+export const getQuotationTotal = async (quotation_id: string) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/quotations/${quotation_id}/total`;
+
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`getRequest 데이터 fetch 실패: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    console.log(`Response data: ${JSON.stringify(data)}`);
+    return data;
+  } catch (error) {
+    console.error('Error', error);
+    throw error;
+  }
+};
+
 // 거래처 주문 내역 조회
 export const getClientPastOrder = async (client_id: string) => {
   try {
