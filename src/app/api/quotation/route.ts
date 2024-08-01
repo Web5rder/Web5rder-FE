@@ -8,9 +8,9 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     const token = getCookie(req, 'accessToken');
-    const { client_id } = params;
-    console.log(token, client_id, '로 요청청');
-
+    // const { client_id } = params;
+    // console.log(token, client_id, '로 요청청');
+const client_id = '16'
     const data = await getQuotation(client_id, token);
     return NextResponse.json(data);
   } catch (error) {
