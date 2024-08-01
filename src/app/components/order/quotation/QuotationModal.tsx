@@ -10,11 +10,8 @@ import Button from '../../common/Button';
 import Input from '../../common/Input';
 import { useState, useEffect, ChangeEvent } from 'react';
 import { callGet, callPatch, callPost } from '@/app/utils/callApi';
-
-interface QuotationModalProps {
-  QuotationModalData: any;
-  closeModal: () => void;
-}
+import { Dialog } from '../../common/Dialog';
+import { useRouter } from 'next/navigation';
 
 const formatNumber = (number: number) => {
   return new Intl.NumberFormat('ko-KR').format(number);
@@ -25,10 +22,13 @@ export default function QuotationModal({
   closeModal,
 }: QuotationModalProps) {
   const { user } = useUser();
+  const router = useRouter();
+
   const [currentDate, setCurrentDate] = useState('');
   const [quotationId, setQuotationId] = useState<number | null>(null);
   const [total, setTotal] = useState(0);
   const [partiValue, setPartiValue] = useState('');
+  const [dialog, setDialog] = useState(false);
 
   // 견적서 생성
   const createQuotations = async () => {
@@ -140,10 +140,16 @@ export default function QuotationModal({
   };
 
   const handleConfirmQuotation = async () => {
-    // 4. 견적서 특이사항 전송
-    await patchParticulars();
-    // 5. 견적서 작성 확정
-    await patchConfirm();
+    try {
+      // 4. 견적서 특이사항 전송
+      await patchParticulars();
+      // 5. 견적서 작성 확정
+      await patchConfirm();
+
+      setDialog(true);
+    } catch (error) {
+      console.error('견적서 확정 중 오류 발생 : ', error);
+    }
   };
   return (
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
@@ -206,6 +212,17 @@ export default function QuotationModal({
             isDisabled={false}
           />
         </div>
+
+        {dialog && (
+          <Dialog
+            topText="견적서가 제출되었습니다."
+            BtnText="닫기"
+            onBtnClick={() => {
+              setDialog(false);
+              router.push('/quotation');
+            }}
+          />
+        )}
       </div>
     </div>
   );
