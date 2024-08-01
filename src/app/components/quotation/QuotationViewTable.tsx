@@ -1,12 +1,10 @@
 'use client';
 
 import { VIEW_QUOTATION_GRAPH } from '@/app/constants/quotation';
-import { leftAngle, rightAngle } from '@/app/ui/iconPath';
 import { callGet } from '@/app/utils/callApi';
 import { useUser } from '@/app/utils/useUser';
 import { useEffect, useState } from 'react';
-import ReactPaginate from 'react-paginate';
-import Icons from '../common/Icons';
+import Pagination from '../common/Pagination';
 import QuotationViewTableInfo from './QuotationViewTableInfo';
 
 interface QuotationViewTableProps {
@@ -54,21 +52,9 @@ const QuotationViewTable = ({ viewType }: QuotationViewTableProps) => {
         })}
       </div>
       <div className="absolute bottom-[180px]">
-        <ReactPaginate
-          className="flex items-center justify-center mt-8 h-[40px] w-full gap-[20px] text-[17px]  text-[#868686] font-semibold"
-          previousLabel={
-            <div className="pt-0.5">
-              <Icons name={leftAngle} />
-            </div>
-          }
-          nextLabel={
-            <div className="pt-0.5">
-              <Icons name={rightAngle} />
-            </div>
-          }
-          pageCount={quotation?.total_pages || 5}
+        <Pagination
+          totalPages={quotation?.total_pages || 5}
           onPageChange={handlePageChange}
-          activeClassName={'active text-[#306317]'}
         />
       </div>
     </div>
