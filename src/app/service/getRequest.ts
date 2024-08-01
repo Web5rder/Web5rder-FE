@@ -138,3 +138,11 @@ export const getQuotation = async (client_id: string, accessToken: string) => {
   const url = `${SERVER_URL}/api/v1/clients/16/quotations`;
   return await getRequest(url, accessToken);
 };
+
+export const getQuotationDetail = async (
+  quotationId: string,
+  accessToken: string,
+) => {
+  const url = `${SERVER_URL}/api/v1/quotations/${quotationId}`;
+  return await getRequest(url, accessToken);
+};
