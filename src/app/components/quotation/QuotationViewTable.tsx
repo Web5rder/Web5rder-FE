@@ -14,7 +14,6 @@ const QuotationViewTable = ({ viewType }: QuotationViewTableProps) => {
   const [quotation, setQuotation] = useState<QuotationTableInfoTypes | null>(
     null,
   );
-  console.log(user?.result, '유저 정보');
 
   useEffect(() => {
     const fetchData = async () => {
