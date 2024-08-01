@@ -135,7 +135,7 @@ const getRequest = async (url: string, token?: string) => {
 };
 
 export const getQuotation = async (client_id: string, accessToken: string) => {
-  const url = `${SERVER_URL}/api/v1/clients/16/quotations`;
+  const url = `${SERVER_URL}/api/v1/clients/${client_id}/quotations`;
   return await getRequest(url, accessToken);
 };
 

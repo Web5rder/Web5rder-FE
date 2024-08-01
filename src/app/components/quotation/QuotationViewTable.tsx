@@ -1,27 +1,24 @@
 'use client';
 import { VIEW_QUOTATION_GRAPH } from '@/app/constants/quotation';
 import { callGet } from '@/app/utils/callApi';
+import { useUser } from '@/app/utils/useUser';
 import { useEffect, useState } from 'react';
 import QuotationViewTableInfo from './QuotationViewTableInfo';
 
-interface QuotationViewTableProps {
-  quotationViewInfo: QuotationViewInfoTypes[];
-}
-
-const QuotationViewTable = ({ quotationViewInfo }: QuotationViewTableProps) => {
+const QuotationViewTable = () => {
+  const { user } = useUser();
   const [quotation, setQuotation] = useState<QuotationTableInfoTypes | null>(
     null,
   );
+  console.log(user?.result, '유저 정보');
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await callGet('/api/quotation');
+      const data = await callGet(`/api/quotation?id=${user?.result.client_id}`);
       setQuotation(data.result);
     };
     fetchData();
-  }, []);
-
-  console.log(quotation);
+  }, [user]);
 
   return (
     <div className="w-full h-[710px]">

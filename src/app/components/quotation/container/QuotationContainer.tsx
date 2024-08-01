@@ -1,6 +1,5 @@
 'use client';
 import { QUOTATION } from '@/app/constants/quotation';
-import { QuoteViewData } from '@/app/constants/test';
 import { useState } from 'react';
 import QuotationViewTable from '../QuotationViewTable';
 
@@ -35,7 +34,7 @@ const QuotationContainer = () => {
             </div>
           </div>
         </div>
-        <QuotationViewTable quotationViewInfo={QuoteViewData} />
+        <QuotationViewTable />
       </div>
     </div>
   );
