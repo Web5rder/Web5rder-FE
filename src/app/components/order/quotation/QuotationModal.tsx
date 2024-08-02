@@ -13,6 +13,7 @@ import { callGet, callPatch, callPost } from '@/app/utils/callApi';
 import { Dialog } from '../../common/Dialog';
 import { useRouter } from 'next/navigation';
 import LoadingIndicator from '../../common/Loading';
+import { saveImage } from '@/app/utils/saveImage';
 
 const formatNumber = (number: number) => {
   return new Intl.NumberFormat('ko-KR').format(number);
@@ -160,9 +161,13 @@ export default function QuotationModal({
       console.error('견적서 확정 중 오류 발생 : ', error);
     }
   };
+
   return (
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
-      <div className="flex flex-col w-[680px] h-[812px] rounded-3xl px-8 py-7 bg-white relative whitespace-nowrap">
+      <div
+        id="quotation-modal"
+        className="flex flex-col w-[680px] h-[812px] rounded-3xl px-8 py-7 bg-white relative whitespace-nowrap"
+      >
         {loading ? (
           <LoadingIndicator />
         ) : (
@@ -212,7 +217,7 @@ export default function QuotationModal({
               </div>
             </div>
             <div className="absolute bottom-32">
-              <QuotationSave />
+              <QuotationSave onClick={saveImage} />
             </div>
 
             <div className="flex flex-col absolute bottom-8 right-12 w-[calc(100%-6rem)]">
