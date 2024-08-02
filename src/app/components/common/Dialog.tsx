@@ -32,8 +32,8 @@ export function Dialog({
     <div className="fixed inset-0 flex-center z-50 bg-black bg-opacity-30">
       <div className="flex w-auto min-w-[30vw] max-w-[80vw] py-6 px-4 flex-col items-start gap-8 rounded-2xl bg-white shadow-xl">
         {/* 텍스트 */}
-        <div className="flex items-center py-0 px-4 flex-col gap-2 self-stretch">
-          <span className="self-stretch text-center text-xl font-semibold">
+        <div className="flex items-center py-0 px-4 flex-col gap-2 self-stretch ">
+          <span className="w-full text-center text-xl font-semibold break-words whitespace-pre-wrap">
             {topText}
           </span>
           <p>{subText}</p>
