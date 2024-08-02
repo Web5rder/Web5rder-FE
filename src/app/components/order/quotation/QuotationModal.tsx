@@ -30,9 +30,14 @@ export default function QuotationModal({
   const [quotationId, setQuotationId] = useState<number | null>(null);
   const [total, setTotal] = useState(0);
   const [partiValue, setPartiValue] = useState('');
-  const [dialog, setDialog] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [dialog, setDialog] = useState({
+    open: false,
+    topText: '',
+    onClick: () => {},
+  });
 
+  console.log(currentDate);
   // 견적서 생성
   const createQuotations = async () => {
     try {
@@ -42,7 +47,16 @@ export default function QuotationModal({
         status: 'CREATED',
       };
       const response = await callPost('/api/order/quotations', body);
-
+      if (response.code === '4003') {
+        setDialog({
+          open: true,
+          topText: '금일의 견적서가 이미 존재합니다.',
+          onClick: () => {
+            setDialog({ open: false, topText: '', onClick: () => {} });
+            router.push('/quotation');
+          },
+        });
+      }
       if (response.isSuccess && response.result) {
         return response.result.id;
       }
@@ -82,10 +96,13 @@ export default function QuotationModal({
   // 오늘 날짜 불러오기
   useEffect(() => {
     const now = new Date();
-    const koreaTime = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-    const year = koreaTime.getFullYear();
-    const month = String(koreaTime.getMonth() + 1).padStart(2, '0');
-    const day = String(koreaTime.getDate()).padStart(2, '0');
+    const koreaTime = now.toLocaleString('en-US', {
+      timeZone: 'Asia/Seoul',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const [month, day, year] = koreaTime.split('/');
     const formattedDate = `${year}-${month}-${day}`;
     setCurrentDate(formattedDate);
   }, []);
@@ -156,7 +173,15 @@ export default function QuotationModal({
       // 5. 견적서 작성 확정
       await patchConfirm();
 
-      setDialog(true);
+      setDialog((prev) => ({
+        ...prev,
+        open: true,
+        topText: '견적서가 제출되었습니다.',
+        onClick: () => {
+          setDialog({ open: false, topText: '', onClick: () => {} });
+          router.push('/quotation');
+        },
+      }));
     } catch (error) {
       console.error('견적서 확정 중 오류 발생 : ', error);
     }
@@ -231,14 +256,11 @@ export default function QuotationModal({
               />
             </div>
 
-            {dialog && (
+            {dialog.open && (
               <Dialog
-                topText="견적서가 제출되었습니다."
+                topText={dialog.topText}
                 BtnText="닫기"
-                onBtnClick={() => {
-                  setDialog(false);
-                  router.push('/quotation');
-                }}
+                onBtnClick={dialog.onClick}
               />
             )}
           </>
