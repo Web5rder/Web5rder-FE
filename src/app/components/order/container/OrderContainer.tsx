@@ -3,7 +3,12 @@
 import { useEffect, useState } from 'react';
 import Input from '../../common/Input';
 import { SearchIcon } from '@/app/ui/iconPath';
-import { categoryMapping, ORDER_TEXT } from '../../../constants/order';
+import {
+  BUTTON_TEXT,
+  categoryMapping,
+  DIALOG_TEXT,
+  ORDER_TEXT,
+} from '../../../constants/order';
 import Icons from '../../common/Icons';
 import { Dialog } from '../../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
@@ -35,7 +40,6 @@ export default function OrderContainer() {
       setState((prev) => ({ ...prev, alert: true }));
     }
   }, [user]);
-  console.log(addedItems);
 
   // 즐겨 찾기에서 불러온 상품을 추가한 상품에 저장
   const setPastOrderId = async (past_order_id: string) => {
@@ -84,7 +88,7 @@ export default function OrderContainer() {
 
   const handleAddBookMark = async () => {
     if (!state.bookmarkName) {
-      alert('즐겨찾기 이름을 입력해주세요');
+      alert(DIALOG_TEXT[2]);
       return;
     }
     try {
@@ -186,7 +190,7 @@ export default function OrderContainer() {
           type="button"
           className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
-          즐겨찾기 추가
+          {ORDER_TEXT[7]}
         </button>
 
         <button
@@ -201,8 +205,8 @@ export default function OrderContainer() {
       </div>
       {state.alert && (
         <Dialog
-          topText="거래처가 생성되지 않았습니다."
-          BtnText="이동"
+          topText={DIALOG_TEXT[3]}
+          BtnText={BUTTON_TEXT[0]}
           onBtnClick={() => {
             setState((prev) => ({ ...prev, alert: false }));
             router.push('/sign-in/client');
@@ -212,9 +216,9 @@ export default function OrderContainer() {
       {state.dialog && (
         <Dialog
           isTwoButton
-          topText="즐겨찾기 이름을 적어주세요"
-          subText="현재 추가한 상품으로 즐겨찾기가 만들어집니다"
-          BtnText="추가"
+          topText={DIALOG_TEXT[4]}
+          subText={DIALOG_TEXT[5]}
+          BtnText={BUTTON_TEXT[1]}
           onSubBtnClick={() => {
             setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' })); // 다이얼로그를 닫을 때 입력값 초기화
           }}

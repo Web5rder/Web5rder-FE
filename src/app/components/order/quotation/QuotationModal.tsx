@@ -1,6 +1,11 @@
 'use client';
 
-import { DIALOG_TEXT, MODAL_INFO, MODAL_TEXT } from '@/app/constants/order';
+import {
+  BUTTON_TEXT,
+  DIALOG_TEXT,
+  MODAL_INFO,
+  MODAL_TEXT,
+} from '@/app/constants/order';
 import { cancelIcon } from '@/app/ui/iconPath';
 import Icons from '../../common/Icons';
 import QuotationSave from '../../quotation/modal/QuotationSave';
@@ -248,7 +253,7 @@ export default function QuotationModal({
               {MODAL_TEXT[8]}
               <Button
                 onClickHandler={handleConfirmQuotation}
-                buttonText="주문 확정"
+                buttonText={BUTTON_TEXT[2]}
                 type="default"
                 className="bg-primary-3 text-white rounded-lg whitespace-nowrap font-extrabold text-xl py-2"
                 isDisabled={false}
@@ -258,7 +263,7 @@ export default function QuotationModal({
             {dialog.open && (
               <Dialog
                 topText={dialog.topText}
-                BtnText="닫기"
+                BtnText={BUTTON_TEXT[3]}
                 onBtnClick={dialog.onClick}
               />
             )}
