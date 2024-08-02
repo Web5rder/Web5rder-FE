@@ -9,7 +9,7 @@ import {
 import { cancelIcon } from '@/app/ui/iconPath';
 import Icons from '../../common/Icons';
 import QuotationSave from '../../quotation/modal/QuotationSave';
-import QuotationTable from './QuotationTable';
+import QuotationTable from './OrderQuotationTable';
 import { useUser } from '@/app/utils/useUser';
 import Button from '../../common/Button';
 import Input from '../../common/Input';
@@ -201,7 +201,6 @@ export default function QuotationModal({
           <LoadingIndicator />
         ) : (
           <>
-            {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
             <div className="self-end cursor-pointer" onClick={closeModal}>
               <Icons name={cancelIcon} />
             </div>

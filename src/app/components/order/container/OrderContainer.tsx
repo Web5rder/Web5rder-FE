@@ -16,7 +16,7 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/utils/useUser';
 import { usePastOrder } from '@/app/utils/usePastOrder';
 import ProductList from '../ProductList';
-import QuotationModal from '../quotation/QuotationModal';
+import QuotationModal from '../quotation/OrderQuotationModal';
 
 export default function OrderContainer() {
   const router = useRouter();
