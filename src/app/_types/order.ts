@@ -1,3 +1,12 @@
+interface OrderState {
+  dialog: boolean;
+  showBookmark: boolean;
+  alert: boolean;
+  search: string;
+  bookmarkName: string;
+  quotation: boolean;
+}
+
 interface ProductsTypes {
   product: string;
   quantity: number;

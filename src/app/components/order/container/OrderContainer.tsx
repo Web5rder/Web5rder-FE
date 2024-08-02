@@ -23,7 +23,7 @@ export default function OrderContainer() {
   const { user } = useUser(); // 커스텀 훅에서 user 가져오기
   const { pastOrder, getPastOrder } = usePastOrder(); // 커스텀 훅에서 즐겨찾기 가져오기
 
-  const [state, setState] = useState({
+  const [state, setState] = useState<OrderState>({
     dialog: false,
     showBookmark: false,
     alert: false,

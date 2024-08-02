@@ -8,7 +8,7 @@ import {
   SIGNIN_TEXT,
   SIGNUP_BUTTON,
 } from '@/app/constants/sign-in';
-import { ValidationClientType } from '@/app/_types/sign-in';
+import { ClientState, ValidationClientType } from '@/app/_types/sign-in';
 import { callPost } from '@/app/utils/callApi';
 import SignInButton from '../common/SignInButton';
 import SignInInput from '../common/SignInInput';
@@ -16,7 +16,7 @@ import SignInInput from '../common/SignInInput';
 export default function ClientComponents() {
   const router = useRouter();
 
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<ClientState>({
     name: '',
     address: '',
     nameError: '',
@@ -26,7 +26,7 @@ export default function ClientComponents() {
 
   const validateField = (type: ValidationClientType, value: string) => {
     if (!value.trim()) {
-      return `${clientMapping[type]}을(를) 입력해주세요.`;
+      return `${clientMapping[type]}을 입력해주세요.`;
     }
     return '';
   };

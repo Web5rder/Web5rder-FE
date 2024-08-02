@@ -12,13 +12,13 @@ import {
   SIGNUP_BUTTON,
   SIGNUP_ERROR,
 } from '@/app/constants/sign-in';
-import { ValidationType } from '@/app/_types/sign-in';
+import { SignUpState, ValidationType } from '@/app/_types/sign-in';
 import { callPost } from '@/app/utils/callApi';
 
-function SignUpComponents() {
+export default function SignUpComponents() {
   const router = useRouter();
 
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<SignUpState>({
     email: '',
     pwd: '',
     pwdConfirm: '',
@@ -86,7 +86,6 @@ function SignUpComponents() {
           email,
           password: pwd,
         });
-        console.log(responseData);
 
         if (responseData.code === 4003) {
           alert('이미 존재하는 사용자입니다.');
@@ -152,5 +151,3 @@ function SignUpComponents() {
     </div>
   );
 }
-
-export default SignUpComponents;

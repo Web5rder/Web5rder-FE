@@ -19,3 +19,23 @@ export interface SingInButtonProps {
   text: string;
   isDelete?: boolean;
 }
+
+export interface SingInState {
+  email: string;
+  pwd: string;
+}
+
+export interface SignUpState extends SingInState {
+  pwdConfirm: string;
+  emailError: string;
+  pwdError: string;
+  pwdConfirmError: string;
+}
+
+export interface ClientState {
+  name: string;
+  address: string;
+  nameError: string;
+  addressError: string;
+  isBtnActive: boolean;
+}
