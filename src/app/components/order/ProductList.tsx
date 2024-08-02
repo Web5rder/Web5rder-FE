@@ -1,26 +1,18 @@
 import React from 'react';
-import ProductItem, { ProductItemProps } from './ProductItem';
+import ProductItem from './ProductItem';
 import {
   PRODUCT_TEXT,
   ORDER_TEXT,
   categoryMapping,
 } from '../../constants/order';
 
-interface ProductListProps {
-  items: ProductItemProps[];
-  isSearchResult: boolean;
-  addedItems?: ProductItemProps[];
-  onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem: (id: string | undefined) => void;
-}
-
-const ProductList: React.FC<ProductListProps> = ({
+export default function ProductList({
   items,
   isSearchResult,
   addedItems,
   onAddItem,
   onRemoveItem,
-}) => {
+}: ProductListProps) {
   return (
     <div
       className={`${isSearchResult ? 'bg-primary-4 mt-4 w-full' : 'w-full bg-primary-4 mt-4'}`}
@@ -65,6 +57,4 @@ const ProductList: React.FC<ProductListProps> = ({
       </div>
     </div>
   );
-};
-
-export default ProductList;
+}

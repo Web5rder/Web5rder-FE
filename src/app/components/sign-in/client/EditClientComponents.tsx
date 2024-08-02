@@ -1,20 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { ValidationClientType } from '@/app/_types/sign-in';
 import {
   clientMapping,
-  SIGNIN_PLACEHOLDER,
   SIGNIN_TEXT,
+  SIGNIN_PLACEHOLDER,
   SIGNUP_BUTTON,
 } from '@/app/constants/sign-in';
-import { ValidationClientType } from '@/app/_types/sign-in';
-import { callPost } from '@/app/utils/callApi';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import SignInButton from '../common/SignInButton';
 import SignInInput from '../common/SignInInput';
+import { useUser } from '@/app/utils/useUser';
 
-export default function ClientComponents() {
+export default function EditClientComponents() {
   const router = useRouter();
+  const { user } = useUser();
 
   const [formState, setFormState] = useState({
     name: '',
@@ -44,14 +45,23 @@ export default function ClientComponents() {
     }));
   };
 
-  const handlePostClient = async () => {
+  const handlePutClient = async () => {
     try {
       const body = {
         name: formState.name,
         address: formState.address,
       };
-      const responseData = await callPost('/api/sign-in/client', body);
-      console.log('리스폰스 데이터', responseData);
+      const response = await fetch(
+        `/api/sign-in/client/${user?.result.client_id}/update`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        },
+      );
+      await response.json();
     } catch (error) {
       console.error(error);
     }
@@ -75,7 +85,7 @@ export default function ClientComponents() {
         addressError: '',
         isBtnActive: true,
       }));
-      handlePostClient();
+      handlePutClient();
       router.push('/');
     }
   };
@@ -103,7 +113,7 @@ export default function ClientComponents() {
 
       <SignInButton
         type="button"
-        text={SIGNUP_BUTTON[1]}
+        text={SIGNUP_BUTTON[2]}
         onClick={handleBtnClick}
       />
     </div>

@@ -12,3 +12,10 @@ export interface SignInputProps {
   error?: boolean;
   errorMessage?: string;
 }
+
+export interface SingInButtonProps {
+  onClick: () => void;
+  type: 'button' | 'submit' | 'reset';
+  text: string;
+  isDelete?: boolean;
+}
