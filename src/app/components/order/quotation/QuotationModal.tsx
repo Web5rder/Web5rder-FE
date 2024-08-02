@@ -1,6 +1,6 @@
 'use client';
 
-import { MODAL_INFO } from '@/app/constants/order';
+import { DIALOG_TEXT, MODAL_INFO, MODAL_TEXT } from '@/app/constants/order';
 import { cancelIcon } from '@/app/ui/iconPath';
 import Icons from '../../common/Icons';
 import QuotationSave from '../../quotation/modal/QuotationSave';
@@ -49,7 +49,7 @@ export default function QuotationModal({
       if (response.code === '4003') {
         setDialog({
           open: true,
-          topText: '금일의 견적서가 이미 존재합니다.',
+          topText: DIALOG_TEXT[0],
           onClick: () => {
             setDialog({ open: false, topText: '', onClick: () => {} });
             router.push('/quotation');
@@ -175,7 +175,7 @@ export default function QuotationModal({
       setDialog((prev) => ({
         ...prev,
         open: true,
-        topText: '견적서가 제출되었습니다.',
+        topText: DIALOG_TEXT[1],
         onClick: () => {
           setDialog({ open: false, topText: '', onClick: () => {} });
           router.push('/quotation');
@@ -219,7 +219,7 @@ export default function QuotationModal({
             <QuotationTable quotationInfo={QuotationModalData} />
 
             <div className="w-full mt-4 flex flex-col">
-              <p>추가적인 문의 사항을 적어주세요</p>
+              <p>{MODAL_TEXT[7]}</p>
               <div className="flex">
                 <Input
                   type="default"
@@ -245,7 +245,7 @@ export default function QuotationModal({
             </div>
 
             <div className="flex flex-col absolute bottom-8 right-12 w-[calc(100%-6rem)]">
-              견적서의 내용을 최종적으로 확인한 후 주문 확정을 눌러주세요
+              {MODAL_TEXT[8]}
               <Button
                 onClickHandler={handleConfirmQuotation}
                 buttonText="주문 확정"

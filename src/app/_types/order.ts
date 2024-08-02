@@ -59,6 +59,7 @@ interface ProductListProps {
   onRemoveItem: (id: string | undefined) => void;
   onCountChange?: (id: string | undefined, value: string) => void;
 }
+
 interface QuotationViewInfoTypes {
   id: number;
   name: string;

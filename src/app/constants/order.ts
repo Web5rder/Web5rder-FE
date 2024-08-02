@@ -18,9 +18,17 @@ export const MODAL_TEXT = [
   '사진으로 저장',
   '단위',
   '분류',
+  '추가적인 문의 사항을 적어주세요',
+  '견적서의 내용을 최종적으로 확인한 후 주문 확정을 눌러주세요',
+  '주문 확정',
 ];
 
 export const MODAL_INFO = ['견적서', 'Date', '구매자', '총액'];
+
+export const DIALOG_TEXT = [
+  '금일의 견적서가 이미 존재합니다.',
+  '견적서가 제출되었습니다.',
+];
 
 export const categoryMapping: { [key: string]: string } = {
   refrigeration: '냉장',
