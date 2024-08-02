@@ -23,11 +23,14 @@ export default function QuotationModal({
   const { user } = useUser();
   const router = useRouter();
 
-  const [currentDate, setCurrentDate] = useState('');
   const [quotationId, setQuotationId] = useState<number | null>(null);
-  const [total, setTotal] = useState(0);
-  const [partiValue, setPartiValue] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [state, setState] = useState({
+    currentDate: '',
+    total: 0,
+    partiValue: '',
+    loading: false,
+  });
+  const { currentDate, total, partiValue, loading } = state;
   const [dialog, setDialog] = useState({
     open: false,
     topText: '',
@@ -82,7 +85,7 @@ export default function QuotationModal({
     try {
       const data = await callGet(`/api/order/quotations/${quotation_id}/total`);
       if (data.isSuccess) {
-        setTotal(data.result);
+        setState((prev) => ({ ...prev, total: data.result }));
       }
     } catch (error) {
       console.error(error);
@@ -100,14 +103,14 @@ export default function QuotationModal({
     });
     const [month, day, year] = koreaTime.split('/');
     const formattedDate = `${year}-${month}-${day}`;
-    setCurrentDate(formattedDate);
+    setState((prev) => ({ ...prev, currentDate: formattedDate }));
   }, []);
 
   // 견적서 완성
   useEffect(() => {
     const completeQuotation = async () => {
       if (currentDate && user?.result.client_id) {
-        setLoading(true);
+        setState((prev) => ({ ...prev, loading: true }));
         try {
           // 1. 견적서 생성
           const id = await createQuotations();
@@ -125,7 +128,7 @@ export default function QuotationModal({
         } catch (error) {
           console.error('견적서 생성 중 오류 발생 : ', error);
         } finally {
-          setLoading(false); // 로딩 종료
+          setState((prev) => ({ ...prev, loading: false })); // 로딩 종료
         }
       }
     };
@@ -137,7 +140,7 @@ export default function QuotationModal({
   // 견적서 특이사항 작성 onChange
   const handlePartiChange = (e: ChangeEvent<HTMLInputElement>) => {
     const parti = e.target.value;
-    setPartiValue(parti);
+    setState((prev) => ({ ...prev, partiValue: parti }));
   };
 
   // 견적서 특이사항 작성
