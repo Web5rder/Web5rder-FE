@@ -14,10 +14,7 @@ import { Dialog } from '../../common/Dialog';
 import { useRouter } from 'next/navigation';
 import LoadingIndicator from '../../common/Loading';
 import { saveImage } from '@/app/utils/saveImage';
-
-const formatNumber = (number: number) => {
-  return new Intl.NumberFormat('ko-KR').format(number);
-};
+import { formatNumber } from '@/app/utils/formatPrice';
 
 export default function QuotationModal({
   QuotationModalData,
@@ -37,7 +34,6 @@ export default function QuotationModal({
     onClick: () => {},
   });
 
-  console.log(currentDate);
   // 견적서 생성
   const createQuotations = async () => {
     try {
