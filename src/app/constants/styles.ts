@@ -4,6 +4,8 @@ export const BUTTON_STYLE = {
   dialog: (className: string) =>
     `flex-center p-2 gap-2 rounded-lg w-full whitespace-nowrap text-sm font-extrabold ${className}`,
   default: (className: string) => `w-full h-full ${className}`,
+  modalButton: (className: string) =>
+    `flex-center text-white w-[180px] h-[60px] rounded-[50px] text-2xl shadow-md ${className}`,
 } as const;
 
 export const INPUT_STYLE = {

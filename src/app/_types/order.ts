@@ -15,14 +15,6 @@ interface ProductsTypes {
   updated_at: string;
 }
 
-interface QuotationInfoTypes {
-  products: ProductsTypes[];
-  name: string;
-  total: number;
-  created_at: string;
-  updated_at: string;
-}
-
 interface User {
   isSuccess: boolean;
   code: string;
@@ -68,16 +60,6 @@ interface ProductListProps {
   onRemoveItem: (id: string | undefined) => void;
   onCountChange?: (id: string | undefined, value: string) => void;
 }
-
-interface QuotationViewInfoTypes {
-  id: number;
-  name: string;
-  total_price: number;
-  created_at: string;
-  updated_at: string;
-}
-
-type CheckTypes = 'week' | 'month' | 'date';
 
 interface quotationIdProps {
   quotation_id: string;

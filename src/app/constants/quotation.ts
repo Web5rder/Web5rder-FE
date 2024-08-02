@@ -8,11 +8,14 @@ export const MODAL_TEXT = [
 
 export const MODAL_INFO = ['견적서', 'Date', '구매자', '총액'];
 
-export const QUOTATION = [
-  '견적서조회',
-  '주간',
-  '월간',
-  '날짜를 선택',
-];
+export const QUOTATION = ['견적서조회', '전체', '주간', '월간', '날짜를 선택'];
 
 export const VIEW_QUOTATION_GRAPH = ['번호', '생성일자', '수정일자', '총가격'];
+
+export const QUOTATION_MANAGE = ['조회', '수정', '삭제'];
+
+export const QUOTATION_DELETE = [
+  '해당 견적서를 삭제하시겠습니까?',
+  '취소',
+  '삭제',
+];

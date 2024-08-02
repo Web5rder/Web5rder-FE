@@ -1,6 +1,6 @@
+import { HEADER_TEXT } from '@/app/constants/common';
 import Image from 'next/image';
 import Link from 'next/link';
-import { HEADER_TEXT } from '@/app/constants/common';
 
 function Header() {
   return (
@@ -18,7 +18,9 @@ function Header() {
         <div className="flex gap-x-3 h-full items-end mb-3 font-semibold text-lg text-[#6ABE39] absolute right-40">
           <Link href="/">{HEADER_TEXT[4]}</Link>
           <Link href="/">{HEADER_TEXT[5]}</Link>
-          <Link href="/" className='text-gray-5'>{HEADER_TEXT[6]}</Link>
+          <Link href="/" className="text-gray-5">
+            {HEADER_TEXT[6]}
+          </Link>
         </div>
         <div className="flex w-[180x] h-[40px] text-[32px] font-semibold" />
       </header>

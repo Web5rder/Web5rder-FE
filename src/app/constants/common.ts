@@ -3,6 +3,11 @@ import {
   PastOrderIcon,
   ProductsIcon,
   QuotationIcon,
+  SelectedOrderIcon,
+  SelectedPastOrderIcon,
+  SelectedProductsIcon,
+  SelectedQuotationIcon,
+  SelectedStarIcon,
   StarIcon,
 } from '@/app/ui/iconPath';
 
@@ -13,7 +18,7 @@ export const HEADER_TEXT = [
   '주문내역',
   '회원가입',
   '로그인',
-  '거래처 생성',
+  '거래처관리',
 ];
 
 export const FOOTER_TEXT = [
@@ -44,6 +49,14 @@ export const SIDENAV_ICONS = [
   QuotationIcon,
   PastOrderIcon,
   ProductsIcon,
+];
+
+export const SELECTED_SIDENAV_ICONS = [
+  SelectedStarIcon,
+  SelectedOrderIcon,
+  SelectedQuotationIcon,
+  SelectedPastOrderIcon,
+  SelectedProductsIcon,
 ];
 
 export const SIDENAV_PATH = [
