@@ -1,17 +1,6 @@
 import { useState, useEffect } from 'react';
 import { callGet } from '@/app/utils/callApi';
 
-interface User {
-  isSuccess: boolean;
-  code?: string;
-  result: {
-    email: string;
-    id: number;
-    is_active: boolean;
-    client_id: string;
-  };
-}
-
 export function useUser() {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
