@@ -20,6 +20,7 @@ import { useRouter } from 'next/navigation';
 import LoadingIndicator from '../../common/Loading';
 import { saveImage } from '@/app/utils/saveImage';
 import { formatNumber } from '@/app/utils/formatPrice';
+import { formatDate } from '@/app/utils/date';
 
 export default function QuotationModal({
   QuotationModalData,
@@ -100,14 +101,7 @@ export default function QuotationModal({
   // 오늘 날짜 불러오기
   useEffect(() => {
     const now = new Date();
-    const koreaTime = now.toLocaleString('en-US', {
-      timeZone: 'Asia/Seoul',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    const [month, day, year] = koreaTime.split('/');
-    const formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = formatDate(now.toISOString());
     setState((prev) => ({ ...prev, currentDate: formattedDate }));
   }, []);
 
