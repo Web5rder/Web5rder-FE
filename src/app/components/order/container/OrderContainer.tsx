@@ -3,7 +3,12 @@
 import { useEffect, useState } from 'react';
 import Input from '../../common/Input';
 import { SearchIcon } from '@/app/ui/iconPath';
-import { categoryMapping, ORDER_TEXT } from '../../../constants/order';
+import {
+  BUTTON_TEXT,
+  categoryMapping,
+  DIALOG_TEXT,
+  ORDER_TEXT,
+} from '../../../constants/order';
 import Icons from '../../common/Icons';
 import { Dialog } from '../../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
@@ -11,18 +16,20 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@/app/utils/useUser';
 import { usePastOrder } from '@/app/utils/usePastOrder';
 import ProductList from '../ProductList';
+import QuotationModal from '../quotation/OrderQuotationModal';
 
 export default function OrderContainer() {
   const router = useRouter();
   const { user } = useUser(); // 커스텀 훅에서 user 가져오기
   const { pastOrder, getPastOrder } = usePastOrder(); // 커스텀 훅에서 즐겨찾기 가져오기
 
-  const [state, setState] = useState({
+  const [state, setState] = useState<OrderState>({
     dialog: false,
     showBookmark: false,
     alert: false,
     search: '',
     bookmarkName: '',
+    quotation: false,
   });
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]); // 검색 결과
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]); // 추가한 상품
@@ -33,7 +40,6 @@ export default function OrderContainer() {
       setState((prev) => ({ ...prev, alert: true }));
     }
   }, [user]);
-  console.log(user);
 
   // 즐겨 찾기에서 불러온 상품을 추가한 상품에 저장
   const setPastOrderId = async (past_order_id: string) => {
@@ -46,7 +52,7 @@ export default function OrderContainer() {
           name: product.name,
           unit: product.unit,
           price: product.price,
-          count: '1',
+          count: product.count,
         }));
         setAddedItems(productList);
         setState((prev) => ({ ...prev, showBookmark: false }));
@@ -82,7 +88,7 @@ export default function OrderContainer() {
 
   const handleAddBookMark = async () => {
     if (!state.bookmarkName) {
-      alert('즐겨찾기 이름을 입력해주세요');
+      alert(DIALOG_TEXT[2]);
       return;
     }
     try {
@@ -103,7 +109,7 @@ export default function OrderContainer() {
 
   const handleAddItem = (item: ProductItemProps) => {
     setAddedItems((prevItems) => {
-      return [...prevItems, { ...item, count: item.count || '1' }];
+      return [...prevItems, { ...item, count: item.count }];
     });
   };
 
@@ -111,6 +117,11 @@ export default function OrderContainer() {
     setAddedItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
+  const handleCountChange = (id: string | undefined, count: string) => {
+    setAddedItems((prevItems) =>
+      prevItems.map((item) => (item.id === id ? { ...item, count } : item)),
+    );
+  };
   return (
     <div className="mt-14 px-24 py-2 w-full min-w-[320px]">
       <div className="flex gap-4 items-center">
@@ -161,12 +172,14 @@ export default function OrderContainer() {
         addedItems={addedItems}
         onAddItem={handleAddItem}
         onRemoveItem={handleRemoveItem}
+        onCountChange={handleCountChange}
       />
 
       <ProductList
         items={addedItems}
         isSearchResult={false}
         onRemoveItem={handleRemoveItem}
+        onCountChange={handleCountChange}
       />
 
       <div className="w-full flex justify-end gap-12 mt-4">
@@ -177,10 +190,13 @@ export default function OrderContainer() {
           type="button"
           className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
-          즐겨찾기 추가
+          {ORDER_TEXT[7]}
         </button>
 
         <button
+          onClick={() => {
+            setState((prev) => ({ ...prev, quotation: true }));
+          }}
           type="button"
           className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
         >
@@ -189,8 +205,8 @@ export default function OrderContainer() {
       </div>
       {state.alert && (
         <Dialog
-          topText="거래처가 생성되지 않았습니다."
-          BtnText="이동"
+          topText={DIALOG_TEXT[3]}
+          BtnText={BUTTON_TEXT[0]}
           onBtnClick={() => {
             setState((prev) => ({ ...prev, alert: false }));
             router.push('/sign-in/client');
@@ -200,9 +216,9 @@ export default function OrderContainer() {
       {state.dialog && (
         <Dialog
           isTwoButton
-          topText="즐겨찾기 이름을 적어주세요"
-          subText="현재 추가한 상품으로 즐겨찾기가 만들어집니다"
-          BtnText="추가"
+          topText={DIALOG_TEXT[4]}
+          subText={DIALOG_TEXT[5]}
+          BtnText={BUTTON_TEXT[1]}
           onSubBtnClick={() => {
             setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' })); // 다이얼로그를 닫을 때 입력값 초기화
           }}
@@ -215,6 +231,15 @@ export default function OrderContainer() {
               bookmarkName: e.target.value.slice(0, 10), // 10자 제한
             }))
           }
+        />
+      )}
+
+      {state.quotation && (
+        <QuotationModal
+          QuotationModalData={addedItems}
+          closeModal={() => {
+            setState((prev) => ({ ...prev, quotation: false }));
+          }}
         />
       )}
     </div>

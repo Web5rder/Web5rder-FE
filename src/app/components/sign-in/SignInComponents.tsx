@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import SignInButton from './common/SignInButton';
 import SignInInput from './common/SignInInput';
 import SignInSubTab from './SignInSubTab';
-import { ValidationType } from '@/app/_types/sign-in';
+import { SingInState, ValidationType } from '@/app/_types/sign-in';
 import { postLogin } from '@/app/service/postRequest';
 import {
   SIGNIN_ERROR,
@@ -17,7 +17,7 @@ import { setTokens } from '@/app/utils/setTokens';
 function SignInComponents() {
   const router = useRouter();
 
-  const [signInState, setSignInState] = useState({
+  const [signInState, setSignInState] = useState<SingInState>({
     email: '',
     pwd: '',
   });
