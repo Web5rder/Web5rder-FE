@@ -115,11 +115,11 @@ export default function OrderContainer() {
     });
   };
 
-  const handleRemoveItem = (id: string | undefined) => {
+  const handleRemoveItem = (id: string | number) => {
     setAddedItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
-  const handleCountChange = (id: string | undefined, count: string) => {
+  const handleCountChange = (id: string | number, count: string) => {
     setAddedItems((prevItems) =>
       prevItems.map((item) => (item.id === id ? { ...item, count } : item)),
     );

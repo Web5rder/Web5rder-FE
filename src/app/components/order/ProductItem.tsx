@@ -29,7 +29,7 @@ export default function ProductItem({
       if (Number.isNaN(numericValue) || numericValue <= 0) {
         value = '1'; // 0 이하의 값일 경우 1로 설정
       }
-      onCountChange?.(id, value);
+      onCountChange?.(id as string, value); // ?.를 써서 정의되지 않을 경우 호출 안하게(if문 사용 대신)
     }
     setInputState((prev) => ({
       ...prev,
@@ -39,7 +39,7 @@ export default function ProductItem({
 
   const handleButtonClick = () => {
     if (isAdded) {
-      onRemoveItem?.(id);
+      onRemoveItem?.(id as string); // 함수가 정의 된 경우에만 호출
     } else {
       onAddItem?.({ category, id, name, count: inputState.count, unit });
     }

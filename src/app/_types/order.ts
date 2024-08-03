@@ -7,17 +7,19 @@ interface OrderState {
   quotation: boolean;
 }
 
+interface UserResult {
+  client_id: number;
+  email: string;
+  id: number;
+  is_active: boolean;
+}
+
 interface User {
   isSuccess: boolean;
   code: string;
   message: string;
   category: string;
-  result: {
-    client_id: number;
-    email: string;
-    id: number;
-    is_active: boolean;
-  };
+  result: UserResult;
 }
 
 interface searchProductsProps {
@@ -48,8 +50,8 @@ interface QuotationTableProps {
 interface ProductItemProps extends QuotationItemType {
   isAdded?: boolean;
   onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem?: (id: string | undefined) => void;
-  onCountChange?: (id: string | undefined, value: string) => void;
+  onRemoveItem?: (id: string | number) => void;
+  onCountChange?: (id: string | number, value: string) => void;
 }
 
 interface ProductListProps {
@@ -57,8 +59,8 @@ interface ProductListProps {
   isSearchResult: boolean;
   addedItems?: ProductItemProps[];
   onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem: (id: string | undefined) => void;
-  onCountChange?: (id: string | undefined, value: string) => void;
+  onRemoveItem: (id: string | number) => void;
+  onCountChange?: (id: string | number, value: string) => void;
 }
 
 interface quotationIdProps {
@@ -70,6 +72,6 @@ interface patchQuotationPartiProps extends quotationIdProps {
 }
 
 interface QuotationModalProps {
-  QuotationModalData: any;
+  QuotationModalData: ProductItemProps[];
   closeModal: () => void;
 }

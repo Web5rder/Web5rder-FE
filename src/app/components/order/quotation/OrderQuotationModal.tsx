@@ -74,7 +74,7 @@ export default function QuotationModal({
   // 견적서 물품 생성
   const createProducts = async (id: number) => {
     try {
-      const body = QuotationModalData.map((item: any) => ({
+      const body = QuotationModalData.map((item) => ({
         quotation_id: id,
         product_id: item.id,
         quantity: item.count,
