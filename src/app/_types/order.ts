@@ -7,14 +7,6 @@ interface OrderState {
   quotation: boolean;
 }
 
-interface ProductsTypes {
-  product: string;
-  quantity: number;
-  price: number;
-  created_at: string;
-  updated_at: string;
-}
-
 interface User {
   isSuccess: boolean;
   code: string;
@@ -40,13 +32,21 @@ interface PastOrder {
   name: string;
 }
 
-interface ProductItemProps {
+interface QuotationItemType {
+  id?: string | number;
   category: string;
-  id?: string;
   name: string;
-  count?: string;
-  isAdded?: boolean;
+  count?: string | number;
   unit: string;
+  price?: string;
+}
+
+interface QuotationTableProps {
+  quotationInfo: QuotationItemType[];
+}
+
+interface ProductItemProps extends QuotationItemType {
+  isAdded?: boolean;
   onAddItem?: (item: ProductItemProps) => void;
   onRemoveItem?: (id: string | undefined) => void;
   onCountChange?: (id: string | undefined, value: string) => void;

@@ -1,19 +1,5 @@
 import { MODAL_TEXT } from '@/app/constants/order';
 
-interface QuotationItemType {
-  id: string | number;
-  category: string;
-  name: string;
-  count: number;
-  unit: string;
-}
-
-type QuotationInfoTypes = QuotationItemType[];
-
-interface QuotationTableProps {
-  quotationInfo: QuotationInfoTypes;
-}
-
 export default function QuotationTable({ quotationInfo }: QuotationTableProps) {
   return (
     <div className="w-full">

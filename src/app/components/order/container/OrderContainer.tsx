@@ -46,14 +46,16 @@ export default function OrderContainer() {
     try {
       const data = await callGet(`/api/order/get-past-order/${past_order_id}`);
       if (data.isSuccess) {
-        const productList = data.result.product_list.map((product: any) => ({
-          id: product.id,
-          category: categoryMapping[product.category],
-          name: product.name,
-          unit: product.unit,
-          price: product.price,
-          count: product.count,
-        }));
+        const productList = data.result.product_list.map(
+          (product: QuotationItemType) => ({
+            id: product.id,
+            category: categoryMapping[product.category],
+            name: product.name,
+            unit: product.unit,
+            price: product.price,
+            count: product.count,
+          }),
+        );
         setAddedItems(productList);
         setState((prev) => ({ ...prev, showBookmark: false }));
       }
@@ -64,7 +66,7 @@ export default function OrderContainer() {
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
-    type: any,
+    type: keyof OrderState,
   ) => {
     const { value } = e.target;
     setState((prev) => ({
