@@ -17,6 +17,7 @@ import { usePastOrder } from '@/app/hooks/usePastOrder';
 import ProductList from '../ProductList';
 import QuotationModal from '../quotation/OrderQuotationModal';
 import { useUser } from '@/app/hooks/useUser';
+import Button from '../../common/Button';
 
 export default function OrderContainer() {
   const router = useRouter();
@@ -128,29 +129,30 @@ export default function OrderContainer() {
     <div className="mt-14 px-24 py-2 w-full min-w-[320px]">
       <div className="flex gap-4 items-center">
         <div>
-          <button
+          <Button
             className="bg-primary-4 self-center font-black text-white px-2 py-1 whitespace-nowrap"
-            type="button"
-            onClick={() => {
+            type="default"
+            onClickHandler={() => {
               setState((prev) => ({
                 ...prev,
                 showBookmark: !prev.showBookmark,
               }));
             }}
-          >
-            {ORDER_TEXT[0]}
-          </button>
+            buttonText={ORDER_TEXT[0]}
+          />
+
           {state.showBookmark && (
             <div className="absolute flex flex-col w-auto bg-white">
               {pastOrder.map((order) => (
-                <button
+                <Button
                   key={order.past_order_id}
-                  type="button"
+                  type="default"
                   className="px-4 py-1 border-b border-gray-2 cursor-pointer  border-t-[1px] border-2 "
-                  onClick={() => setPastOrderId(order.past_order_id.toString())}
-                >
-                  {order.name}
-                </button>
+                  onClickHandler={() =>
+                    setPastOrderId(order.past_order_id.toString())
+                  }
+                  buttonText={order.name}
+                />
               ))}
             </div>
           )}
@@ -185,25 +187,23 @@ export default function OrderContainer() {
       />
 
       <div className="w-full flex justify-end gap-12 mt-4">
-        <button
-          onClick={() => {
+        <Button
+          onClickHandler={() => {
             setState((prev) => ({ ...prev, dialog: true }));
           }}
-          type="button"
-          className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
-        >
-          {ORDER_TEXT[7]}
-        </button>
+          type="default"
+          className="bg-primary-4 text-white text-xl px-3 py-1 font-black w-fit"
+          buttonText={ORDER_TEXT[7]}
+        />
 
-        <button
-          onClick={() => {
+        <Button
+          onClickHandler={() => {
             setState((prev) => ({ ...prev, quotation: true }));
           }}
-          type="button"
-          className="bg-primary-4 text-white text-xl px-3 py-1 font-black"
-        >
-          {ORDER_TEXT[4]}
-        </button>
+          type="default"
+          className="bg-primary-4 text-white text-xl px-3 py-1 font-black w-fit"
+          buttonText={ORDER_TEXT[4]}
+        />
       </div>
       {state.alert && (
         <Dialog
