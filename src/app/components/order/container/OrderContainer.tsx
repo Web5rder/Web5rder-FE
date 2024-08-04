@@ -13,10 +13,10 @@ import Icons from '../../common/Icons';
 import { Dialog } from '../../common/Dialog';
 import { callGet, callPost } from '@/app/utils/callApi';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@/app/utils/useUser';
-import { usePastOrder } from '@/app/utils/usePastOrder';
+import { usePastOrder } from '@/app/hooks/usePastOrder';
 import ProductList from '../ProductList';
 import QuotationModal from '../quotation/OrderQuotationModal';
+import { useUser } from '@/app/hooks/useUser';
 
 export default function OrderContainer() {
   const router = useRouter();

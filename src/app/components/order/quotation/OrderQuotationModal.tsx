@@ -10,7 +10,6 @@ import { cancelIcon } from '@/app/ui/iconPath';
 import Icons from '../../common/Icons';
 import QuotationSave from '../../quotation/modal/QuotationSave';
 import QuotationTable from './OrderQuotationTable';
-import { useUser } from '@/app/utils/useUser';
 import Button from '../../common/Button';
 import Input from '../../common/Input';
 import { useState, useEffect, ChangeEvent } from 'react';
@@ -21,6 +20,7 @@ import LoadingIndicator from '../../common/Loading';
 import { saveImage } from '@/app/utils/saveImage';
 import { formatNumber } from '@/app/utils/formatPrice';
 import { formatDate } from '@/app/utils/date';
+import { useUser } from '@/app/hooks/useUser';
 
 export default function QuotationModal({
   QuotationModalData,
