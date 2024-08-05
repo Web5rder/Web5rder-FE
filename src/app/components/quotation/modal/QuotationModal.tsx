@@ -5,7 +5,7 @@ import { QuotationModalData } from '@/app/constants/test';
 import { cancelIcon } from '@/app/ui/iconPath';
 import { callGet } from '@/app/utils/callApi';
 import { formatDate } from '@/app/utils/date';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import Icons from '../../common/Icons';
 import QuotationSave from './QuotationSave';
 import QuotationTable from './QuotationTable';
@@ -61,7 +61,7 @@ const QuotationModal = ({ closeModal, id }: QuotationModalProps) => {
           </div>
         </div>
         <div className="absolute left-8 bottom-6">
-          <QuotationSave />
+          <QuotationSave onClick={() => {}} />
         </div>
       </div>
     </div>

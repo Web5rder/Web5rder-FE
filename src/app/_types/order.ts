@@ -1,3 +1,20 @@
+interface OrderState {
+  dialog: boolean;
+  showBookmark: boolean;
+  alert: boolean;
+  search: string;
+  bookmarkName: string;
+  quotation: boolean;
+}
+
+interface ProductsTypes {
+  product: string;
+  quantity: number;
+  price: number;
+  created_at: string;
+  updated_at: string;
+}
+
 interface User {
   isSuccess: boolean;
   code: string;
@@ -9,6 +26,13 @@ interface User {
     id: number;
     is_active: boolean;
   };
+}
+
+interface searchProductsProps {
+  namePrefix: string;
+  limit: string;
+  cachedTime: string;
+  token: string;
 }
 
 interface PastOrder {
@@ -25,6 +49,7 @@ interface ProductItemProps {
   unit: string;
   onAddItem?: (item: ProductItemProps) => void;
   onRemoveItem?: (id: string | undefined) => void;
+  onCountChange?: (id: string | undefined, value: string) => void;
 }
 
 interface ProductListProps {
@@ -33,4 +58,18 @@ interface ProductListProps {
   addedItems?: ProductItemProps[];
   onAddItem?: (item: ProductItemProps) => void;
   onRemoveItem: (id: string | undefined) => void;
+  onCountChange?: (id: string | undefined, value: string) => void;
+}
+
+interface quotationIdProps {
+  quotation_id: string;
+}
+
+interface patchQuotationPartiProps extends quotationIdProps {
+  particulars: string;
+}
+
+interface QuotationModalProps {
+  QuotationModalData: any;
+  closeModal: () => void;
 }

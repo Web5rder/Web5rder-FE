@@ -12,6 +12,18 @@ export async function callPost(endpoint: string, body: any) {
   return response.json();
 }
 
+export async function callPatch(endpoint: string, params?: string) {
+  const url = params
+    ? `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}?${params}`
+    : `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}`;
+
+  const response = await fetch(url, {
+    method: 'PATCH',
+  });
+
+  return response.json();
+}
+
 export async function callGet(endpoint: string, params?: string) {
   const url = params
     ? `${process.env.NEXT_PUBLIC_LOCAL_SERVER}${endpoint}?${params}`

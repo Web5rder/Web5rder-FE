@@ -1,6 +1,6 @@
 'use client';
 
-import { ValidationClientType } from '@/app/_types/sign-in';
+import { ClientState, ValidationClientType } from '@/app/_types/sign-in';
 import {
   clientMapping,
   SIGNIN_TEXT,
@@ -17,7 +17,7 @@ export default function EditClientComponents() {
   const router = useRouter();
   const { user } = useUser();
 
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<ClientState>({
     name: '',
     address: '',
     nameError: '',

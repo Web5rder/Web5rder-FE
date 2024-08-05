@@ -12,6 +12,7 @@ export default function ProductList({
   addedItems,
   onAddItem,
   onRemoveItem,
+  onCountChange,
 }: ProductListProps) {
   return (
     <div
@@ -52,6 +53,7 @@ export default function ProductList({
             count={!isSearchResult ? item.count || '1' : undefined}
             onAddItem={onAddItem}
             onRemoveItem={onRemoveItem}
+            onCountChange={onCountChange}
           />
         ))}
       </div>
