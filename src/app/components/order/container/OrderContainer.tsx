@@ -54,7 +54,6 @@ export default function OrderContainer() {
             name: product.name,
             unit: product.unit,
             price: product.price,
-            count: product.count,
           }),
         );
         setAddedItems(productList);
