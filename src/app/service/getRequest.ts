@@ -32,7 +32,7 @@ export const getSearchProducts = async ({
   return getRequest(url, token);
 };
 
-// 주문 내역 상세 불러오기
+// 즐겨찾기 상세 불러오기
 export const getPastOrder = async (past_order_id: string) => {
   const url = `${SERVER_URL}/api/v1/past-order/${past_order_id}`;
   return getRequest(url);
@@ -44,34 +44,10 @@ export const getQuotationTotal = async (quotation_id: string) => {
   return getRequest(url);
 };
 
-// 거래처 주문 내역 조회
+// 거래처 주문 내역 조회(URL 캐시 버스팅 사용)
 export const getClientPastOrder = async (client_id: string) => {
-  try {
-    const url = `${SERVER_URL}/api/v1/clients/${client_id}/past-order`;
-
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        Pragma: 'no-cache',
-        Expires: '0',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `getClientPastOrder 데이터 fetch 실패: ${response.statusText}`,
-      );
-    }
-    console.log('전체 응답:', response);
-    const data = await response.json();
-    console.log(`Response data: ${JSON.stringify(data)}`);
-    return data;
-  } catch (error) {
-    console.error('Error: ', error);
-    throw error;
-  }
+  const url = `${SERVER_URL}/api/v1/clients/${client_id}/past-order?_t=${Date.now()}`;
+  return getRequest(url);
 };
 
 export const getQuotation = async (
