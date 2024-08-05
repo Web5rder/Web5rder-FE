@@ -50,11 +50,13 @@ export default function ProductItem({
       <div className="w-[7%] pl-4 text-ellipsis whitespace-nowrap">
         {category}
       </div>
-      <div className="w-[7%] text-ellipsis whitespace-nowrap">{id}</div>
+      <div className="w-[7%] text-center text-ellipsis whitespace-nowrap">
+        {id}
+      </div>
       <div className="w-[60%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
         {name}
       </div>
-      <div className="w-[10%] flex items-center justify-center">
+      <div className="w-[10%]">
         <Input
           className="w-16 text-center"
           placeholder="1"
@@ -64,7 +66,7 @@ export default function ProductItem({
           onChange={(e) => handleInputChange(e, 'count')}
         />
       </div>
-      <div className="w-[8%] text-right pr-2 overflow-hidden text-ellipsis whitespace-nowrap">
+      <div className="w-[8%] text-center pr-2 overflow-hidden text-ellipsis whitespace-nowrap">
         {unit}
       </div>
       <div className="w-[8%] flex justify-end pr-4">

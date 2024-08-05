@@ -52,4 +52,9 @@ body {
   .flex-center {
     @apply flex justify-center items-center;
   }
+
+  /* Order */
+  .order-btn {
+    @apply bg-primary-4 text-white text-xl px-2 py-1 font-black whitespace-nowrap;
+  }
 }

@@ -129,7 +129,7 @@ export default function OrderContainer() {
       <div className="flex gap-4 items-center">
         <div>
           <Button
-            className="bg-primary-4 self-center font-black text-white px-2 py-1 whitespace-nowrap"
+            className="order-btn self-center"
             type="default"
             onClickHandler={() => {
               setState((prev) => ({
@@ -146,7 +146,7 @@ export default function OrderContainer() {
                 <Button
                   key={order.past_order_id}
                   type="default"
-                  className="px-4 py-1 border-b border-gray-2 cursor-pointer  border-t-[1px] border-2 "
+                  className="px-4 py-1 border-b border-gray-2 cursor-pointer border-t-[1px] border-2 "
                   onClickHandler={() =>
                     setPastOrderId(order.past_order_id.toString())
                   }
@@ -191,7 +191,7 @@ export default function OrderContainer() {
             setState((prev) => ({ ...prev, dialog: true }));
           }}
           type="default"
-          className="bg-primary-4 text-white text-xl px-3 py-1 font-black w-fit"
+          className="order-btn w-min"
           buttonText={ORDER_TEXT[7]}
         />
 
@@ -200,7 +200,7 @@ export default function OrderContainer() {
             setState((prev) => ({ ...prev, quotation: true }));
           }}
           type="default"
-          className="bg-primary-4 text-white text-xl px-3 py-1 font-black w-fit"
+          className="order-btn w-min"
           buttonText={ORDER_TEXT[4]}
         />
       </div>
