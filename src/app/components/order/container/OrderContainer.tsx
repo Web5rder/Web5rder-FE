@@ -125,7 +125,7 @@ export default function OrderContainer() {
     );
   };
   return (
-    <div className="mt-14 px-24 py-2 w-full min-w-[320px]">
+    <section className="mt-14 px-24 py-2 w-full min-w-[320px]">
       <div className="flex gap-4 items-center">
         <div>
           <Button
@@ -243,6 +243,6 @@ export default function OrderContainer() {
           }}
         />
       )}
-    </div>
+    </section>
   );
 }
