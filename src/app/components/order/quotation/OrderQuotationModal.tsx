@@ -8,7 +8,7 @@ import {
 } from '@/app/constants/order';
 import { cancelIcon } from '@/app/ui/iconPath';
 import { callGet, callPatch, callPost } from '@/app/utils/callApi';
-import { formatNumber } from '@/app/utils/formatPrice';
+import { formatPrice } from '@/app/utils/formatPrice';
 import { saveImage } from '@/app/utils/saveImage';
 import { useUser } from '@/app/utils/useUser';
 import { useRouter } from 'next/navigation';
@@ -240,7 +240,7 @@ export default function QuotationModal({
               <span className="text-2xl mr-4">{MODAL_INFO[3]}</span>
               <div className="pl-4 border-double border-b-[7px] border-[#55aa00]">
                 <span className="text-2xl sm:text-4xl font-bold text-end pb-1">
-                  {formatNumber(total)} 원
+                  {formatPrice(total)} 원
                 </span>
               </div>
             </div>
