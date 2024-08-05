@@ -40,7 +40,15 @@ function Header() {
               >
                 {HEADER_TEXT[6]}
               </Link>
-              <Link href={user.code==='4005' ? '/sign-in/client' :'/sign-in/client/edit' }>{HEADER_TEXT[7]}</Link>
+              <Link
+                href={
+                  user.code === '4005'
+                    ? '/sign-in/client'
+                    : '/sign-in/client/edit'
+                }
+              >
+                {HEADER_TEXT[7]}
+              </Link>
             </div>
           ) : (
             <div className="flex gap-x-3">
