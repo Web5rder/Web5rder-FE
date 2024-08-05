@@ -62,8 +62,8 @@ export const SELECTED_SIDENAV_ICONS = [
 
 export const SIDENAV_PATH = [
   '/',
+  '/order',
   '/quotation',
-  '/quotation',
-  '/quotation',
-  '/quotation',
+  '/past-order',
+  '/',
 ];
