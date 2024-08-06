@@ -12,14 +12,14 @@ const LoginModal = () => {
       <div className="flex gap-x-6">
         <Button
           buttonText={MAIN_MODAL_TEXT[1]}
-          type={'modalLogin'}
+          type="modalLogin"
           onClickHandler={() => router.push('sign-in/sign-up')}
-        ></Button>
+        />
         <Button
           buttonText={MAIN_MODAL_TEXT[2]}
-          type={'modalSignup'}
+          type="modalSignup"
           onClickHandler={() => router.push('sign-in')}
-        ></Button>
+        />
       </div>
     </div>
   );

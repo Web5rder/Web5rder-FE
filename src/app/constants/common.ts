@@ -60,10 +60,4 @@ export const SELECTED_SIDENAV_ICONS = [
   SelectedProductsIcon,
 ];
 
-export const SIDENAV_PATH = [
-  '/',
-  '/order',
-  '/quotation',
-  '/past-order',
-  '/',
-];
+export const SIDENAV_PATH = ['/', '/order', '/quotation', '/past-order', '/'];

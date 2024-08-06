@@ -2,10 +2,10 @@ import { QUOTATION_MANAGE } from '@/app/constants/quotation';
 import { useModal } from '@/app/hooks/useModal';
 import { callDelete } from '@/app/utils/callApi';
 import { formatDate } from '@/app/utils/date';
+import { formatPrice } from '@/app/utils/formatPrice';
 import { useRouter } from 'next/navigation';
 import DeleteQuotationModal from './modal/DeleteQuotationModal';
 import QuotationModal from './modal/QuotationModal';
-import { formatPrice } from '@/app/utils/formatPrice';
 
 interface QuotationViewTableInfoProps {
   quoteView: QuotationViewInfoTypes;
@@ -46,7 +46,9 @@ const QuotationViewTableInfo = ({
         <div className="w-[250px] text-center">
           {formatDate(quoteView.updated_at)}
         </div>
-        <div className="w-[170px] text-center">{formatPrice(quoteView.total_price)}원</div>
+        <div className="w-[170px] text-center">
+          {formatPrice(quoteView.total_price)}원
+        </div>
         <div
           className="w-[42px] text-center cursor-pointer font-bold"
           onClick={openModal}

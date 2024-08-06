@@ -79,13 +79,15 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
     });
   };
 
-  const handleRemoveItem = (id: string | undefined) => {
-    setAddedItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  const handleRemoveItem = (itemId: string | undefined) => {
+    setAddedItems((prevItems) =>
+      prevItems.filter((item) => item.id !== itemId),
+    );
   };
 
-  const handleCountChange = (id: string | undefined, count: string) => {
+  const handleCountChange = (itemId: string | undefined, count: string) => {
     setAddedItems((prevItems) =>
-      prevItems.map((item) => (item.id === id ? { ...item, count } : item)),
+      prevItems.map((item) => (item.id === itemId ? { ...item, count } : item)),
     );
   };
 

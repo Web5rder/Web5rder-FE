@@ -50,5 +50,5 @@ export const initialOrderState: OrderState = {
   alert: false,
   search: '',
   bookmarkName: '',
-  quotation: false
+  quotation: false,
 };
