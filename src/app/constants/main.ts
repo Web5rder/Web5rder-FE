@@ -9,3 +9,9 @@ export const WELCOME_TEXT = [
 export const REORDER_TEXT = ['빠르게 다시 주문하기', '주문하기'];
 
 export const RECOMMEND_TEXT = ['오늘, 이런 상품은 어때요?', '구매하기'];
+
+export const MAIN_MODAL_TEXT = [
+  '로그인 후 JMF만의 특별한 혜택을 만나보세요!',
+  '로그인',
+  '회원가입',
+];
