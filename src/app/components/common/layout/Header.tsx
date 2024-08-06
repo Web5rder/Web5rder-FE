@@ -13,10 +13,6 @@ function Header() {
     document.cookie = `accessToken=; expires=0; path=/;`;
     router.push('/');
   };
-  console.log(user?.code);
-  console.log(user?.isSuccess);
-  console.log(user?.message);
-  console.log(user?.result);
 
   return (
     <div className="relative w-full border-b-2 pt-2 drop-shadow-lg">
