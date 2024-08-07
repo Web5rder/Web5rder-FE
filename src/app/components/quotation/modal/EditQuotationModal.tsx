@@ -58,14 +58,18 @@ export default function EditQuotationModal({
     const editedItems = QuotationModalData.filter(
       (item: any) => item.isEdited === true,
     );
-    for (const item of editedItems) {
-      const body = {
-        quantity: item.count,
-      };
-      await callPut(
+    const updatePromises = editedItems.map((item: any) => {
+      const body = { quantity: item.count };
+      return callPut(
         `/api/quotation/put?quotation_id=${quotationId}&product_id=${item.id}`,
         body,
       );
+    });
+
+    try {
+      await Promise.all(updatePromises);
+    } catch (error) {
+      console.error(error);
     }
   };
 

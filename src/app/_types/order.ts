@@ -73,5 +73,5 @@ interface patchQuotationPartiProps extends quotationIdProps {
 interface QuotationModalProps {
   QuotationModalData: any;
   closeModal: () => void;
-  quotationId?:string
+  quotationId?: string;
 }
