@@ -48,3 +48,11 @@ export const putQuotation = async (
   const url = `${SERVER_URL}/api/v1/quotations/${quotation_id}/${product_id}`;
   return putRequest(url, quantity);
 };
+
+export const putPastOrder = async (
+  pastorder_id: number,
+  pastOrderData: PastOrder,
+) => {
+  const url = `${SERVER_URL}/api/v1/past-order/${pastorder_id}/update`;
+  return putRequest(url, pastOrderData);
+};
