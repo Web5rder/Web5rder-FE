@@ -72,3 +72,27 @@ export const patchAdminClientComment = async (
     throw new Error('patchAdminClientComment 에러 발생');
   }
 };
+
+// 야채 물품 가격 직접 변경
+export const patchAdminProductsVegetable = async (
+  product_id: string,
+  price: string,
+) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products/${product_id}/vegetable?price=${price}`;
+    return await patchRequest(url);
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('patchAdminProductsVegetable 에러 발생');
+  }
+};
+
+// 야채 물품 가격 엑셀 파일로 변경
+export const patchAdminProductsVegetableFile = async () => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products/vegetable/file`;
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('patchAdminProductsVegetableFile 에러 발생');
+  }
+};
