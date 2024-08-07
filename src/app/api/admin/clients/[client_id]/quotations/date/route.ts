@@ -3,10 +3,13 @@
 import { NextResponse } from 'next/server';
 import { getAdminClientQuotationsDate } from '@/app/service/getRequest';
 
-export async function GET(req: Request): Promise<NextResponse> {
+export async function GET(
+  req: Request,
+  { params }: { params: { client_id: string } },
+): Promise<NextResponse> {
   try {
+    const { client_id } = params;
     const url = new URL(req.url);
-    const client_id = url.searchParams.get('client_id') || '';
     const date_range_type = url.searchParams.get('date_range_type') || '';
     const start_date = url.searchParams.get('start_date') || '';
     const end_date = url.searchParams.get('end_date') || '';

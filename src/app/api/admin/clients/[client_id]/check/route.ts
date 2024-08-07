@@ -3,10 +3,13 @@
 import { NextResponse } from 'next/server';
 import { getAdminClientCheck } from '@/app/service/getRequest';
 
-export async function GET(req: Request): Promise<NextResponse> {
+export async function GET(
+  req: Request,
+  { params }: { params: { client_id: string } },
+): Promise<NextResponse> {
   try {
+    const { client_id } = params;
     const url = new URL(req.url);
-    const client_id = url.searchParams.get('client_id') || '';
     const input_date = url.searchParams.get('input_date') || '';
 
     const data = await getAdminClientCheck(client_id, input_date);
