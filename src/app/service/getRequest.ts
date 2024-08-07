@@ -120,3 +120,9 @@ export const getAdminClientCheck = async (
   const url = `${SERVER_URL}/api/v1/clients/${client_id}/check?input_date=${input_date}`;
   return getRequest(url);
 };
+
+// 분류 별 물품 조회
+export const getAdminProductsCategory = async (category: string) => {
+  const url = `${SERVER_URL}/api/v1/products/${category}`;
+  return getRequest(url);
+};
