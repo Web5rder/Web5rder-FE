@@ -69,3 +69,54 @@ export const getQuotationDetail = async (
   const url = `${SERVER_URL}/api/v1/quotations/${quotationId}`;
   return getRequest(url, accessToken);
 };
+
+// ===== 관리자 =====
+// 거래처 명으로 조회
+export const getAdminClientName = async (name: string) => {
+  const url = `${SERVER_URL}/api/v1/clients/name${name}`;
+  return getRequest(url);
+};
+
+// 거래처 지역으로 조회
+export const getAdminClientRegion = async (region: string) => {
+  const url = `${SERVER_URL}/api/v1/clients/region?region=${region}`;
+  return getRequest(url);
+};
+
+// 거래처 견적서 조회
+export const getAdminClientQuotations = async (
+  client_id: string,
+  page: string,
+  page_size: string,
+) => {
+  const url = `${SERVER_URL}/api/v1/clients/${client_id}/quotations?page=${page}&page_size=${page_size}`;
+  return getRequest(url);
+};
+
+// 거래처 견적서 기간에 따른 조회
+export const getAdminClientQuotationsDate = async (
+  client_id: string,
+  date_range_type: string,
+  start_date: string,
+  end_date: string,
+  page: string,
+  page_size: string,
+) => {
+  const url = `${SERVER_URL}/api/v1/clients/${client_id}/quotations/date?date_range_type=${date_range_type}&start_date=${start_date}&end_date=${end_date}&page=${page}&page_size=${page_size}`;
+  return getRequest(url);
+};
+
+// 거래처 주문 내역 조회
+export const getAdminClientPastOrder = async (client_id: string) => {
+  const url = `${SERVER_URL}/api/v1/clients/${client_id}/past-order`;
+  return getRequest(url);
+};
+
+// 거래처 해당 날짜 견적서 제출 여부 파악
+export const getAdminClientCheck = async (
+  client_id: string,
+  input_date: string,
+) => {
+  const url = `${SERVER_URL}/api/v1/clients/${client_id}/check?input_date=${input_date}`;
+  return getRequest(url);
+};
