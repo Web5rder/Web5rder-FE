@@ -27,3 +27,9 @@ export const deleteAdminClient = async (client_id: string) => {
   const url = `${SERVER_URL}/api/v1/clients/${client_id}/delete`;
   return deleteRequest(url);
 };
+
+// 물품 삭제
+export const deleteAdminProducts = async (product_id: string) => {
+  const url = `${SERVER_URL}/api/v1/products/${product_id}/delete`;
+  return deleteRequest(url);
+};
