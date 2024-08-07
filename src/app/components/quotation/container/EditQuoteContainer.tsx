@@ -1,12 +1,13 @@
 'use client';
 
 import { SearchIcon } from '@/app/ui/iconPath';
-import { callGet, callPost } from '@/app/utils/callApi';
+import { callDelete, callGet, callPost } from '@/app/utils/callApi';
 import { usePastOrder } from '@/app/utils/usePastOrder';
 import { useUser } from '@/app/utils/useUser';
 import { useEffect, useState } from 'react';
 import {
   BUTTON_TEXT,
+  categoryMapping,
   DIALOG_TEXT,
   initialOrderState,
   ORDER_TEXT,
@@ -15,7 +16,7 @@ import { Dialog } from '../../common/Dialog';
 import Icons from '../../common/Icons';
 import Input from '../../common/Input';
 import ProductList from '../../order/ProductList';
-import QuotationModal from '../../order/quotation/OrderQuotationModal';
+import EditQuotationModal from '../modal/EditQuotationModal';
 
 interface EditQuoteContainerProps {
   id: string;
@@ -28,17 +29,21 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
   const [state, setState] = useState<OrderState>(initialOrderState);
   const [searchResults, setSearchResults] = useState<ProductItemProps[]>([]);
   const [addedItems, setAddedItems] = useState<ProductItemProps[]>([]);
+  console.log(addedItems);
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await callGet(`/api/quotation/detail?id=${id}`);
+      console.log(data.result);
+      console.log(id);
       setAddedItems(
         data.result.products.map((product: any, index: number) => ({
-          category: '냉동',
-          id: index,
+          category: categoryMapping[product.category],
+          id: product.id,
           name: product.product,
           count: product.quantity,
-          unit: '개',
+          unit: product.unit,
+          isEdited: true,
         })),
       );
     };
@@ -79,7 +84,15 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
     });
   };
 
-  const handleRemoveItem = (itemId: string | undefined) => {
+  const handleRemoveItem = async (itemId: string | undefined) => {
+    const itemToRemove = addedItems.find((item) => item.id === itemId);
+    if (itemToRemove?.isEdited) {
+      console.log('삭제 진행');
+
+      await callDelete(
+        `/api/quotation/delete/product?quotation_id=${id}&product_id=${itemId}`,
+      );
+    }
     setAddedItems((prevItems) =>
       prevItems.filter((item) => item.id !== itemId),
     );
@@ -174,7 +187,7 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
           subText={DIALOG_TEXT[5]}
           BtnText={BUTTON_TEXT[1]}
           onSubBtnClick={() => {
-            setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' })); // 다이얼로그를 닫을 때 입력값 초기화
+            setState((prev) => ({ ...prev, dialog: false, bookmarkName: '' }));
           }}
           onBtnClick={handleAddBookMark}
           hasInput
@@ -189,11 +202,12 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
       )}
 
       {state.quotation && (
-        <QuotationModal
+        <EditQuotationModal
           closeModal={() => {
             setState((prev) => ({ ...prev, quotation: false }));
           }}
           QuotationModalData={addedItems}
+          quotationId={id}
         />
       )}
     </div>

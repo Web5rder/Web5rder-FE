@@ -39,3 +39,12 @@ export const putUpdateClient = async (
     throw new Error('putUpdateClient 에러 발생');
   }
 };
+
+export const putQuotation = async (
+  quantity: number,
+  quotation_id: number,
+  product_id: number,
+) => {
+  const url = `${SERVER_URL}/api/v1/quotations/${quotation_id}/${product_id}`;
+  return await putRequest(url, quantity);
+};
