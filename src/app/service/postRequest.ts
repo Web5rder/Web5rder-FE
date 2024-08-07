@@ -112,3 +112,25 @@ export const postQuotationsProducts = async (
     throw new Error('postQuotationsProducts 에러 발생');
   }
 };
+
+// ===== 관리자 =====
+// 물건 견적서 파일 업로드
+export const postAdminProductsUpload = async (productsContents: any) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products/upload`;
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('postAdminProductUpload 에러 발생');
+  }
+};
+
+// 물품 추가 생성
+export const postAdminProducts = async (productsContents: any) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products`;
+    return await postRequest(url, productsContents);
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('postAdminProducts 에러 발생');
+  }
+};
