@@ -7,12 +7,16 @@ export default function SetRegion({ clientId }: ClientIdProps) {
   const [region, setRegion] = useState('');
 
   const handleSetRegion = async () => {
+    if (!clientId || !region) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
     try {
       await callPatch(
         `/api/admin/clients/${clientId}/region`,
         `region=${region}`,
       );
-      alert(ALERT_TEXT[0]);
+      alert(ALERT_TEXT[1]);
     } catch (error) {
       console.error(error);
     }

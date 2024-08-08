@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Input from '../../common/Input';
 import Button from '../../common/Button';
 import {
+  ALERT_TEXT,
   BTN_TEXT,
   clientStatusMapping,
   INPUT_TEXT,
@@ -16,6 +17,10 @@ export default function CheckQuotation({ clientId }: ClientIdProps) {
   );
 
   const handleCheckQuotation = async () => {
+    if (!clientId || !inputDate) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
     try {
       const data = await callGet(
         `/api/admin/clients/${clientId}/check`,

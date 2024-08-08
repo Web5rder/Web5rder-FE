@@ -8,6 +8,7 @@ import {
   BTN_TEXT,
   INPUT_TEXT,
   TABLE_TEXT,
+  ALERT_TEXT,
 } from '@/app/constants/admin';
 
 export default function InquiryQuotation({ clientId }: ClientIdProps) {
@@ -18,6 +19,11 @@ export default function InquiryQuotation({ clientId }: ClientIdProps) {
   );
 
   const handleGetQuotations = async () => {
+    if (!clientId || !page || !pageSize) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
+
     try {
       const data = await callGet(
         `/api/admin/clients/${clientId}/quotations`,

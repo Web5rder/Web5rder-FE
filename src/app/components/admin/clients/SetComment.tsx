@@ -8,12 +8,16 @@ export default function SetComment({ clientId }: ClientIdProps) {
   const [inputComment, setInputComment] = useState('');
 
   const handleSetComment = async () => {
+    if (!clientId || !inputComment) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
     try {
       await callPatch(
         `/api/admin/clients/${clientId}/comment`,
         `input_comment=${inputComment}`,
       );
-      alert(ALERT_TEXT[1]);
+      alert(ALERT_TEXT[2]);
     } catch (error) {
       console.error(error);
     }

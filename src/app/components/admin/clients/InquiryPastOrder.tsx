@@ -1,7 +1,7 @@
 import { callGet } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Button from '../../common/Button';
-import { BTN_TEXT, TABLE_TEXT } from '@/app/constants/admin';
+import { ALERT_TEXT, BTN_TEXT, TABLE_TEXT } from '@/app/constants/admin';
 
 export default function InquiryPastOrder({ clientId }: ClientIdProps) {
   const [result, setResult] = useState<{ result: AdminItemProps[] }>({
@@ -9,6 +9,10 @@ export default function InquiryPastOrder({ clientId }: ClientIdProps) {
   });
 
   const handleGetPastOrders = async () => {
+    if (!clientId) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
     try {
       const data = await callGet(`/api/order/${clientId}/get-past-order`);
       setResult(data);

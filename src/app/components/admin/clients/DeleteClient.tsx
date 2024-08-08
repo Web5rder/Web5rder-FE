@@ -4,9 +4,13 @@ import { BTN_TEXT, ALERT_TEXT } from '@/app/constants/admin';
 
 export default function DeleteClient({ clientId }: ClientIdProps) {
   const handleDeleteClient = async () => {
+    if (!clientId) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
     try {
       await callDelete(`/api/admin/clients/${clientId}/delete`);
-      alert(ALERT_TEXT[2]);
+      alert(ALERT_TEXT[3]);
     } catch (error) {
       console.error(error);
     }

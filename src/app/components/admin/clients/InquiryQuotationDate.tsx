@@ -7,6 +7,7 @@ import {
   BTN_TEXT,
   INPUT_TEXT,
   TABLE_TEXT,
+  ALERT_TEXT,
 } from '@/app/constants/admin';
 import { formatNumber } from '@/app/utils/formatPrice';
 
@@ -20,6 +21,10 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
   );
 
   const handleGetQuotationsByDate = async () => {
+    if (!clientId || !startDate || !endDate || !page || !pageSize) {
+      alert(ALERT_TEXT[0]);
+      return;
+    }
     try {
       const data = await callGet(
         `/api/admin/clients/${clientId}/quotations/date`,
