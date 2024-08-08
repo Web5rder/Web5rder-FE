@@ -20,7 +20,7 @@ export default function SetRegion({ clientId }: ClientIdProps) {
   return (
     <div className="flex gap-4 border-2 p-8">
       <select
-        className="border-2"
+        className="border-2 px-2"
         name="region"
         onChange={(e) => setRegion(e.target.value)}
         value={region}
@@ -34,7 +34,7 @@ export default function SetRegion({ clientId }: ClientIdProps) {
       </select>
 
       <Button
-        className="border-2 w-fit px-8"
+        className="admin-btn"
         buttonText="실행"
         type="default"
         onClickHandler={handleSetRegion}

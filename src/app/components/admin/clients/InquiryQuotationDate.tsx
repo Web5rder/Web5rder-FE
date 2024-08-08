@@ -29,7 +29,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
 
   const renderTable = () => {
     return (
-      <table className="border-collapse border border-gray-3 w-full">
+      <table className="admin-table">
         <thead>
           <tr>
             <th className="admin-table-th">번호</th>
@@ -67,7 +67,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
           <p className="whitespace-nowrap">시작 날짜</p>
           <Input
             name="startDate"
-            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            className="admin-input"
             inputType="date"
             type="default"
             onChange={(e) => setStartDate(e.target.value)}
@@ -80,7 +80,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
           <p className="whitespace-nowrap">종료 날짜</p>
           <Input
             name="endDate"
-            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            className="admin-input"
             inputType="date"
             type="default"
             onChange={(e) => setEndDate(e.target.value)}
@@ -93,7 +93,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
           <p className="whitespace-nowrap">페이지</p>
           <Input
             name="page"
-            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            className="admin-input"
             type="default"
             onChange={(e) => setPage(e.target.value)}
             textValue={page}
@@ -105,7 +105,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
           <p className="whitespace-nowrap">페이지 크기</p>
           <Input
             name="pageSize"
-            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            className="admin-input"
             type="default"
             onChange={(e) => setPageSize(e.target.value)}
             textValue={pageSize}
@@ -114,7 +114,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
         </div>
 
         <Button
-          className="border-2 w-fit px-8"
+          className="admin-btn"
           buttonText="실행"
           type="default"
           onClickHandler={handleGetQuotationsByDate}

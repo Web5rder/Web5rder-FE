@@ -78,10 +78,10 @@ export default function AdminContainer() {
         </select>
 
         <div className="flex gap-4">
-          <p>거래처 id</p>
+          <p className="whitespace-nowrap">거래처 id</p>
           <Input
             name="clientId"
-            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            className="admin-input"
             type="default"
             onChange={handleInputChange}
             textValue={state.clientId}

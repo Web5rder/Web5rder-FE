@@ -24,7 +24,7 @@ export default function SetComment({ clientId }: ClientIdProps) {
         <p className="whitespace-nowrap">특이사항 입력</p>
         <Input
           name="inputComment"
-          className="bg-gray-0 w-fit border border-gray-7 px-4"
+          className="admin-input"
           type="default"
           onChange={(e) => setInputComment(e.target.value)}
           textValue={inputComment}
@@ -33,7 +33,7 @@ export default function SetComment({ clientId }: ClientIdProps) {
       </div>
 
       <Button
-        className="border-2 w-fit px-8"
+        className="admin-btn"
         buttonText="실행"
         type="default"
         onClickHandler={handleSetComment}
