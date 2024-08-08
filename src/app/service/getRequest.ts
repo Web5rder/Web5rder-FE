@@ -126,3 +126,25 @@ export const getAdminProductsCategory = async (category: string) => {
   const url = `${SERVER_URL}/api/v1/products/${category}`;
   return getRequest(url);
 };
+
+// 견적서 정보 조회
+export const getAdminQuotationsInfo = async (
+  start: string,
+  end: string,
+  query: string,
+) => {
+  const url = `${SERVER_URL}/api/v1/quotations/search/info?start=${start}&end=${end}&query=${query}`;
+  return getRequest(url);
+};
+
+// 견적서 excel 파일로 추출
+export const getAdminQuotationsExtract = async (quotation_id: string) => {
+  const url = `${SERVER_URL}/api/v1/quotations/extract/${quotation_id}`;
+  return getRequest(url);
+};
+
+// 오늘 날짜의 모든 견적서 excel 파일로 추출
+export const getAdminQuotationsExtractsToday = async (input_date: string) => {
+  const url = `${SERVER_URL}/api/v1/quotations/extracts/today?input_date=${input_date}`;
+  return getRequest(url);
+};
