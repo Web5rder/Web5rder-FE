@@ -39,3 +39,18 @@ export const putUpdateClient = async (
     throw new Error('putUpdateClient 에러 발생');
   }
 };
+
+// ===== 관리자 =====
+// 물품 수정
+export const putUpdateProducts = async (
+  productContents: any,
+  product_id: string,
+) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products${product_id}/update`;
+    return await putRequest(url, productContents);
+  } catch (error) {
+    console.error(error);
+    throw new Error('putUpdateProducts 에러 발생');
+  }
+};

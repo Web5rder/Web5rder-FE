@@ -43,3 +43,56 @@ export const patchQuotationParticulars = async ({
     throw new Error('patchQuotationParticulars 에러 발생');
   }
 };
+
+// ===== 관리자 =====
+// 거래처 지역 선택
+export const patchAdminClientRegion = async (
+  client_id: string,
+  region: string,
+) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/clients/${client_id}/region?region=${region}`;
+    return await patchRequest(url);
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('patchAdminClientRegion 에러 발생');
+  }
+};
+
+// 거래처 특이사항 작성
+export const patchAdminClientComment = async (
+  client_id: string,
+  input_comment: string,
+) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/clients/${client_id}/comment?input_comment=${input_comment}`;
+    return await patchRequest(url);
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('patchAdminClientComment 에러 발생');
+  }
+};
+
+// 야채 물품 가격 직접 변경
+export const patchAdminProductsVegetable = async (
+  product_id: string,
+  price: string,
+) => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products/${product_id}/vegetable?price=${price}`;
+    return await patchRequest(url);
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('patchAdminProductsVegetable 에러 발생');
+  }
+};
+
+// 야채 물품 가격 엑셀 파일로 변경
+export const patchAdminProductsVegetableFile = async () => {
+  try {
+    const url = `${SERVER_URL}/api/v1/products/vegetable/file`;
+  } catch (error) {
+    console.error('에러 : ', error);
+    throw new Error('patchAdminProductsVegetableFile 에러 발생');
+  }
+};
