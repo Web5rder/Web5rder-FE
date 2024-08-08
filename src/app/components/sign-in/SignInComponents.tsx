@@ -13,8 +13,11 @@ import {
   SIGNIN_TEXT,
 } from '@/app/constants/sign-in';
 import { setTokens } from '@/app/utils/setTokens';
+import Image from 'next/image';
 
-function SignInComponents() {
+const REDIRECT_URL = 'http://localhost:3000/sign-in/auth';
+
+export default function SignInComponents() {
   const router = useRouter();
 
   const [signInState, setSignInState] = useState<SingInState>({
@@ -37,7 +40,7 @@ function SignInComponents() {
     const { email, pwd } = signInState;
 
     if (!email || !pwd) {
-      alert('이메일과 비밀번호를 입력해주세요.');
+      alert(SIGNIN_ERROR[1]);
       return;
     }
 
@@ -50,9 +53,14 @@ function SignInComponents() {
         alert(SIGNIN_ERROR[0]);
       }
     } catch (error) {
-      alert('오류가 발생했습니다.');
+      console.error('로그인 에러 : ', error);
+      alert(SIGNIN_ERROR[2]);
     }
   };
+
+  const kakaoLink = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_KEY}&redirect_uri=${REDIRECT_URL}&response_type=code`;
+
+  console.log('카카오링크', kakaoLink);
 
   return (
     <div className="w-full flex-center flex-col gap-6 max-w-[678px]">
@@ -78,17 +86,21 @@ function SignInComponents() {
         text={SIGNIN_TEXT[4]}
       />
 
-      <SignInButton
+      <div
         onClick={() => {
-          alert('카카오로그인');
+          window.location.href = kakaoLink;
         }}
-        type="button"
-        text="카카오로그인"
-      />
+        className="cursor-pointer w-full flex-center"
+      >
+        <Image
+          src="/images/kakao_login_medium_wide.png"
+          alt="카카오 로그인"
+          width={300}
+          height={45}
+        />
+      </div>
 
       <SignInSubTab />
     </div>
   );
 }
-
-export default SignInComponents;

@@ -18,7 +18,11 @@ export const SIGNIN_PLACEHOLDER = [
   '거래처 주소를 정확히 입력해주세요.',
 ];
 
-export const SIGNIN_ERROR = ['이메일 혹은 비밀번호를 확인해주세요.'];
+export const SIGNIN_ERROR = [
+  '이메일 혹은 비밀번호를 확인해주세요.',
+  '이메일과 비밀번호를 입력해주세요.',
+  '오류가 발생했습니다. 잠시후 다시 시도해주세요.',
+];
 
 export const SIGNUP_ERROR = [
   '유효하지 않은 이메일 형식입니다.',

@@ -2,10 +2,10 @@
 
 import { VIEW_QUOTATION_GRAPH } from '@/app/constants/quotation';
 import { callGet } from '@/app/utils/callApi';
-import { useUser } from '@/app/utils/useUser';
 import { useEffect, useState } from 'react';
 import Pagination from '../common/Pagination';
 import QuotationViewTableInfo from './QuotationViewTableInfo';
+import { useUser } from '@/app/hooks/useUser';
 
 interface QuotationViewTableProps {
   viewType: CheckTypes;
