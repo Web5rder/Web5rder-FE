@@ -87,112 +87,124 @@ export default function AdminContainer() {
           data = await callDelete(`/api/admin/clients/${clientId}/delete`);
           break;
         default:
-          throw new Error('Invalid option');
+          throw new Error('유효하지 않은 option');
       }
       console.log(data);
 
       setState((prev) => ({
         ...prev,
-        result: JSON.stringify(data, null, 2),
+        result: data,
       }));
     } catch (error) {
       console.error(error);
       setState((prev) => ({
         ...prev,
-        result: 'An error occurred. Please check the console for more details.',
+        result: '',
       }));
     }
   };
 
   const renderTable = () => {
-    const data = JSON.parse(state.result);
-    if (
-      ['inquiryQuotation', 'inquiryQuotationDate'].includes(
-        state.selectedOption,
-      ) &&
-      data.result.items
-    ) {
-      return (
-        <table className="table-auto border-collapse border border-gray-3">
-          <thead>
-            <tr>
-              <th className="border border-gray-3 px-4 py-2">번호</th>
-              <th className="border border-gray-3 px-4 py-2">이름</th>
-              <th className="border border-gray-3 px-4 py-2">생성일</th>
-              <th className="border border-gray-3 px-4 py-2">수정일</th>
-              <th className="border border-gray-3 px-4 py-2">상태</th>
-              <th className="border border-gray-3 px-4 py-2">가격</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.result.items.map((item: AdminItemProps) => (
-              <tr key={item.id}>
-                <td className="border border-gray-3 px-4 py-2">{item.id}</td>
-                <td className="border border-gray-3 px-4 py-2">{item.name}</td>
+    try {
+      const data =
+        typeof state.result === 'string'
+          ? JSON.parse(state.result)
+          : state.result;
+      if (
+        ['inquiryQuotation', 'inquiryQuotationDate'].includes(
+          state.selectedOption,
+        ) &&
+        data.result.items
+      ) {
+        return (
+          <table className="table-auto border-collapse border border-gray-3">
+            <thead>
+              <tr>
+                <th className="border border-gray-3 px-4 py-2">번호</th>
+                <th className="border border-gray-3 px-4 py-2">이름</th>
+                <th className="border border-gray-3 px-4 py-2">생성일</th>
+                <th className="border border-gray-3 px-4 py-2">수정일</th>
+                <th className="border border-gray-3 px-4 py-2">상태</th>
+                <th className="border border-gray-3 px-4 py-2">가격</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.result.items.map((item: AdminItemProps) => (
+                <tr key={item.id}>
+                  <td className="border border-gray-3 px-4 py-2">{item.id}</td>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.name}
+                  </td>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.created_at}
+                  </td>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.updated_at || 'N/A'}
+                  </td>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.status}
+                  </td>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.total_price}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        );
+      }
+      if (
+        state.selectedOption === 'inquiryPastOrder' &&
+        Array.isArray(data.result)
+      ) {
+        return (
+          <table className="table-auto border-collapse border border-gray-3">
+            <thead>
+              <tr>
+                <th className="border border-gray-3 px-4 py-2">번호</th>
+                <th className="border border-gray-3 px-4 py-2">이름</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.result.map((item: AdminItemProps) => (
+                <tr key={item.id}>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.past_order_id}
+                  </td>
+                  <td className="border border-gray-3 px-4 py-2">
+                    {item.name}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        );
+      }
+      if (state.selectedOption === 'checkQuotation' && data.result) {
+        return (
+          <table className="table-auto border-collapse border border-gray-3">
+            <thead>
+              <tr>
+                <th className="border border-gray-3 px-4 py-2">번호</th>
+                <th className="border border-gray-3 px-4 py-2">상태</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
                 <td className="border border-gray-3 px-4 py-2">
-                  {item.created_at}
+                  {data.result.client_id}
                 </td>
                 <td className="border border-gray-3 px-4 py-2">
-                  {item.updated_at || 'N/A'}
-                </td>
-                <td className="border border-gray-3 px-4 py-2">
-                  {item.status}
-                </td>
-                <td className="border border-gray-3 px-4 py-2">
-                  {item.total_price}
+                  {data.result.status ? '제출' : '미제출'}
                 </td>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      );
-    }
-    if (
-      state.selectedOption === 'inquiryPastOrder' &&
-      Array.isArray(data.result)
-    ) {
-      return (
-        <table className="table-auto border-collapse border border-gray-3">
-          <thead>
-            <tr>
-              <th className="border border-gray-3 px-4 py-2">번호</th>
-              <th className="border border-gray-3 px-4 py-2">이름</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.result.map((item: AdminItemProps) => (
-              <tr key={item.id}>
-                <td className="border border-gray-3 px-4 py-2">
-                  {item.past_order_id}
-                </td>
-                <td className="border border-gray-3 px-4 py-2">{item.name}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      );
-    }
-    if (state.selectedOption === 'checkQuotation' && data.result) {
-      return (
-        <table className="table-auto border-collapse border border-gray-3">
-          <thead>
-            <tr>
-              <th className="border border-gray-3 px-4 py-2">번호</th>
-              <th className="border border-gray-3 px-4 py-2">상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td className="border border-gray-3 px-4 py-2">
-                {data.result.client_id}
-              </td>
-              <td className="border border-gray-3 px-4 py-2">
-                {data.result.status ? '제출' : '미제출'}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      );
+            </tbody>
+          </table>
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      return <div />;
     }
 
     return null;
