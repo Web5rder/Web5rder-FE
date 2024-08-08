@@ -8,28 +8,32 @@ export default function SetComment({ clientId }: ClientIdProps) {
 
   const handleSetComment = async () => {
     try {
-      const data = await callPatch(
+      await callPatch(
         `/api/admin/clients/${clientId}/comment`,
         `input_comment=${inputComment}`,
       );
-      console.log(data);
+      alert('특이사항이 저장되었습니다.');
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <Input
-        name="inputComment"
-        className="bg-gray-0 p-3"
-        type="default"
-        onChange={(e) => setInputComment(e.target.value)}
-        textValue={inputComment}
-        placeholder="특이사항 입력"
-      />
+    <div className="flex gap-4 border-2 p-8">
+      <div className="flex gap-4 items-center">
+        <p className="whitespace-nowrap">특이사항 입력</p>
+        <Input
+          name="inputComment"
+          className="bg-gray-0 w-fit border border-gray-7 px-4"
+          type="default"
+          onChange={(e) => setInputComment(e.target.value)}
+          textValue={inputComment}
+          placeholder="특이사항 입력"
+        />
+      </div>
+
       <Button
-        className="border-2"
+        className="border-2 w-fit px-8"
         buttonText="실행"
         type="default"
         onClickHandler={handleSetComment}
