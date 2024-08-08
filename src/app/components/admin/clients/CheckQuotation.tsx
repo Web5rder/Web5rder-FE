@@ -25,7 +25,7 @@ export default function CheckQuotation({ clientId }: ClientIdProps) {
   const renderTable = () => {
     if (!result.result) return null;
     return (
-      <table className="table-auto border-collapse border border-gray-3">
+      <table className="border-collapse border border-gray-3 w-fit">
         <thead>
           <tr>
             <th className="admin-table-th">번호</th>
@@ -45,22 +45,28 @@ export default function CheckQuotation({ clientId }: ClientIdProps) {
   };
 
   return (
-    <div>
-      <Input
-        name="inputDate"
-        className="bg-gray-0 p-3"
-        inputType="date"
-        onChange={(e) => setInputDate(e.target.value)}
-        textValue={inputDate}
-        placeholder="날짜 입력"
-        type="default"
-      />
-      <Button
-        className="border-2"
-        buttonText="실행"
-        type="default"
-        onClickHandler={handleCheckQuotation}
-      />
+    <div className="flex flex-col gap-4 border-2 p-8">
+      <div className="flex w-full gap-12">
+        <div className="flex gap-4 items-center">
+          <p className="whitespace-nowrap">날짜 입력</p>
+          <Input
+            name="inputDate"
+            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            inputType="date"
+            onChange={(e) => setInputDate(e.target.value)}
+            textValue={inputDate}
+            placeholder="날짜 입력"
+            type="default"
+          />
+        </div>
+
+        <Button
+          className="border-2 w-fit px-8"
+          buttonText="실행"
+          type="default"
+          onClickHandler={handleCheckQuotation}
+        />
+      </div>
       {renderTable()}
     </div>
   );

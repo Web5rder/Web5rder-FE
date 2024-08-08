@@ -19,7 +19,7 @@ export default function InquiryPastOrder({ clientId }: ClientIdProps) {
 
   const renderTable = () => {
     return (
-      <table className=" border-collapse border border-gray-3 w-fit">
+      <table className="border-collapse border border-gray-3 w-fit">
         <thead>
           <tr>
             <th className="admin-table-th">번호</th>

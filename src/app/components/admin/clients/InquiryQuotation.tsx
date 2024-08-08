@@ -27,7 +27,7 @@ export default function InquiryQuotation({ clientId }: ClientIdProps) {
 
   const renderTable = () => {
     return (
-      <table className=" border-collapse border border-gray-3 w-full">
+      <table className="border-collapse border border-gray-3 w-full">
         <thead>
           <tr>
             <th className="admin-table-th">번호</th>
