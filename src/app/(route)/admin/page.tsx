@@ -4,7 +4,9 @@ export default function Admin() {
   return (
     <section>
       <div className="bg-white w-full h-full flex relative">
-        <AdminContainer />
+        <div className="flex flex-col w-full">
+          <AdminContainer />
+        </div>
       </div>
     </section>
   );

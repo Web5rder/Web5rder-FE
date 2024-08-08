@@ -54,11 +54,11 @@ export default function AdminContainer() {
   };
 
   return (
-    <div className="p-8">
-      <div>관리자 페이지</div>
-
-      <div className="flex-center flex-col gap-6">
+    <div className="p-8 border border-gray-2">
+      <div className="flex items-center gap-4 h-16 border-2 px-4 mb-8">
+        <p>옵션을 선택하세요</p>
         <select
+          className="border-2"
           name="selectedOption"
           onChange={handleSelectChange}
           value={state.selectedOption}
@@ -77,17 +77,20 @@ export default function AdminContainer() {
           <option value="deleteClient">거래처 삭제</option>
         </select>
 
-        <Input
-          name="clientId"
-          className="bg-gray-0 p-3"
-          type="default"
-          onChange={handleInputChange}
-          textValue={state.clientId}
-          placeholder="거래처 아이디 입력"
-        />
-
-        {renderComponent()}
+        <div className="flex gap-4">
+          <p>거래처 id</p>
+          <Input
+            name="clientId"
+            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            type="default"
+            onChange={handleInputChange}
+            textValue={state.clientId}
+            placeholder="거래처 아이디 입력"
+          />
+        </div>
       </div>
+
+      {renderComponent()}
     </div>
   );
 }
