@@ -1,9 +1,22 @@
+interface ClientIdProps {
+  clientId: string;
+}
+
 interface AdminItemProps {
-  id: string | number;
+  id: number;
   name: string;
   created_at: string;
   updated_at: string | null;
   status: string;
   total_price: number;
-  past_order_id?: number;
+}
+
+interface AdminItemProps {
+  past_order_id: number;
+  name: string;
+}
+
+interface CheckQuotationResult {
+  client_id: number;
+  status: boolean;
 }

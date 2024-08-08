@@ -57,4 +57,9 @@ body {
   .order-btn {
     @apply bg-primary-4 text-white text-xl px-2 py-1 font-black whitespace-nowrap;
   }
+
+  /* 관리자 */
+  .admin-table-th {
+    @apply border border-gray-3 px-4 py-2;
+  }
 }

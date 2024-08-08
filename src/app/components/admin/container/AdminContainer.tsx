@@ -1,22 +1,19 @@
 'use client';
 
-import { callDelete, callGet, callPatch } from '@/app/utils/callApi';
 import { useState } from 'react';
+import CheckQuotation from '../clients/CheckQuotation';
+import DeleteClient from '../clients/DeleteClient';
+import InquiryPastOrder from '../clients/InquiryPastOrder';
+import InquiryQuotation from '../clients/InquiryQuotation';
+import InquiryQuotationDate from '../clients/InquiryQuotationDate';
+import SetComment from '../clients/SetComment';
+import SetRegion from '../clients/SetRegion';
 import Input from '../../common/Input';
-import Button from '../../common/Button';
 
 export default function AdminContainer() {
   const [state, setState] = useState({
     clientId: '',
     selectedOption: '',
-    result: '',
-    page: '',
-    pageSize: '',
-    startDate: '',
-    endDate: '',
-    inputDate: '',
-    region: '',
-    inputComment: '',
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,179 +32,25 @@ export default function AdminContainer() {
     }));
   };
 
-  const handleButtonClick = async () => {
-    const {
-      clientId,
-      selectedOption,
-      page,
-      pageSize,
-      startDate,
-      endDate,
-      inputDate,
-      region,
-      inputComment,
-    } = state;
-    try {
-      let data;
-      switch (selectedOption) {
-        case 'inquiryQuotation':
-          data = await callGet(
-            `/api/admin/clients/${clientId}/quotations`,
-            `page=${page}&page_size=${pageSize}`,
-          );
-          break;
-        case 'inquiryQuotationDate':
-          data = await callGet(
-            `/api/admin/clients/${clientId}/quotations/date`,
-            `date_range_type=custom&start_date=${startDate}&end_date=${endDate}&page=${page}&page_size=${pageSize}`,
-          );
-          break;
-        case 'inquiryPastOrder':
-          data = await callGet(`/api/order/${clientId}/get-past-order`);
-          break;
-        case 'checkQuotation':
-          data = await callGet(
-            `/api/admin/clients/${clientId}/check`,
-            `input_date=${inputDate}`,
-          );
-          break;
-        case 'setRegion':
-          data = await callPatch(
-            `/api/admin/clients/${clientId}/region`,
-            `region=${region}`,
-          );
-          break;
-        case 'setComment':
-          data = await callPatch(
-            `/api/admin/clients/${clientId}/comment`,
-            `input_comment=${inputComment}`,
-          );
-          break;
-        case 'deleteClient':
-          data = await callDelete(`/api/admin/clients/${clientId}/delete`);
-          break;
-        default:
-          throw new Error('유효하지 않은 option');
-      }
-      console.log(data);
-
-      setState((prev) => ({
-        ...prev,
-        result: data,
-      }));
-    } catch (error) {
-      console.error(error);
-      setState((prev) => ({
-        ...prev,
-        result: '',
-      }));
+  const renderComponent = () => {
+    switch (state.selectedOption) {
+      case 'inquiryQuotation':
+        return <InquiryQuotation clientId={state.clientId} />;
+      case 'inquiryQuotationDate':
+        return <InquiryQuotationDate clientId={state.clientId} />;
+      case 'inquiryPastOrder':
+        return <InquiryPastOrder clientId={state.clientId} />;
+      case 'checkQuotation':
+        return <CheckQuotation clientId={state.clientId} />;
+      case 'setRegion':
+        return <SetRegion clientId={state.clientId} />;
+      case 'setComment':
+        return <SetComment clientId={state.clientId} />;
+      case 'deleteClient':
+        return <DeleteClient clientId={state.clientId} />;
+      default:
+        return null;
     }
-  };
-
-  const renderTable = () => {
-    try {
-      const data =
-        typeof state.result === 'string'
-          ? JSON.parse(state.result)
-          : state.result;
-      if (
-        ['inquiryQuotation', 'inquiryQuotationDate'].includes(
-          state.selectedOption,
-        ) &&
-        data.result.items
-      ) {
-        return (
-          <table className="table-auto border-collapse border border-gray-3">
-            <thead>
-              <tr>
-                <th className="border border-gray-3 px-4 py-2">번호</th>
-                <th className="border border-gray-3 px-4 py-2">이름</th>
-                <th className="border border-gray-3 px-4 py-2">생성일</th>
-                <th className="border border-gray-3 px-4 py-2">수정일</th>
-                <th className="border border-gray-3 px-4 py-2">상태</th>
-                <th className="border border-gray-3 px-4 py-2">가격</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.result.items.map((item: AdminItemProps) => (
-                <tr key={item.id}>
-                  <td className="border border-gray-3 px-4 py-2">{item.id}</td>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.name}
-                  </td>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.created_at}
-                  </td>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.updated_at || 'N/A'}
-                  </td>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.status}
-                  </td>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.total_price}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        );
-      }
-      if (
-        state.selectedOption === 'inquiryPastOrder' &&
-        Array.isArray(data.result)
-      ) {
-        return (
-          <table className="table-auto border-collapse border border-gray-3">
-            <thead>
-              <tr>
-                <th className="border border-gray-3 px-4 py-2">번호</th>
-                <th className="border border-gray-3 px-4 py-2">이름</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.result.map((item: AdminItemProps) => (
-                <tr key={item.id}>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.past_order_id}
-                  </td>
-                  <td className="border border-gray-3 px-4 py-2">
-                    {item.name}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        );
-      }
-      if (state.selectedOption === 'checkQuotation' && data.result) {
-        return (
-          <table className="table-auto border-collapse border border-gray-3">
-            <thead>
-              <tr>
-                <th className="border border-gray-3 px-4 py-2">번호</th>
-                <th className="border border-gray-3 px-4 py-2">상태</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td className="border border-gray-3 px-4 py-2">
-                  {data.result.client_id}
-                </td>
-                <td className="border border-gray-3 px-4 py-2">
-                  {data.result.status ? '제출' : '미제출'}
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        );
-      }
-    } catch (error) {
-      console.error(error);
-      return <div />;
-    }
-
-    return null;
   };
 
   return (
@@ -234,90 +77,6 @@ export default function AdminContainer() {
           <option value="deleteClient">거래처 삭제</option>
         </select>
 
-        {['inquiryQuotation', 'inquiryQuotationDate'].includes(
-          state.selectedOption,
-        ) && (
-          <>
-            <Input
-              name="page"
-              className="bg-gray-0 p-3"
-              type="default"
-              onChange={handleInputChange}
-              textValue={state.page}
-              placeholder="페이지"
-            />
-            <Input
-              name="pageSize"
-              className="bg-gray-0 p-3"
-              type="default"
-              onChange={handleInputChange}
-              textValue={state.pageSize}
-              placeholder="페이지 크기"
-            />
-          </>
-        )}
-
-        {state.selectedOption === 'inquiryQuotationDate' && (
-          <>
-            <Input
-              name="startDate"
-              className="bg-gray-0 p-3"
-              inputType="date"
-              type="default"
-              onChange={handleInputChange}
-              textValue={state.startDate}
-              placeholder="시작 날짜"
-            />
-            <Input
-              name="endDate"
-              className="bg-gray-0 p-3"
-              inputType="date"
-              type="default"
-              onChange={handleInputChange}
-              textValue={state.endDate}
-              placeholder="종료 날짜"
-            />
-          </>
-        )}
-
-        {state.selectedOption === 'checkQuotation' && (
-          <Input
-            name="inputDate"
-            className="bg-gray-0 p-3"
-            inputType="date"
-            onChange={handleInputChange}
-            textValue={state.inputDate}
-            placeholder="날짜 입력"
-            type="default"
-          />
-        )}
-
-        {state.selectedOption === 'setRegion' && (
-          <select
-            name="region"
-            onChange={handleSelectChange}
-            value={state.region}
-          >
-            <option value="">지역을 선택하세요</option>
-            <option value="노원">노원</option>
-            <option value="의정부">의정부</option>
-            <option value="강남">강남</option>
-            <option value="건대">건대</option>
-            <option value="신촌">신촌</option>
-          </select>
-        )}
-
-        {state.selectedOption === 'setComment' && (
-          <Input
-            name="inputComment"
-            className="bg-gray-0 p-3"
-            type="default"
-            onChange={handleInputChange}
-            textValue={state.inputComment}
-            placeholder="특이사항 입력"
-          />
-        )}
-
         <Input
           name="clientId"
           className="bg-gray-0 p-3"
@@ -327,14 +86,7 @@ export default function AdminContainer() {
           placeholder="거래처 아이디 입력"
         />
 
-        <Button
-          className="border-2"
-          buttonText="실행"
-          type="default"
-          onClickHandler={handleButtonClick}
-        />
-
-        <pre> {renderTable()}</pre>
+        {renderComponent()}
       </div>
     </div>
   );
