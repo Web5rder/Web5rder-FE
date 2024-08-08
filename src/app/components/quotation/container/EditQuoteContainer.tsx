@@ -1,8 +1,8 @@
 'use client';
 
+import { usePastOrder } from '@/app/hooks/usePastOrder';
 import { SearchIcon } from '@/app/ui/iconPath';
 import { callDelete, callGet, callPost } from '@/app/utils/callApi';
-import { usePastOrder } from '@/app/utils/usePastOrder';
 import { useUser } from '@/app/utils/useUser';
 import { useEffect, useState } from 'react';
 import {
@@ -84,7 +84,7 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
     });
   };
 
-  const handleRemoveItem = async (itemId: string | undefined) => {
+  const handleRemoveItem = async (itemId: string | number) => {
     const itemToRemove = addedItems.find((item) => item.id === itemId);
     if (itemToRemove?.isEdited) {
       console.log('삭제 진행');
@@ -98,7 +98,7 @@ export default function EditQuoteContainer({ id }: EditQuoteContainerProps) {
     );
   };
 
-  const handleCountChange = (itemId: string | undefined, count: string) => {
+  const handleCountChange = (itemId: string | number, count: string) => {
     setAddedItems((prevItems) =>
       prevItems.map((item) => (item.id === itemId ? { ...item, count } : item)),
     );
