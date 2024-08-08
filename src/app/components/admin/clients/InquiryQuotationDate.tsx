@@ -2,12 +2,14 @@ import { callGet } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Input from '../../common/Input';
 import Button from '../../common/Button';
+import { clientStatusMapping } from '@/app/constants/admin';
+import { formatNumber } from '@/app/utils/formatPrice';
 
 export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [page, setPage] = useState('');
-  const [pageSize, setPageSize] = useState('');
+  const [page, setPage] = useState('1');
+  const [pageSize, setPageSize] = useState('10');
   const [result, setResult] = useState<{ result: { items: AdminItemProps[] } }>(
     { result: { items: [] } },
   );
@@ -27,7 +29,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
 
   const renderTable = () => {
     return (
-      <table className="table-auto border-collapse border border-gray-3">
+      <table className=" border-collapse border border-gray-3 w-full">
         <thead>
           <tr>
             <th className="admin-table-th">번호</th>
@@ -45,8 +47,12 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
               <td className="admin-table-th">{item.name}</td>
               <td className="admin-table-th">{item.created_at}</td>
               <td className="admin-table-th">{item.updated_at || 'N/A'}</td>
-              <td className="admin-table-th">{item.status}</td>
-              <td className="admin-table-th">{item.total_price}</td>
+              <td className="admin-table-th">
+                {clientStatusMapping[item.status]}
+              </td>
+              <td className="admin-table-th">
+                {formatNumber(item.total_price)} 원
+              </td>
             </tr>
           ))}
         </tbody>
@@ -55,47 +61,65 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
   };
 
   return (
-    <div>
-      <Input
-        name="startDate"
-        className="bg-gray-0 p-3"
-        inputType="date"
-        type="default"
-        onChange={(e) => setStartDate(e.target.value)}
-        textValue={startDate}
-        placeholder="시작 날짜"
-      />
-      <Input
-        name="endDate"
-        className="bg-gray-0 p-3"
-        inputType="date"
-        type="default"
-        onChange={(e) => setEndDate(e.target.value)}
-        textValue={endDate}
-        placeholder="종료 날짜"
-      />
-      <Input
-        name="page"
-        className="bg-gray-0 p-3"
-        type="default"
-        onChange={(e) => setPage(e.target.value)}
-        textValue={page}
-        placeholder="페이지"
-      />
-      <Input
-        name="pageSize"
-        className="bg-gray-0 p-3"
-        type="default"
-        onChange={(e) => setPageSize(e.target.value)}
-        textValue={pageSize}
-        placeholder="페이지 크기"
-      />
-      <Button
-        className="border-2"
-        buttonText="실행"
-        type="default"
-        onClickHandler={handleGetQuotationsByDate}
-      />
+    <div className="flex flex-col gap-4 border-2 p-8">
+      <div className="flex w-full gap-12">
+        <div className="flex gap-4 items-center">
+          <p className="whitespace-nowrap">시작 날짜</p>
+          <Input
+            name="startDate"
+            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            inputType="date"
+            type="default"
+            onChange={(e) => setStartDate(e.target.value)}
+            textValue={startDate}
+            placeholder="시작 날짜"
+          />
+        </div>
+
+        <div className="flex gap-4 items-center">
+          <p className="whitespace-nowrap">종료 날짜</p>
+          <Input
+            name="endDate"
+            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            inputType="date"
+            type="default"
+            onChange={(e) => setEndDate(e.target.value)}
+            textValue={endDate}
+            placeholder="종료 날짜"
+          />
+        </div>
+
+        <div className="flex gap-4 items-center">
+          <p className="whitespace-nowrap">페이지</p>
+          <Input
+            name="page"
+            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            type="default"
+            onChange={(e) => setPage(e.target.value)}
+            textValue={page}
+            placeholder="페이지"
+          />
+        </div>
+
+        <div className="flex gap-4 items-center">
+          <p className="whitespace-nowrap">페이지 크기</p>
+          <Input
+            name="pageSize"
+            className="bg-gray-0 w-fit border border-gray-7 px-4"
+            type="default"
+            onChange={(e) => setPageSize(e.target.value)}
+            textValue={pageSize}
+            placeholder="페이지 크기"
+          />
+        </div>
+
+        <Button
+          className="border-2 w-fit px-8"
+          buttonText="실행"
+          type="default"
+          onClickHandler={handleGetQuotationsByDate}
+        />
+      </div>
       {renderTable()}
     </div>
   );

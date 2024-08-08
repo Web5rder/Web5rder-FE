@@ -4,7 +4,6 @@ import Input from '../../common/Input';
 import Button from '../../common/Button';
 import { formatNumber } from '../../../utils/formatPrice';
 import { clientStatusMapping } from '@/app/constants/admin';
-import QuotationModal from '../../quotation/modal/QuotationModal';
 
 export default function InquiryQuotation({ clientId }: ClientIdProps) {
   const [page, setPage] = useState('1');
@@ -50,7 +49,7 @@ export default function InquiryQuotation({ clientId }: ClientIdProps) {
                 {clientStatusMapping[item.status]}
               </td>
               <td className="admin-table-th">
-                {formatNumber(item.total_price)}
+                {formatNumber(item.total_price)} 원
               </td>
             </tr>
           ))}
