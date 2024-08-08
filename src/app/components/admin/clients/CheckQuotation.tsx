@@ -2,6 +2,12 @@ import { callGet } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Input from '../../common/Input';
 import Button from '../../common/Button';
+import {
+  BTN_TEXT,
+  clientStatusMapping,
+  INPUT_TEXT,
+  TABLE_TEXT,
+} from '@/app/constants/admin';
 
 export default function CheckQuotation({ clientId }: ClientIdProps) {
   const [inputDate, setInputDate] = useState('');
@@ -25,18 +31,20 @@ export default function CheckQuotation({ clientId }: ClientIdProps) {
   const renderTable = () => {
     if (!result.result) return null;
     return (
-      <table className="admin-table">
+      <table className="admin-table max-w-fit">
         <thead>
           <tr>
-            <th className="admin-table-th">번호</th>
-            <th className="admin-table-th">상태</th>
+            <th className="admin-table-th">{TABLE_TEXT[0]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[4]}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td className="admin-table-th">{result.result.client_id}</td>
             <td className="admin-table-th">
-              {result.result.status ? '제출' : '미제출'}
+              {result.result.status
+                ? clientStatusMapping.COMPLETED
+                : clientStatusMapping.NONE}
             </td>
           </tr>
         </tbody>
@@ -48,21 +56,21 @@ export default function CheckQuotation({ clientId }: ClientIdProps) {
     <div className="flex flex-col gap-4 border-2 p-8">
       <div className="flex w-full gap-12">
         <div className="flex gap-4 items-center">
-          <p className="whitespace-nowrap">날짜 입력</p>
+          <p className="whitespace-nowrap">{INPUT_TEXT[6]}</p>
           <Input
             name="inputDate"
             className="admin-input"
             inputType="date"
             onChange={(e) => setInputDate(e.target.value)}
             textValue={inputDate}
-            placeholder="날짜 입력"
+            placeholder={INPUT_TEXT[6]}
             type="default"
           />
         </div>
 
         <Button
           className="admin-btn"
-          buttonText="실행"
+          buttonText={BTN_TEXT[0]}
           type="default"
           onClickHandler={handleCheckQuotation}
         />

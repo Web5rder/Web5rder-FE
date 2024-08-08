@@ -2,7 +2,12 @@ import { callGet } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Input from '../../common/Input';
 import Button from '../../common/Button';
-import { clientStatusMapping } from '@/app/constants/admin';
+import {
+  clientStatusMapping,
+  BTN_TEXT,
+  INPUT_TEXT,
+  TABLE_TEXT,
+} from '@/app/constants/admin';
 import { formatNumber } from '@/app/utils/formatPrice';
 
 export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
@@ -32,12 +37,12 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
       <table className="admin-table">
         <thead>
           <tr>
-            <th className="admin-table-th">번호</th>
-            <th className="admin-table-th">이름</th>
-            <th className="admin-table-th">생성일</th>
-            <th className="admin-table-th">수정일</th>
-            <th className="admin-table-th">상태</th>
-            <th className="admin-table-th">가격</th>
+            <th className="admin-table-th">{TABLE_TEXT[0]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[1]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[2]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[3]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[4]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[5]}</th>
           </tr>
         </thead>
         <tbody>
@@ -64,7 +69,7 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
     <div className="flex flex-col gap-4 border-2 p-8">
       <div className="flex w-full gap-12">
         <div className="flex gap-4 items-center">
-          <p className="whitespace-nowrap">시작 날짜</p>
+          <p className="whitespace-nowrap">{INPUT_TEXT[4]}</p>
           <Input
             name="startDate"
             className="admin-input"
@@ -72,12 +77,12 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
             type="default"
             onChange={(e) => setStartDate(e.target.value)}
             textValue={startDate}
-            placeholder="시작 날짜"
+            placeholder={INPUT_TEXT[4]}
           />
         </div>
 
         <div className="flex gap-4 items-center">
-          <p className="whitespace-nowrap">종료 날짜</p>
+          <p className="whitespace-nowrap">{INPUT_TEXT[5]}</p>
           <Input
             name="endDate"
             className="admin-input"
@@ -85,37 +90,37 @@ export default function InquiryQuotationDate({ clientId }: ClientIdProps) {
             type="default"
             onChange={(e) => setEndDate(e.target.value)}
             textValue={endDate}
-            placeholder="종료 날짜"
+            placeholder={INPUT_TEXT[5]}
           />
         </div>
 
         <div className="flex gap-4 items-center">
-          <p className="whitespace-nowrap">페이지</p>
+          <p className="whitespace-nowrap">{INPUT_TEXT[2]}</p>
           <Input
             name="page"
             className="admin-input"
             type="default"
             onChange={(e) => setPage(e.target.value)}
             textValue={page}
-            placeholder="페이지"
+            placeholder={INPUT_TEXT[2]}
           />
         </div>
 
         <div className="flex gap-4 items-center">
-          <p className="whitespace-nowrap">페이지 크기</p>
+          <p className="whitespace-nowrap">{INPUT_TEXT[3]}</p>
           <Input
             name="pageSize"
             className="admin-input"
             type="default"
             onChange={(e) => setPageSize(e.target.value)}
             textValue={pageSize}
-            placeholder="페이지 크기"
+            placeholder={INPUT_TEXT[3]}
           />
         </div>
 
         <Button
           className="admin-btn"
-          buttonText="실행"
+          buttonText={BTN_TEXT[0]}
           type="default"
           onClickHandler={handleGetQuotationsByDate}
         />

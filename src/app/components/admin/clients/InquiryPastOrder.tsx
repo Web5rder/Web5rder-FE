@@ -1,6 +1,7 @@
 import { callGet } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Button from '../../common/Button';
+import { BTN_TEXT, TABLE_TEXT } from '@/app/constants/admin';
 
 export default function InquiryPastOrder({ clientId }: ClientIdProps) {
   const [result, setResult] = useState<{ result: AdminItemProps[] }>({
@@ -19,11 +20,11 @@ export default function InquiryPastOrder({ clientId }: ClientIdProps) {
 
   const renderTable = () => {
     return (
-      <table className="admin-table">
+      <table className="admin-table max-w-fit">
         <thead>
           <tr>
-            <th className="admin-table-th">번호</th>
-            <th className="admin-table-th">이름</th>
+            <th className="admin-table-th">{TABLE_TEXT[0]}</th>
+            <th className="admin-table-th">{TABLE_TEXT[1]}</th>
           </tr>
         </thead>
         <tbody>
@@ -42,7 +43,7 @@ export default function InquiryPastOrder({ clientId }: ClientIdProps) {
     <div className="flex flex-col gap-4 border-2 p-8">
       <Button
         className="admin-btn"
-        buttonText="실행"
+        buttonText={BTN_TEXT[0]}
         type="default"
         onClickHandler={handleGetPastOrders}
       />

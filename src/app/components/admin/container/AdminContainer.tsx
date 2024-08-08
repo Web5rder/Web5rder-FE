@@ -9,6 +9,7 @@ import InquiryQuotationDate from '../clients/InquiryQuotationDate';
 import SetComment from '../clients/SetComment';
 import SetRegion from '../clients/SetRegion';
 import Input from '../../common/Input';
+import { INPUT_TEXT, OPTION_TEXT } from '@/app/constants/admin';
 
 export default function AdminContainer() {
   const [state, setState] = useState({
@@ -56,36 +57,32 @@ export default function AdminContainer() {
   return (
     <div className="p-8 border border-gray-2">
       <div className="flex items-center gap-4 h-16 border-2 px-4 mb-8">
-        <p>옵션을 선택하세요</p>
+        <p>{OPTION_TEXT[0]}</p>
         <select
           className="border-2"
           name="selectedOption"
           onChange={handleSelectChange}
           value={state.selectedOption}
         >
-          <option value="">옵션을 선택하세요</option>
-          <option value="inquiryQuotation">거래처 견적서 조회</option>
-          <option value="inquiryQuotationDate">
-            거래처 견적서 기간에 따른 조회
-          </option>
-          <option value="inquiryPastOrder">거래처 주문 내역 조회</option>
-          <option value="checkQuotation">
-            거래처 해당 날짜 견적서 제출 여부 파악
-          </option>
-          <option value="setRegion">거래처 지역 선택</option>
-          <option value="setComment">거래처 특이사항 작성</option>
-          <option value="deleteClient">거래처 삭제</option>
+          <option value="">{OPTION_TEXT[0]}</option>
+          <option value="inquiryQuotation">{OPTION_TEXT[1]}</option>
+          <option value="inquiryQuotationDate">{OPTION_TEXT[2]}</option>
+          <option value="inquiryPastOrder">{OPTION_TEXT[3]}</option>
+          <option value="checkQuotation">{OPTION_TEXT[4]}</option>
+          <option value="setRegion">{OPTION_TEXT[5]}</option>
+          <option value="setComment">{OPTION_TEXT[6]}</option>
+          <option value="deleteClient">{OPTION_TEXT[7]}</option>
         </select>
 
         <div className="flex gap-4">
-          <p className="whitespace-nowrap">거래처 id</p>
+          <p className="whitespace-nowrap">{INPUT_TEXT[0]}</p>
           <Input
             name="clientId"
             className="admin-input"
             type="default"
             onChange={handleInputChange}
             textValue={state.clientId}
-            placeholder="거래처 아이디 입력"
+            placeholder={INPUT_TEXT[1]}
           />
         </div>
       </div>

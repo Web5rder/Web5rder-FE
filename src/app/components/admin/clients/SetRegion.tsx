@@ -1,6 +1,7 @@
 import { callPatch } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Button from '../../common/Button';
+import { BTN_TEXT, ALERT_TEXT, REGION_TEXT } from '@/app/constants/admin';
 
 export default function SetRegion({ clientId }: ClientIdProps) {
   const [region, setRegion] = useState('');
@@ -11,7 +12,7 @@ export default function SetRegion({ clientId }: ClientIdProps) {
         `/api/admin/clients/${clientId}/region`,
         `region=${region}`,
       );
-      alert('해당 거래처의 지역이 변경되었습니다.');
+      alert(ALERT_TEXT[0]);
     } catch (error) {
       console.error(error);
     }
@@ -25,17 +26,17 @@ export default function SetRegion({ clientId }: ClientIdProps) {
         onChange={(e) => setRegion(e.target.value)}
         value={region}
       >
-        <option value="">지역을 선택하세요</option>
-        <option value="노원">노원</option>
-        <option value="의정부">의정부</option>
-        <option value="강남">강남</option>
-        <option value="건대">건대</option>
-        <option value="신촌">신촌</option>
+        <option value="">{REGION_TEXT[0]}</option>
+        <option value={REGION_TEXT[1]}>{REGION_TEXT[1]}</option>
+        <option value={REGION_TEXT[2]}>{REGION_TEXT[2]}</option>
+        <option value={REGION_TEXT[3]}>{REGION_TEXT[3]}</option>
+        <option value={REGION_TEXT[4]}>{REGION_TEXT[4]}</option>
+        <option value={REGION_TEXT[5]}>{REGION_TEXT[5]}</option>
       </select>
 
       <Button
         className="admin-btn"
-        buttonText="실행"
+        buttonText={BTN_TEXT[0]}
         type="default"
         onClickHandler={handleSetRegion}
       />

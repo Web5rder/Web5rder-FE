@@ -2,6 +2,7 @@ import { callPatch } from '@/app/utils/callApi';
 import { useState } from 'react';
 import Input from '../../common/Input';
 import Button from '../../common/Button';
+import { BTN_TEXT, ALERT_TEXT, INPUT_TEXT } from '@/app/constants/admin';
 
 export default function SetComment({ clientId }: ClientIdProps) {
   const [inputComment, setInputComment] = useState('');
@@ -12,7 +13,7 @@ export default function SetComment({ clientId }: ClientIdProps) {
         `/api/admin/clients/${clientId}/comment`,
         `input_comment=${inputComment}`,
       );
-      alert('특이사항이 저장되었습니다.');
+      alert(ALERT_TEXT[1]);
     } catch (error) {
       console.error(error);
     }
@@ -21,20 +22,20 @@ export default function SetComment({ clientId }: ClientIdProps) {
   return (
     <div className="flex gap-4 border-2 p-8">
       <div className="flex gap-4 items-center">
-        <p className="whitespace-nowrap">특이사항 입력</p>
+        <p className="whitespace-nowrap">{INPUT_TEXT[7]}</p>
         <Input
           name="inputComment"
           className="admin-input"
           type="default"
           onChange={(e) => setInputComment(e.target.value)}
           textValue={inputComment}
-          placeholder="특이사항 입력"
+          placeholder={INPUT_TEXT[7]}
         />
       </div>
 
       <Button
         className="admin-btn"
-        buttonText="실행"
+        buttonText={BTN_TEXT[0]}
         type="default"
         onClickHandler={handleSetComment}
       />
