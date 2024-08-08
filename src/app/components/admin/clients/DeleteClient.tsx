@@ -4,17 +4,17 @@ import Button from '../../common/Button';
 export default function DeleteClient({ clientId }: ClientIdProps) {
   const handleDeleteClient = async () => {
     try {
-      const data = await callDelete(`/api/admin/clients/${clientId}/delete`);
-      console.log(data);
+      await callDelete(`/api/admin/clients/${clientId}/delete`);
+      alert('거래처가 삭제되었습니다.');
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4 border-2 p-8">
       <Button
-        className="border-2"
+        className="border-2 border-red-1 w-fit px-8"
         buttonText="실행"
         type="default"
         onClickHandler={handleDeleteClient}
