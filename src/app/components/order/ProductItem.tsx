@@ -29,7 +29,7 @@ export default function ProductItem({
       if (Number.isNaN(numericValue) || numericValue <= 0) {
         value = '1'; // 0 이하의 값일 경우 1로 설정
       }
-      onCountChange?.(id, value);
+      onCountChange?.(id as string, value); // ?.를 써서 정의되지 않을 경우 호출 안하게(if문 사용 대신)
     }
     setInputState((prev) => ({
       ...prev,
@@ -39,7 +39,7 @@ export default function ProductItem({
 
   const handleButtonClick = () => {
     if (isAdded) {
-      onRemoveItem?.(id);
+      onRemoveItem?.(id as string); // 함수가 정의 된 경우에만 호출
     } else {
       onAddItem?.({ category, id, name, count: inputState.count, unit });
     }
@@ -50,11 +50,13 @@ export default function ProductItem({
       <div className="w-[7%] pl-4 text-ellipsis whitespace-nowrap">
         {category}
       </div>
-      <div className="w-[7%] text-ellipsis whitespace-nowrap">{id}</div>
+      <div className="w-[7%] text-center text-ellipsis whitespace-nowrap">
+        {id}
+      </div>
       <div className="w-[60%] pl-4 overflow-hidden text-ellipsis whitespace-nowrap">
         {name}
       </div>
-      <div className="w-[10%] flex items-center justify-center">
+      <div className="w-[10%]">
         <Input
           className="w-16 text-center"
           placeholder="1"
@@ -64,7 +66,7 @@ export default function ProductItem({
           onChange={(e) => handleInputChange(e, 'count')}
         />
       </div>
-      <div className="w-[8%] text-right pr-2 overflow-hidden text-ellipsis whitespace-nowrap">
+      <div className="w-[8%] text-center pr-2 overflow-hidden text-ellipsis whitespace-nowrap">
         {unit}
       </div>
       <div className="w-[8%] flex justify-end pr-4">

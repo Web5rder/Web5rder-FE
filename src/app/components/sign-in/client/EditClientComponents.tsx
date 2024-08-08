@@ -11,7 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import SignInButton from '../common/SignInButton';
 import SignInInput from '../common/SignInInput';
-import { useUser } from '@/app/utils/useUser';
+import { useUser } from '@/app/hooks/useUser';
 
 export default function EditClientComponents() {
   const router = useRouter();

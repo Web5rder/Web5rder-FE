@@ -1,7 +1,7 @@
 // hooks/usePastOrder.ts
 import { useState, useEffect } from 'react';
 import { callGet } from '@/app/utils/callApi';
-import { useUser } from '@/app/utils/useUser';
+import { useUser } from './useUser';
 
 export function usePastOrder() {
   const { user } = useUser();

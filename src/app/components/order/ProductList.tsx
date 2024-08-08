@@ -15,16 +15,14 @@ export default function ProductList({
   onCountChange,
 }: ProductListProps) {
   return (
-    <div
-      className={`${isSearchResult ? 'bg-primary-4 mt-4 w-full' : 'w-full bg-primary-4 mt-4'}`}
-    >
+    <div className="bg-primary-4 mt-4 w-full">
       {isSearchResult ? (
         <div className="flex text-white font-black py-1 pl-4 pr-6 whitespace-nowrap">
-          <div className="w-[7%] pl-4">{PRODUCT_TEXT[0]}</div>
-          <div className="w-[7%]">{PRODUCT_TEXT[1]}</div>
+          <div className="w-[7%] text-center pl-4">{PRODUCT_TEXT[0]}</div>
+          <div className="w-[7%] text-center">{PRODUCT_TEXT[1]}</div>
           <div className="w-[60%] pl-4">{PRODUCT_TEXT[2]}</div>
           <div className="w-[10%] text-center">{PRODUCT_TEXT[3]}</div>
-          <div className="w-[8%] text-right pr-2">{PRODUCT_TEXT[4]}</div>
+          <div className="w-[8%] text-center pr-2">{PRODUCT_TEXT[4]}</div>
           <div className="w-[8%] text-right pr-8">{PRODUCT_TEXT[5]}</div>
         </div>
       ) : (

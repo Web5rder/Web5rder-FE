@@ -7,12 +7,11 @@ interface OrderState {
   quotation: boolean;
 }
 
-interface ProductsTypes {
-  product: string;
-  quantity: number;
-  price: number;
-  created_at: string;
-  updated_at: string;
+interface UserResult {
+  client_id: number;
+  email: string;
+  id: number;
+  is_active: boolean;
 }
 
 interface User {
@@ -20,12 +19,7 @@ interface User {
   code: string;
   message: string;
   category: string;
-  result: {
-    client_id: number;
-    email: string;
-    id: number;
-    is_active: boolean;
-  };
+  result: UserResult;
 }
 
 interface searchProductsProps {
@@ -40,17 +34,26 @@ interface PastOrder {
   name: string;
 }
 
-interface ProductItemProps {
+interface QuotationItemType {
+  id?: string | number;
   category: string;
-  id?: string;
   name: string;
-  count?: string;
+  count?: string | number;
+  unit: string;
+  price?: string;
+}
+
+interface QuotationTableProps {
+  quotationInfo: QuotationItemType[];
+}
+
+interface ProductItemProps extends QuotationItemType {
   isAdded?: boolean;
   isEdited?: boolean;
   unit: string;
   onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem?: (id: string | undefined) => void;
-  onCountChange?: (id: string | undefined, value: string) => void;
+  onRemoveItem?: (id: string | number) => void;
+  onCountChange?: (id: string | number, value: string) => void;
 }
 
 interface ProductListProps {
@@ -58,8 +61,8 @@ interface ProductListProps {
   isSearchResult: boolean;
   addedItems?: ProductItemProps[];
   onAddItem?: (item: ProductItemProps) => void;
-  onRemoveItem: (id: string | undefined) => void;
-  onCountChange?: (id: string | undefined, value: string) => void;
+  onRemoveItem: (id: string | number) => void;
+  onCountChange?: (id: string | number, value: string) => void;
 }
 
 interface quotationIdProps {
@@ -71,7 +74,7 @@ interface patchQuotationPartiProps extends quotationIdProps {
 }
 
 interface QuotationModalProps {
-  QuotationModalData: any;
+  QuotationModalData: ProductItemProps[];
   closeModal: () => void;
   quotationId?: string;
 }

@@ -10,7 +10,6 @@ import { cancelIcon } from '@/app/ui/iconPath';
 import { callGet, callPatch, callPost } from '@/app/utils/callApi';
 import { formatPrice } from '@/app/utils/formatPrice';
 import { saveImage } from '@/app/utils/saveImage';
-import { useUser } from '@/app/utils/useUser';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Button from '../../common/Button';
@@ -20,6 +19,8 @@ import Input from '../../common/Input';
 import LoadingIndicator from '../../common/Loading';
 import QuotationSave from '../../quotation/modal/QuotationSave';
 import QuotationTable from './OrderQuotationTable';
+import { formatDate } from '@/app/utils/date';
+import { useUser } from '@/app/hooks/useUser';
 
 export default function QuotationModal({
   QuotationModalData,
@@ -73,7 +74,7 @@ export default function QuotationModal({
   // 견적서 물품 생성
   const createProducts = async (id: number) => {
     try {
-      const body = QuotationModalData.map((item: any) => ({
+      const body = QuotationModalData.map((item) => ({
         quotation_id: id,
         product_id: item.id,
         quantity: item.count,
@@ -100,14 +101,7 @@ export default function QuotationModal({
   // 오늘 날짜 불러오기
   useEffect(() => {
     const now = new Date();
-    const koreaTime = now.toLocaleString('en-US', {
-      timeZone: 'Asia/Seoul',
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
-    const [month, day, year] = koreaTime.split('/');
-    const formattedDate = `${year}-${month}-${day}`;
+    const formattedDate = formatDate(now.toISOString());
     setState((prev) => ({ ...prev, currentDate: formattedDate }));
   }, []);
 
