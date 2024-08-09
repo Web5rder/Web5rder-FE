@@ -18,6 +18,7 @@ export const HEADER_TEXT = [
   '주문내역',
   '회원가입',
   '로그인',
+  '로그아웃',
   '거래처관리',
 ];
 
@@ -59,10 +60,4 @@ export const SELECTED_SIDENAV_ICONS = [
   SelectedProductsIcon,
 ];
 
-export const SIDENAV_PATH = [
-  '/',
-  '/quotation',
-  '/quotation',
-  '/quotation',
-  '/quotation',
-];
+export const SIDENAV_PATH = ['/', '/order', '/quotation', '/past-order', '/'];
