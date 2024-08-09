@@ -3,7 +3,7 @@
 import { usePastOrder } from '@/app/hooks/usePastOrder';
 import { SearchIcon } from '@/app/ui/iconPath';
 import { callDelete, callGet, callPost } from '@/app/utils/callApi';
-import { useUser } from '@/app/utils/useUser';
+import { useUser } from '@/app/hooks/useUser';
 import { useEffect, useState } from 'react';
 import {
   BUTTON_TEXT,

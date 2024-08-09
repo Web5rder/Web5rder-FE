@@ -1,7 +1,7 @@
 'use client';
 
 import { HEADER_TEXT } from '@/app/constants/common';
-import { useUser } from '@/app/utils/useUser';
+import { useUser } from '@/app/hooks/useUser';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

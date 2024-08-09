@@ -1,6 +1,6 @@
 'use client';
 
-import { useUser } from '@/app/utils/useUser';
+import { useUser } from '@/app/hooks/useUser';
 import LoginModal from '../LoginModal';
 import Recommend from '../recommend/Recommend';
 import Reorder from '../Reorder';
