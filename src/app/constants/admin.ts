@@ -1,3 +1,5 @@
+export const ADMIN_TEXT = ['거래처', ' 상품', '견적서'];
+
 export const OPTION_TEXT = [
   '옵션을 선택하세요',
   '거래처 견적서 조회',

@@ -1,3 +1,11 @@
+interface AdminHeaderProps {
+  isActive: string;
+}
+
+interface AdminPageProps {
+  searchParams: { page: string };
+}
+
 interface ClientIdProps {
   clientId: string;
 }

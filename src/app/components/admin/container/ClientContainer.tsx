@@ -11,7 +11,7 @@ import SetRegion from '../clients/SetRegion';
 import Input from '../../common/Input';
 import { INPUT_TEXT, OPTION_TEXT } from '@/app/constants/admin';
 
-export default function AdminContainer() {
+export default function ClientContainer() {
   const [state, setState] = useState({
     clientId: '',
     selectedOption: '',
